@@ -1,13 +1,15 @@
-import { MQTTClient, TOPIC } from "../setupMQTT";
+import { MQTTClient, TOPIC } from "../mqtt/setupMQTT";
+import { retrieveEnergyToday } from "./power-stats";
 
-const TOPIC_POWER = `cmnd/${TOPIC}/Power`;
+const POWER_TOPIC = `cmnd/${TOPIC}/Power`;
 
 const sendSocket = (message: string) => {
-  MQTTClient.publish(TOPIC_POWER, `${message}`);
+  MQTTClient.publish(POWER_TOPIC, `${message}`);
 };
 
 export const startSocket = () => {
   sendSocket("on");
+  retrieveEnergyToday();
 };
 
 export const stopSocket = () => {

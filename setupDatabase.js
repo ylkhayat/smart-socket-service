@@ -3,7 +3,6 @@ const client = require("./src/database.js");
 const createPowerStatsTable = `
 CREATE TABLE IF NOT EXISTS power_stats (
     id SERIAL PRIMARY KEY,
-    device_id VARCHAR(255) NOT NULL,
     timestamp TIMESTAMP NOT NULL,
     power_consumption DECIMAL NOT NULL
 );
