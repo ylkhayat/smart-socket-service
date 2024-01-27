@@ -3,6 +3,7 @@ import {
   STAT_TOPIC_RESULT,
   subscribeToPowerStatistics,
 } from "../handlers/power-stats";
+import mqttEventEmitter from "../eventEmitter";
 
 const PROTOCOL = "mqtt";
 //TUM HOST 131.159.6.111
@@ -21,7 +22,6 @@ export const MQTTClient = mqtt.connect(CONNECT_URL, {
   password: "****",
 });
 
-// TelePeriod = 300
 MQTTClient.on("connect", (ev) => {
   console.log("MQTT connected!");
   subscribeToPowerStatistics();
@@ -30,11 +30,11 @@ MQTTClient.on("connect", (ev) => {
     if (topic === STAT_TOPIC_RESULT) {
       const data = JSON.parse(message.toString());
       const { EnergyToday } = data;
-      if (!EnergyToday) {
+      const todayEnergy = EnergyToday?.Today;
+      if (todayEnergy === undefined) {
         return;
       }
-      console.log("EnergyToday", data);
-      // insertPowerStatistics(DeviceId, Time, POWER);
+      mqttEventEmitter.emit("energyTodayData", todayEnergy);
     }
   });
 

@@ -9,7 +9,7 @@ const sendSocket = (message: string) => {
 
 export const startSocket = () => {
   sendSocket("on");
-  retrieveEnergyToday();
+  retrieveEnergyToday(true);
 };
 
 export const stopSocket = () => {

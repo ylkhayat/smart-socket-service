@@ -1,9 +1,7 @@
 import { Router, Request, Response } from "express";
-import {
-  getPowerStatistics,
-  insertPowerStatistics,
-} from "./handlers/power-stats";
+import { retrieveEnergyToday } from "./handlers/power-stats";
 import { startSocket, stopSocket } from "./handlers/socket";
+import mqttEventEmitter from "./eventEmitter";
 
 const router = Router();
 
@@ -36,55 +34,25 @@ router.post("/wait", async (req: Request, res: Response) => {
   }
 });
 
-const iso8601Regex =
-  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d{3})?(Z|[+-]\d{2}:\d{2})?$/;
+router.get("/power-statistics", async (_, res: Response) => {
+  const waitForData = new Promise((resolve, reject) => {
+    mqttEventEmitter.once("energyTodayData", (data) => {
+      resolve(data);
+    });
 
-router.get("/power-statistics", async (req: Request, res: Response) => {
-  const { startTime, endTime } = req.query;
-
-  if (!startTime || !endTime) {
-    return res
-      .status(400)
-      .send(
-        "Please provide both startTime and endTime following a valid ISO 8601 format, example: 2021-01-01",
-      );
-  }
-
-  if (!startTime || !endTime) {
-    return res.status(400).send("Please provide both startTime and endTime");
-  }
-
-  if (
-    !iso8601Regex.test(startTime as string) ||
-    !iso8601Regex.test(endTime as string)
-  ) {
-    return res
-      .status(400)
-      .send(
-        "Please provide both startTime and endTime in a valid ISO 8601 format, example: 2021-01-01T00:00:00Z",
-      );
-  }
+    // Timeout after 10 seconds (or your preferred time)
+    setTimeout(() => {
+      reject(new Error("Timeout waiting for MQTT data"));
+    }, 10000);
+  });
 
   try {
-    const statistics = await getPowerStatistics(
-      new Date(startTime as string),
-      new Date(endTime as string),
-    );
-    res.json(statistics);
+    retrieveEnergyToday();
+
+    const data = await waitForData;
+    res.json(data);
   } catch (error) {
     res.status(500).send("An error occurred while fetching power statistics");
-  }
-});
-
-router.post("/power-stats", async (req, res) => {
-  const { deviceId, timestamp, powerConsumption } = req.body;
-
-  try {
-    await insertPowerStatistics(deviceId, timestamp, powerConsumption);
-    res.status(200).send("Power statistics recorded successfully");
-  } catch (error) {
-    console.error("Error recording power statistics:", error);
-    res.status(500).send("Failed to record power statistics");
   }
 });
 
