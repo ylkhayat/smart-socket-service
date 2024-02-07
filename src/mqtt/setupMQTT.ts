@@ -1,5 +1,6 @@
 import mqtt from "mqtt";
 import {
+  POWER_TOPIC_RESULT,
   STAT_TOPIC_RESULT,
   subscribeToPowerStatistics,
 } from "../handlers/power-stats";
@@ -27,14 +28,25 @@ MQTTClient.on("connect", (ev) => {
   subscribeToPowerStatistics();
 
   MQTTClient.on("message", (topic, message) => {
-    if (topic === STAT_TOPIC_RESULT) {
-      const data = JSON.parse(message.toString());
-      const { EnergyToday } = data;
-      const todayEnergy = EnergyToday?.Today;
-      if (todayEnergy === undefined) {
-        return;
+    switch (topic) {
+      case STAT_TOPIC_RESULT: {
+        const data = JSON.parse(message.toString());
+        const { EnergyToday } = data;
+        const todayEnergy = EnergyToday?.Today;
+
+        if (todayEnergy === undefined) {
+          return;
+        }
+        mqttEventEmitter.emit("energyTodayData", todayEnergy);
+        break;
       }
-      mqttEventEmitter.emit("energyTodayData", todayEnergy);
+      case POWER_TOPIC_RESULT: {
+        const data = message.toString();
+        mqttEventEmitter.emit("powerData", data);
+        break;
+      }
+      default:
+        break;
     }
   });
 

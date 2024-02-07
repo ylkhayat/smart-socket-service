@@ -1,7 +1,7 @@
 {
   "name": "smart-socket-service",
   "version": "1.0.0",
-  "description": "REST API service for controlling and monitoring a smart socket. This service allows users to start and stop a smart socket, wait asynchronously for a set duration, receive real-time updates on power consumption, and fetch power usage statistics for specified time intervals. Integrates with MQTT for communication with smart socket devices.",
+  "description": "REST API service for controling and monitoring a smart socket. This service allows users to start and stop a smart socket, wait asynchronously for a set duration, receive real-time updates on power consumption, and fetch power usage statistics for specified time intervals. Integrates with MQTT for communication with smart socket devices.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,12 +21,11 @@
   "homepage": "https://github.com/ylkhayat/smart-socket-service#readme",
   "devDependencies": {
     "@types/express": "^4.17.21",
-    "@types/pg": "^8.10.9",
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "axios": "^1.6.7",
     "express": "^4.18.2",
-    "mqtt": "^5.3.4",
-    "pg": "8.11.3"
+    "mqtt": "^5.3.4"
   }
 }
