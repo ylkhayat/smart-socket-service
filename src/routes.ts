@@ -31,7 +31,7 @@ router.post(
       : null;
 
     let instanceData: Partial<InstanceData> = {
-      consumedEnergyToday: 0.000,
+      consumedEnergyToday: 0.0,
       amperage: [],
       samplingInterval,
       startTimestamp: new Date(),
@@ -100,11 +100,16 @@ router.put(
     if (!instanceId)
       return res.status(422).json({ message: "instanceId is required" });
     try {
-      const { success, message, triggeredPowerOff, isLastEmergencyStop } =
-        stopInstance(instanceId);
+      const {
+        success,
+        statusCode,
+        message,
+        triggeredPowerOff,
+        isLastEmergencyStop,
+      } = stopInstance(instanceId);
 
       if (!success) {
-        return res.status(409).json({
+        return res.status(statusCode).json({
           message,
           instanceId,
         });
@@ -162,7 +167,6 @@ router.get(
   "/instance",
   async (req: Request<any, any, any, GetInstanceParams>, res: Response) => {
     const { instanceId: id } = req.query;
-
     console.log("Instance Id", id);
     if (!id) return res.status(422).json({ message: "instanceId is required" });
     try {
@@ -245,13 +249,13 @@ router.put(
       setTimeout(function () {
         if (callbackUrl) {
           fetch(callbackUrl, {
-            method: 'PUT',
+            method: "PUT",
             headers: {
-              'Content-Type': 'application/json'
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
               waiting: false,
-            })
+            }),
           });
         }
       }, duration * 1000);

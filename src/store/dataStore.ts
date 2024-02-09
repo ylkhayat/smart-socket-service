@@ -129,12 +129,20 @@ const prettyPrintServerData = () => {
             ...acc,
             [key]:
                 typeof serverData[key as ServerDataKeys] === "object"
-                    ? JSON.stringify(serverData[key as ServerDataKeys])
+                    ? serverData[key as ServerDataKeys]?.toString()
                     : serverData[key as ServerDataKeys],
         }),
         {},
     );
-    console.table(prettyServerData);
+
+    const length = serverData.powerStatus.length;
+    const prettierServerData = {
+        ...prettyServerData,
+        powerStatus: `[..${length > 0 ? length - 1 : 0} items..,${JSON.stringify(
+            serverData.powerStatus[length - 1],
+        )}]`,
+    };
+    console.table(prettierServerData);
 };
 setInterval(() => {
     console.table(instancesData);

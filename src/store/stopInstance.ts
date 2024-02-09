@@ -2,6 +2,7 @@ import { instancesData, serverData } from "./dataStore";
 
 export type StopReport = {
     success: boolean;
+    statusCode: number;
     isLastEmergencyStop?: boolean;
     triggeredPowerOff?: boolean;
     message: string;
@@ -18,6 +19,7 @@ export const stopInstance = (id: string): StopReport => {
         // Instance already exists, return a failure message
         return {
             success: false,
+            statusCode: 404,
             message: `Instance with ID ${id} does not exist.`,
         };
     }
@@ -25,12 +27,14 @@ export const stopInstance = (id: string): StopReport => {
     if (instancesData[id].stopTimestamp) {
         return {
             success: false,
+            statusCode: 409,
             message: `Instance with ID ${id} is already stopped.`,
         };
     }
     if (serverData.powerStatus[serverData.powerStatus.length - 1].powerOff) {
         return {
             success: false,
+            statusCode: 409,
             message: `Socket is already stopped.`,
         };
     }
@@ -39,6 +43,7 @@ export const stopInstance = (id: string): StopReport => {
     instancesData[id].stopTimestamp = new Date();
 
     let report: StopReport = {
+        statusCode: 200,
         success: true,
         message: `Instance with ID ${id} stopped successfully.`,
         triggeredPowerOff: false,
