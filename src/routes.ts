@@ -2,7 +2,6 @@ import { Router, Request, Response } from "express";
 import { retrieveEnergyToday } from "./handlers/power-stats";
 import { startSocket, stopSocket } from "./handlers/socket";
 import { waitForEventEmitterData } from "./eventEmitter";
-import axios from "axios";
 import {
   InstanceData,
   InstanceDataInput,
@@ -244,8 +243,14 @@ router.get(
       const callbackUrl = req.get("CPEE-CALLBACK");
       setTimeout(function () {
         if (callbackUrl) {
-          axios.put(callbackUrl, {
-            waiting: false,
+          fetch(callbackUrl, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              waiting: false,
+            })
           });
         }
       }, duration * 1000);
