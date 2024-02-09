@@ -13,6 +13,7 @@ type OperationReport = StopReport & {
 export const deleteInstance = (id: string): OperationReport => {
     const {
         success,
+        statusCode,
         isLastEmergencyStop,
         triggeredPowerOff,
         message,
@@ -23,6 +24,7 @@ export const deleteInstance = (id: string): OperationReport => {
         delete instancesData[id];
         return {
             success,
+            statusCode,
             message: `Instance with ID ${id} deleted successfully.`,
             isLastEmergencyStop,
             triggeredPowerOff,
@@ -33,5 +35,6 @@ export const deleteInstance = (id: string): OperationReport => {
         success,
         message,
         instanceId,
+        statusCode,
     };
 };
