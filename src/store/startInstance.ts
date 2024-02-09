@@ -37,9 +37,7 @@ export const startInstance = (data: InstanceData): OperationReport => {
     // Proceed with initializing a new instance
     instancesData[id] = data;
     serverData.runningInstances.push(id);
-    // Reset energyTodayPerSecond for simplicity; adjust as needed based on your application logic
-    serverData.energyTodayPerSecond = 0;
-    // Handle emergency stop logic
+    serverData.energyToday = 0;
     if (data.emergencyStopTimeout) {
         serverData.runningInstancesWithEmergencyStop.push(id);
         const emergencyStopDate = new Date(Date.now() + data.emergencyStopTimeout);
@@ -55,7 +53,6 @@ export const startInstance = (data: InstanceData): OperationReport => {
 
     const lastPowerStatus =
         serverData.powerStatus[serverData.powerStatus.length - 1];
-    // Update global timestamps based on the instance data
     if (lastPowerStatus.powerOn === null) {
         serverData.powerStatus[serverData.powerStatus.length - 1] = {
             powerOn: {

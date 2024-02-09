@@ -13,7 +13,6 @@ export const subscribeToPowerStatistics = () => {
   });
 };
 
-export const retrieveEnergyToday = (initialCall = false) => {
-  // Pass 0 to reset the energy for today
-  MQTTClient.publish(CMND_ENERGY_TOPIC, initialCall === true ? "0" : "");
+export const retrieveEnergyToday = () => {
+  MQTTClient.publish(CMND_ENERGY_TOPIC, "");
 };

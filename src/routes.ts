@@ -7,6 +7,7 @@ import {
   InstanceData,
   InstanceDataInput,
   instancesData,
+  serverData,
 } from "./store/dataStore";
 import { stopInstance } from "./store/stopInstance";
 import { startInstance } from "./store/startInstance";
@@ -256,24 +257,27 @@ router.get(
   },
 );
 
-router.get("/instance/power-statistics", async (_, res: Response) => {
+type GetInstancePowerStatisticsParams = {
+  instanceId: string;
+};
+
+router.get("/instance/power-statistics", async (req: Request<any, any, any, GetInstancePowerStatisticsParams>, res: Response) => {
+  const { instanceId: id } = req.query;
+  if (!id) return res.status(422).json({ message: "instanceId is required" });
+  const instance = instancesData[id];
+  if (!instance) {
+    return res.status(404).json({
+      message: `Instance with ID ${id} does not exist`,
+    });
+  }
+  const { initialEnergyToday } = instance;
+  const energyToday = initialEnergyToday - serverData.energyToday;
+
   try {
-    retrieveEnergyToday();
-    const [energyTodayData] = await waitForEventEmitterData([
-      "energyTodayData",
-    ]);
-    if (startEnergyToday === null) {
-      return res.status(200).json({
-        energyConsumptionSinceStart: energyTodayData,
-      });
-    } else {
-      return res.status(200).json({
-        energyConsumptionSinceStart:
-          startEnergyToday > 0
-            ? energyTodayData - startEnergyToday
-            : energyTodayData,
-      });
-    }
+    return res.status(200).json({
+      energyToday,
+    });
+
   } catch (error) {
     return res
       .status(500)

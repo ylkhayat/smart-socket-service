@@ -87,7 +87,7 @@ type ServerData = {
     /**
      * Energy consumption per second
      */
-    energyTodayPerSecond: number;
+    energyToday: number;
     runningInstancesWithEmergencyStop: string[];
     /**
      * The furthest time in the future when an emergency stop will be triggered
@@ -102,7 +102,7 @@ type ServerData = {
 
 export let serverData: ServerData = {
     runningInstances: [],
-    energyTodayPerSecond: 0,
+    energyToday: 0,
     runningInstancesWithEmergencyStop: [],
     latestEmergencyStopTimeout: null,
     latestEmergencyStopTimeoutInstanceId: null,
