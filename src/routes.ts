@@ -162,6 +162,8 @@ router.get(
   "/instance",
   async (req: Request<any, any, any, GetInstanceParams>, res: Response) => {
     const { instanceId: id } = req.query;
+
+    console.log("Instance Id", id);
     if (!id) return res.status(422).json({ message: "instanceId is required" });
     try {
       const instance = instancesData[id];
@@ -229,7 +231,7 @@ type WaitParams = {
   duration: string;
 };
 
-router.get(
+router.put(
   "/wait",
   async (req: Request<any, any, any, WaitParams>, res: Response) => {
     const duration = parseInt(req.query.duration, 10);
