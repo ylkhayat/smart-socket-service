@@ -99,7 +99,7 @@ type ServerData = {
      */
     latestEmergencyStopTimeoutInstanceId: string | null;
     powerStatus: PowerStatus[];
-    instancesOrderingPowerOff: string[];
+    instancesTriggeringPowerOff: string[];
 };
 
 export let serverData: ServerData = {
@@ -108,7 +108,7 @@ export let serverData: ServerData = {
     runningInstancesWithEmergencyStop: [],
     latestEmergencyStopTimeout: null,
     latestEmergencyStopTimeoutInstanceId: null,
-    instancesOrderingPowerOff: [],
+    instancesTriggeringPowerOff: [],
     powerStatus: [
         {
             powerOn: null,

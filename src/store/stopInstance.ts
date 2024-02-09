@@ -35,7 +35,7 @@ export const stopInstance = (id: string): StopReport => {
         };
     }
 
-    serverData.instancesOrderingPowerOff.push(id);
+    serverData.instancesTriggeringPowerOff.push(id);
     instancesData[id].stopTimestamp = new Date();
 
     let report: StopReport = {

@@ -27,7 +27,7 @@ export const emergencyStop = (id?: string): OperationReport => {
         };
     } else {
         serverData.powerStatus[serverData.powerStatus.length - 1].powerOff = {
-            instanceId: id || "unknown",
+            instanceId: id || "<unknown>",
             timestamp: new Date(),
         };
     }

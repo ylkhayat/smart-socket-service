@@ -5,6 +5,8 @@ import {
   subscribeToPowerStatistics,
 } from "../handlers/power-stats";
 import mqttEventEmitter from "../eventEmitter";
+import { serverData } from "../store/dataStore";
+import { manualStop } from "../store/manualStop";
 
 const PROTOCOL = "mqtt";
 //TUM HOST 131.159.6.111
@@ -22,6 +24,9 @@ export const MQTTClient = mqtt.connect(CONNECT_URL, {
   username: "DVES_USER",
   password: "****",
 });
+
+let previousInstancesTriggeringPowerOff: string[] =
+  serverData.instancesTriggeringPowerOff;
 
 MQTTClient.on("connect", (ev) => {
   console.log("MQTT connected!");
@@ -42,7 +47,22 @@ MQTTClient.on("connect", (ev) => {
       }
       case POWER_TOPIC_RESULT: {
         const data = message.toString();
+
+        if (
+          data === "OFF" &&
+          serverData.instancesTriggeringPowerOff.length ===
+          previousInstancesTriggeringPowerOff.length
+        ) {
+          const { stoppedInstances } = manualStop();
+          console.log(
+            `Manual stop occurred, stopped instances ${stoppedInstances?.toString()}`,
+          );
+        }
+        previousInstancesTriggeringPowerOff =
+          serverData.instancesTriggeringPowerOff;
+
         mqttEventEmitter.emit("powerData", data);
+
         break;
       }
       default:
