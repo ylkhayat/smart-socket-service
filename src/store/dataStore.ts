@@ -129,7 +129,7 @@ const prettyPrintServerData = () => {
             ...acc,
             [key]:
                 typeof serverData[key as ServerDataKeys] === "object"
-                    ? JSON.stringify(serverData[key as ServerDataKeys], null, 2)
+                    ? JSON.stringify(serverData[key as ServerDataKeys])
                     : serverData[key as ServerDataKeys],
         }),
         {},
