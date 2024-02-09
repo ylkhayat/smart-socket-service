@@ -23,7 +23,7 @@ export const manualStop = (): OperationReport => {
         if (instancesData[instanceId].stopTimestamp) continue;
         instancesData[instanceId].stopTimestamp = new Date();
         instancesData[instanceId].powerOffTimestamp = new Date();
-        instancesData[instanceId].isEmergencyStopped = true;
+        instancesData[instanceId].isManuallyStopped = true;
         report.stoppedInstances?.push(instanceId);
     }
 

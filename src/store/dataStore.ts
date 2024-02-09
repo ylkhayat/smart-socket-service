@@ -51,6 +51,10 @@ export type InstanceData = {
      * Flag indicating if the instance was stopped due to an emergency stop
      */
     isEmergencyStopped: boolean;
+    /**
+     * Flag indicating if the instance was stopped manually
+     */
+    isManuallyStopped: boolean;
 };
 
 type InstancesData = {
@@ -102,6 +106,8 @@ type ServerData = {
     instancesTriggeringPowerOff: string[];
 };
 
+type ServerDataKeys = keyof ServerData;
+
 export let serverData: ServerData = {
     runningInstances: [],
     energyToday: 0,
@@ -117,8 +123,21 @@ export let serverData: ServerData = {
     ],
 };
 
+const prettyPrintServerData = () => {
+    const prettyServerData = Object.keys(serverData).reduce(
+        (acc, key) => ({
+            ...acc,
+            [key]:
+                typeof serverData[key as ServerDataKeys] === "object"
+                    ? JSON.stringify(serverData[key as ServerDataKeys], null, 2)
+                    : serverData[key as ServerDataKeys],
+        }),
+        {},
+    );
+    console.table(prettyServerData);
+};
 setInterval(() => {
     console.table(instancesData);
-    console.table(serverData);
+    prettyPrintServerData();
     console.log("-".repeat(100));
 }, 10000);

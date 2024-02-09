@@ -6,6 +6,8 @@ let workerRunning = false;
 let watcherSetup = false;
 let intervalId: NodeJS.Timeout | null = null;
 
+const FETCH_POWER_TIMEOUT_MS = 2000;
+const CHECK_CHANGES_TIMEOUT_MS = 2000;
 const powerStatisticWorker = async () => {
     workerRunning = true;
     if (intervalId) {
@@ -28,7 +30,7 @@ const powerStatisticWorker = async () => {
                 consumedEnergyToday.toFixed(3),
             );
         });
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, FETCH_POWER_TIMEOUT_MS));
     }
     console.log("Worker has stopped.");
     workerRunning = false;
@@ -47,7 +49,10 @@ const checkForChangesAndStartWorker = () => {
 
 const startInterval = () => {
     if (!intervalId) {
-        intervalId = setInterval(checkForChangesAndStartWorker, 1000);
+        intervalId = setInterval(
+            checkForChangesAndStartWorker,
+            CHECK_CHANGES_TIMEOUT_MS,
+        );
     }
 };
 

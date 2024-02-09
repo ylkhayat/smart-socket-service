@@ -39,7 +39,6 @@ export const startInstance = (data: InstanceData): OperationReport => {
         instanceId: id,
     };
 
-
     serverData.runningInstances.push(id);
     serverData.energyToday = 0;
     if (augmentedData.emergencyStopTimeout) {
@@ -63,28 +62,27 @@ export const startInstance = (data: InstanceData): OperationReport => {
         serverData.powerStatus[serverData.powerStatus.length - 1] = {
             powerOn: {
                 instanceId: id,
-                timestamp: augmentedData.powerOnTimestamp,
+                timestamp: new Date(),
             },
             powerOff: null,
         };
         report.triggeredPowerOn = true;
         augmentedData.powerOnTimestamp = new Date();
-    } else {
-        augmentedData.powerOnTimestamp = lastPowerStatus.powerOn.timestamp;
-    }
-
-    if (
+    } else if (
         lastPowerStatus.powerOff !== null &&
-        lastPowerStatus.powerOff.timestamp < augmentedData.powerOnTimestamp
+        lastPowerStatus.powerOff.timestamp < augmentedData.startTimestamp
     ) {
         serverData.powerStatus.push({
             powerOn: {
                 instanceId: id,
-                timestamp: augmentedData.powerOnTimestamp,
+                timestamp: new Date(),
             },
             powerOff: null,
         });
+        augmentedData.powerOnTimestamp = new Date();
         report.triggeredPowerOn = true;
+    } else {
+        augmentedData.powerOnTimestamp = lastPowerStatus.powerOn.timestamp;
     }
 
     instancesData[id] = augmentedData;

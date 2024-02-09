@@ -15,4 +15,5 @@ export const subscribeToPowerStatistics = () => {
 
 export const retrieveEnergyToday = () => {
   MQTTClient.publish(CMND_ENERGY_TOPIC, "");
+  console.log('Published to topic: ', CMND_ENERGY_TOPIC);
 };
