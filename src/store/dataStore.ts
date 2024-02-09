@@ -80,8 +80,6 @@ type PowerStatus = {
     } | null;
 };
 
-
-
 type ServerData = {
     /**
      * List of running instances
@@ -122,4 +120,5 @@ export let serverData: ServerData = {
 setInterval(() => {
     console.table(instancesData);
     console.table(serverData);
+    console.log("-".repeat(100));
 }, 10000);
