@@ -7,6 +7,7 @@ type OperationReport = {
     triggeredPowerOn?: boolean;
     message: string;
     instanceId?: string;
+    instance?: InstanceData;
 };
 
 /**
@@ -16,7 +17,10 @@ type OperationReport = {
  */
 export const startInstance = (data: InstanceData): OperationReport => {
     const id = shortid.generate();
-
+    const augmentedData = {
+        ...data,
+        id,
+    };
     if (instancesData[id]) {
         // Instance already exists, return a failure message
         return {
@@ -35,12 +39,14 @@ export const startInstance = (data: InstanceData): OperationReport => {
     };
 
     // Proceed with initializing a new instance
-    instancesData[id] = data;
+    instancesData[id] = augmentedData;
     serverData.runningInstances.push(id);
     serverData.energyToday = 0;
-    if (data.emergencyStopTimeout) {
+    if (augmentedData.emergencyStopTimeout) {
         serverData.runningInstancesWithEmergencyStop.push(id);
-        const emergencyStopDate = new Date(Date.now() + data.emergencyStopTimeout);
+        const emergencyStopDate = new Date(
+            Date.now() + augmentedData.emergencyStopTimeout,
+        );
         if (
             !serverData.latestEmergencyStopTimeout ||
             serverData.latestEmergencyStopTimeout < emergencyStopDate
@@ -57,7 +63,7 @@ export const startInstance = (data: InstanceData): OperationReport => {
         serverData.powerStatus[serverData.powerStatus.length - 1] = {
             powerOn: {
                 instanceId: id,
-                timestamp: data.powerOnTimestamp,
+                timestamp: augmentedData.powerOnTimestamp,
             },
             powerOff: null,
         };
@@ -66,17 +72,18 @@ export const startInstance = (data: InstanceData): OperationReport => {
 
     if (
         lastPowerStatus.powerOff !== null &&
-        lastPowerStatus.powerOff.timestamp < data.powerOnTimestamp
+        lastPowerStatus.powerOff.timestamp < augmentedData.powerOnTimestamp
     ) {
         serverData.powerStatus.push({
             powerOn: {
                 instanceId: id,
-                timestamp: data.powerOnTimestamp,
+                timestamp: augmentedData.powerOnTimestamp,
             },
             powerOff: null,
         });
         report.triggeredPowerOn = true;
     }
+    report.instance = data;
 
     return report;
 };

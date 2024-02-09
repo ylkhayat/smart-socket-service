@@ -13,6 +13,7 @@ import { stopInstance } from "./store/stopInstance";
 import { startInstance } from "./store/startInstance";
 import { emergencyStop } from "./store/emergyStop";
 import { deleteInstance } from "./store/deleteInstance";
+import { setupPowerStatisticWatcher } from "./store/powerMonitorWorker";
 
 const router = Router();
 
@@ -31,7 +32,7 @@ router.post(
       : null;
 
     let instanceData: Partial<InstanceData> = {
-      consumedEnergyToday: 0,
+      consumedEnergyToday: "0.000",
       amperage: [],
       samplingInterval,
       startTimestamp: new Date(),
@@ -65,6 +66,7 @@ router.post(
         triggeredPowerOn,
         success,
         message,
+        instance,
       } = startInstance(instanceData as InstanceData);
 
       if (!success) {
@@ -73,12 +75,12 @@ router.post(
           instanceId,
         });
       }
-
+      setupPowerStatisticWatcher();
       return res.status(200).json({
         instanceId,
         isLastEmergencyStop,
         triggeredPowerOn,
-        lastEnergyConsumptionToday: energyTodayData,
+        instance,
         energyConsumptionSinceStart: 0,
       });
     } catch (error) {
@@ -98,6 +100,7 @@ router.put(
   "/instance",
   async (req: Request<any, any, any, PutInstanceParams>, res: Response) => {
     const instanceId = req.query.instanceId;
+
     if (!instanceId)
       return res.status(422).json({ message: "instanceId is required" });
     try {
@@ -261,28 +264,32 @@ type GetInstancePowerStatisticsParams = {
   instanceId: string;
 };
 
-router.get("/instance/power-statistics", async (req: Request<any, any, any, GetInstancePowerStatisticsParams>, res: Response) => {
-  const { instanceId: id } = req.query;
-  if (!id) return res.status(422).json({ message: "instanceId is required" });
-  const instance = instancesData[id];
-  if (!instance) {
-    return res.status(404).json({
-      message: `Instance with ID ${id} does not exist`,
-    });
-  }
-  const { initialEnergyToday } = instance;
-  const energyToday = initialEnergyToday - serverData.energyToday;
+router.get(
+  "/instance/power-statistics",
+  async (
+    req: Request<any, any, any, GetInstancePowerStatisticsParams>,
+    res: Response,
+  ) => {
+    const { instanceId: id } = req.query;
+    if (!id) return res.status(422).json({ message: "instanceId is required" });
+    const instance = instancesData[id];
+    if (!instance) {
+      return res.status(404).json({
+        message: `Instance with ID ${id} does not exist`,
+      });
+    }
+    const { consumedEnergyToday } = instance;
 
-  try {
-    return res.status(200).json({
-      energyToday,
-    });
-
-  } catch (error) {
-    return res
-      .status(500)
-      .send({ message: "An error occurred while fetching power statistics" });
-  }
-});
+    try {
+      return res.status(200).json({
+        energyToday: consumedEnergyToday,
+      });
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: "An error occurred while fetching power statistics" });
+    }
+  },
+);
 
 export default router;

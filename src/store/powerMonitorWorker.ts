@@ -1,24 +1,18 @@
 import { waitForEventEmitterData } from "../eventEmitter";
 import { retrieveEnergyToday } from "../handlers/power-stats";
-import { serverData } from "./dataStore";
+import { serverData, instancesData } from "./dataStore";
 
+let workerRunning = false;
+let watcherSetup = false;
+let intervalId: NodeJS.Timeout | null = null;
 
-// // Simulates adding or removing instances to/from serverData.runningInstances
-// function toggleRunningState(addInstance: boolean) {
-//     if (addInstance) {
-//         // Simulate adding an instance
-//         const newInstanceId = `instance-${Date.now()}`;
-//         serverData.runningInstances.push(newInstanceId);
-//         console.log(`Added instance ${newInstanceId}, runningInstances: ${serverData.runningInstances}`);
-//     } else {
-//         // Simulate removing an instance
-//         serverData.runningInstances.pop();
-//         console.log(`Removed an instance, runningInstances: ${serverData.runningInstances}`);
-//     }
-// }
-
-// Worker function that performs tasks
 const powerStatisticWorker = async () => {
+    workerRunning = true;
+    if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+    }
+
     while (serverData.runningInstances.length > 0) {
         console.log("Worker is working...");
         retrieveEnergyToday();
@@ -26,29 +20,48 @@ const powerStatisticWorker = async () => {
             "energyTodayData",
         ]);
         serverData.energyToday = energyTodayData;
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        serverData.runningInstances.forEach((instanceId) => {
+            const instanceData = instancesData[instanceId];
+            const consumedEnergyToday = energyTodayData - instanceData.initialEnergyToday;
+            instanceData.consumedEnergyToday = consumedEnergyToday.toFixed(3);
+        });
+        await new Promise((resolve) => setTimeout(resolve, 1000));
     }
     console.log("Worker has stopped.");
-}
+    workerRunning = false;
+    startInterval();
+};
 
+const checkForChangesAndStartWorker = () => {
+    console.log("Checking for changes in runningInstances from the watcher...");
+    const currentState = serverData.runningInstances;
+    let prevState = [...currentState]; // This needs to be managed to reflect the latest state before each check
 
-
-function setupPowerStatisticWatcher() {
-    let prevState = [...serverData.runningInstances];
-    setInterval(() => {
-        // Check for changes in the runningInstances array
-        const currentState = serverData.runningInstances;
-        if (currentState.length !== prevState.length || !currentState.every((value, index) => value === prevState[index])) {
-            console.log(`Detected change in runningInstances: ${currentState}`);
-            prevState = [...currentState];
-            if (currentState.length > 0 && !workerRunning) {
-                workerRunning = true;
-                powerStatisticWorker().then(() => { workerRunning = false; });
-            }
+    if (
+        currentState.length !== prevState.length ||
+        !currentState.every((value, index) => value === prevState[index])
+    ) {
+        console.log(`Detected change in runningInstances: ${currentState}`);
+        prevState = [...currentState];
+        if (currentState.length > 0 && !workerRunning) {
+            powerStatisticWorker().then(() => {
+                // Worker has finished; the interval will be restarted inside the worker
+            });
         }
-    }, 2000);
-}
+    }
+};
 
-let workerRunning = false;
+const startInterval = () => {
+    if (!intervalId) {
+        intervalId = setInterval(checkForChangesAndStartWorker, 1000);
+    }
+};
 
-setupPowerStatisticWatcher();
+export const setupPowerStatisticWatcher = () => {
+    if (watcherSetup) {
+        return;
+    }
+    watcherSetup = true;
+    console.log("Setting up power statistic watcher...");
+    startInterval();
+};

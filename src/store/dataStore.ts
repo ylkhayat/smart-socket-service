@@ -5,6 +5,7 @@ export type InstanceDataInput = {
     >]?: string;
 };
 export type InstanceData = {
+    id: string;
     /**
      * The energy consumption queried from the device at the start of the instance
      */
@@ -13,7 +14,7 @@ export type InstanceData = {
      * Cummulative energy consumption for the instance per interval
      * @example consumedEnergyToday = initialEnergyToday - API.newEnergyToday
      */
-    consumedEnergyToday: number;
+    consumedEnergyToday: string;
     /**
      * Amperage report per interval
      */
@@ -113,3 +114,8 @@ export let serverData: ServerData = {
         },
     ],
 };
+
+setInterval(() => {
+    console.table(instancesData);
+    console.table(serverData);
+}, 10000);
