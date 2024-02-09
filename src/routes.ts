@@ -56,8 +56,6 @@ router.post(
           message: "The socket turned off unexpectedly",
         });
       }
-
-      instanceData.powerOnTimestamp = new Date();
       instanceData.initialEnergyToday = energyTodayData;
 
       const {

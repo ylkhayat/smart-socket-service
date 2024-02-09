@@ -1,6 +1,4 @@
 import EventEmitter from "events";
-import { serverData } from "./store/dataStore";
-import { manualStop } from "./store/manualStop";
 class Emitter extends EventEmitter { }
 const mqttEventEmitter = new Emitter();
 export default mqttEventEmitter;

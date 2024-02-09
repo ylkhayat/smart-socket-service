@@ -21,6 +21,7 @@ export const startInstance = (data: InstanceData): OperationReport => {
         ...data,
         id,
     };
+
     if (instancesData[id]) {
         // Instance already exists, return a failure message
         return {
@@ -38,8 +39,7 @@ export const startInstance = (data: InstanceData): OperationReport => {
         instanceId: id,
     };
 
-    // Proceed with initializing a new instance
-    instancesData[id] = augmentedData;
+
     serverData.runningInstances.push(id);
     serverData.energyToday = 0;
     if (augmentedData.emergencyStopTimeout) {
@@ -68,6 +68,9 @@ export const startInstance = (data: InstanceData): OperationReport => {
             powerOff: null,
         };
         report.triggeredPowerOn = true;
+        augmentedData.powerOnTimestamp = new Date();
+    } else {
+        augmentedData.powerOnTimestamp = lastPowerStatus.powerOn.timestamp;
     }
 
     if (
@@ -83,7 +86,8 @@ export const startInstance = (data: InstanceData): OperationReport => {
         });
         report.triggeredPowerOn = true;
     }
-    report.instance = data;
 
+    instancesData[id] = augmentedData;
+    report.instance = augmentedData;
     return report;
 };

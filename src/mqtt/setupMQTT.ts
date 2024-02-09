@@ -26,7 +26,7 @@ export const MQTTClient = mqtt.connect(CONNECT_URL, {
 });
 
 let previousInstancesTriggeringPowerOff: string[] =
-  serverData.instancesTriggeringPowerOff;
+  [];
 
 MQTTClient.on("connect", (ev) => {
   console.log("MQTT connected!");
@@ -47,7 +47,6 @@ MQTTClient.on("connect", (ev) => {
       }
       case POWER_TOPIC_RESULT: {
         const data = message.toString();
-
         if (
           data === "OFF" &&
           serverData.instancesTriggeringPowerOff.length ===
