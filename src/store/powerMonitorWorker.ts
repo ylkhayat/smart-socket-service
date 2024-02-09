@@ -23,7 +23,7 @@ const powerStatisticWorker = async () => {
         serverData.runningInstances.forEach((instanceId) => {
             const instanceData = instancesData[instanceId];
             const consumedEnergyToday = energyTodayData - instanceData.initialEnergyToday;
-            instanceData.consumedEnergyToday = consumedEnergyToday.toFixed(3);
+            instanceData.consumedEnergyToday = parseFloat(consumedEnergyToday.toFixed(3));
         });
         await new Promise((resolve) => setTimeout(resolve, 1000));
     }

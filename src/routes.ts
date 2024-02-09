@@ -32,7 +32,7 @@ router.post(
       : null;
 
     let instanceData: Partial<InstanceData> = {
-      consumedEnergyToday: "0.000",
+      consumedEnergyToday: 0.000,
       amperage: [],
       samplingInterval,
       startTimestamp: new Date(),

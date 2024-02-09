@@ -14,7 +14,7 @@ export type InstanceData = {
      * Cummulative energy consumption for the instance per interval
      * @example consumedEnergyToday = initialEnergyToday - API.newEnergyToday
      */
-    consumedEnergyToday: string;
+    consumedEnergyToday: number;
     /**
      * Amperage report per interval
      */
@@ -80,6 +80,8 @@ type PowerStatus = {
     } | null;
 };
 
+
+
 type ServerData = {
     /**
      * List of running instances
@@ -99,6 +101,7 @@ type ServerData = {
      */
     latestEmergencyStopTimeoutInstanceId: string | null;
     powerStatus: PowerStatus[];
+    instancesOrderingPowerOff: string[];
 };
 
 export let serverData: ServerData = {
@@ -107,6 +110,7 @@ export let serverData: ServerData = {
     runningInstancesWithEmergencyStop: [],
     latestEmergencyStopTimeout: null,
     latestEmergencyStopTimeoutInstanceId: null,
+    instancesOrderingPowerOff: [],
     powerStatus: [
         {
             powerOn: null,
