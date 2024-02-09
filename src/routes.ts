@@ -78,7 +78,6 @@ router.post(
         isLastEmergencyStop,
         triggeredPowerOn,
         instance,
-        energyConsumptionSinceStart: 0,
       });
     } catch (error) {
       return res.status(500).json({
@@ -259,38 +258,6 @@ router.get(
       });
     } catch (error) {
       return res.status(500).json({ message: "An error occurred" });
-    }
-  },
-);
-
-type GetInstancePowerStatisticsParams = {
-  instanceId: string;
-};
-
-router.get(
-  "/instance/power-statistics",
-  async (
-    req: Request<any, any, any, GetInstancePowerStatisticsParams>,
-    res: Response,
-  ) => {
-    const { instanceId: id } = req.query;
-    if (!id) return res.status(422).json({ message: "instanceId is required" });
-    const instance = instancesData[id];
-    if (!instance) {
-      return res.status(404).json({
-        message: `Instance with ID ${id} does not exist`,
-      });
-    }
-    const { consumedEnergyToday } = instance;
-
-    try {
-      return res.status(200).json({
-        energyToday: consumedEnergyToday,
-      });
-    } catch (error) {
-      return res
-        .status(500)
-        .send({ message: "An error occurred while fetching power statistics" });
     }
   },
 );
