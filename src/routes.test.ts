@@ -3,7 +3,7 @@ import express from "express";
 import routes from "./routes";
 
 import { waitForEventEmitterData } from "./events/eventEmitter";
-import { instancesData, resetAllData, serverData } from "./store";
+import { InstanceData, instancesData, resetAllData, serverData } from "./store";
 import shortid from "shortid";
 
 jest.mock("shortid");
@@ -174,5 +174,38 @@ describe("DELETE /api/instance", () => {
         );
         const response = await request(app).delete(`/api/instance/${id}`);
         expect(response.status).toBe(500);
+    });
+});
+
+describe('GET /download', () => {
+    beforeAll(() => {
+        resetAllData();
+        instancesData["instance1"] = {
+            initialEnergyToday: 0,
+            consumedEnergyToday: 0,
+            id: "instance1",
+        } as InstanceData;
+        instancesData["instance2"] = {
+            initialEnergyToday: 5,
+            consumedEnergyToday: 0,
+            id: "instance2",
+        } as InstanceData;
+    });
+    it('should return a JSON file with the current server state', async () => {
+
+        const res = await request(app).get('/api/download');
+
+        expect(res.status).toBe(200);
+        expect(res.headers['content-type']).toContain('application/json');
+        expect(res.headers['content-disposition']).toEqual('attachment; filename=server_state.json');
+
+        const expectedData = {
+            instances: instancesData,
+            server: serverData
+        };
+
+        expect(JSON.parse(res.text)).toEqual(
+            expect.objectContaining(expectedData)
+        );
     });
 });

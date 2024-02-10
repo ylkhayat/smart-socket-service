@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { startSocket, stopSocket } from "./handlers/socket/control";
 import { waitForEventEmitterData } from "./events/eventEmitter";
-import { InstanceData, InstanceDataInput, instancesData } from "./store";
+import { InstanceData, InstanceDataInput, instancesData, serverData } from "./store";
 import { stopInstance } from "./handlers/instance/stopInstance";
 import { startInstance } from "./handlers/instance/startInstance";
 import { emergencyStop } from "./handlers/socket/emergencyStop";
@@ -281,5 +281,18 @@ router.get(
     }
   },
 );
+
+
+router.get('/download', (_: Request, res: Response) => {
+  const data = {
+    instances: instancesData,
+    server: serverData
+  };
+
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Disposition', 'attachment; filename=server_state.json');
+  res.status(200).send(JSON.stringify(data, null, 4));
+});
+
 
 export default router;
