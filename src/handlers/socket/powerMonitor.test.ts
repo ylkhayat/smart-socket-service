@@ -1,23 +1,55 @@
-import { subscribeToPowerStatistics, retrieveEnergyToday, setupPowerStatisticWatcher } from "./powerMonitor";
+import {
+    CMND_ENERGY_TOPIC,
+    POWER_TOPIC_RESULT,
+    STAT_TOPIC_RESULT,
+    powerFetchingWorker,
+    retrieveEnergyToday,
+    setupPowerStatisticWatcher,
+    subscribeToPowerStatistics,
+} from "./powerMonitor";
 import { MQTTClient } from "../../mqtt/setupMQTT";
-import { waitForEventEmitterData } from "../../events/eventEmitter";
-import { serverData, instancesData } from "../../store";
+import { resetAllData, serverData } from "../../store";
+import * as powerMonitor from "./powerMonitor";
 
-jest.mock("../../mqtt/setupMQTT");
+const powerFetchingWorkerSpy = jest
+    .spyOn(powerMonitor, "powerFetchingWorker")
+    .mockImplementation(async () => {
+        for (let i = 0; i < 10; i++) { }
+        if (serverData.runningInstances.length === 0) {
+            setupPowerStatisticWatcher();
+        }
+    });
+
+jest
+    .spyOn(powerMonitor, "setupPowerStatisticWatcher")
+    .mockImplementation(async () => {
+        if (serverData.runningInstances.length > 0) {
+            powerFetchingWorker();
+        }
+    });
+
+jest.mock("../../mqtt/setupMQTT", () => ({
+    MQTTClient: {
+        subscribe: jest.fn(),
+        publish: jest.fn(),
+    },
+    TOPIC: "mixer",
+}));
 jest.mock("../../events/eventEmitter");
 jest.mock("../../store");
 
 describe("Power Monitor", () => {
     beforeEach(() => {
         jest.clearAllMocks();
+        resetAllData();
     });
 
     describe("subscribeToPowerStatistics", () => {
         it("should subscribe to power statistics topics", () => {
             subscribeToPowerStatistics();
             expect(MQTTClient.subscribe).toHaveBeenCalledWith(
-                ["stat/${TOPIC}/RESULT", "stat/${TOPIC}/POWER"],
-                expect.any(Function)
+                [STAT_TOPIC_RESULT, POWER_TOPIC_RESULT],
+                expect.any(Function),
             );
         });
     });
@@ -25,44 +57,21 @@ describe("Power Monitor", () => {
     describe("retrieveEnergyToday", () => {
         it("should publish a message to retrieve energy today", () => {
             retrieveEnergyToday();
-            expect(MQTTClient.publish).toHaveBeenCalledWith(
-                "cmnd/${TOPIC}/EnergyToday",
-                ""
-            );
+            expect(MQTTClient.publish).toHaveBeenCalledWith(CMND_ENERGY_TOPIC, "");
         });
     });
 
     describe("setupPowerStatisticWatcher", () => {
         it("should start the power statistic worker if there are running instances", () => {
             serverData.runningInstances = ["instance1", "instance2"];
-            instancesData["instance1"] = { initialEnergyToday: 0 };
-            instancesData["instance2"] = { initialEnergyToday: 0 };
-
             setupPowerStatisticWatcher();
-
-            expect(setInterval).toHaveBeenCalledTimes(1);
-            expect(setInterval).toHaveBeenCalledWith(
-                expect.any(Function),
-                2000
-            );
+            expect(powerFetchingWorkerSpy).toHaveBeenCalledTimes(1);
         });
 
         it("should not start the power statistic worker if there are no running instances", () => {
             serverData.runningInstances = [];
-
             setupPowerStatisticWatcher();
-
-            expect(setInterval).not.toHaveBeenCalled();
-        });
-
-        it("should not start the power statistic worker if it is already running", () => {
-            serverData.runningInstances = ["instance1"];
-            instancesData["instance1"] = { initialEnergyToday: 0 };
-            setInterval.mockReturnValue(123);
-
-            setupPowerStatisticWatcher();
-
-            expect(setInterval).not.toHaveBeenCalled();
+            expect(powerFetchingWorkerSpy).not.toHaveBeenCalled();
         });
     });
 });

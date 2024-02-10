@@ -9,7 +9,7 @@ let intervalId: NodeJS.Timeout | null = null;
 const FETCH_POWER_TIMEOUT_MS = 2000;
 const CHECK_CHANGES_TIMEOUT_MS = 2000;
 
-const CMND_ENERGY_TOPIC = `cmnd/${TOPIC}/EnergyToday`;
+export const CMND_ENERGY_TOPIC = `cmnd/${TOPIC}/EnergyToday`;
 export const STAT_TOPIC_RESULT = `stat/${TOPIC}/RESULT`;
 export const POWER_TOPIC_RESULT = `stat/${TOPIC}/POWER`;
 
@@ -26,19 +26,22 @@ export const retrieveEnergyToday = () => {
     MQTTClient.publish(CMND_ENERGY_TOPIC, "");
 };
 
-const powerStatisticWorker = async () => {
+const waitForFetchTimeout = () =>
+    new Promise((resolve) => setTimeout(resolve, FETCH_POWER_TIMEOUT_MS));
+
+export const powerFetchingWorker = async () => {
     workerRunning = true;
     if (intervalId) {
         clearInterval(intervalId);
         intervalId = null;
     }
-
-    console.log("Worker is working...");
     while (serverData.runningInstances.length > 0) {
         retrieveEnergyToday();
-        const [energyTodayData] = await waitForEventEmitterData([
-            "energyTodayData",
-        ]);
+        const energyData = await waitForEventEmitterData(["energyTodayData"]);
+        if (energyData === undefined) {
+            return;
+        }
+        const energyTodayData = energyData[0];
         serverData.energyToday = energyTodayData;
         serverData.runningInstances.forEach((instanceId) => {
             const instanceData = instancesData[instanceId];
@@ -48,37 +51,28 @@ const powerStatisticWorker = async () => {
                 consumedEnergyToday.toFixed(3),
             );
         });
-        await new Promise((resolve) => setTimeout(resolve, FETCH_POWER_TIMEOUT_MS));
+        await waitForFetchTimeout();
     }
-    console.log("Worker has stopped.");
+    if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+    }
     workerRunning = false;
-    startInterval();
+    setupPowerStatisticWatcher();
 };
 
 const checkForChangesAndStartWorker = () => {
-    console.log(
-        "Checking for new instances to run the power statistic worker...",
-    );
     const currentState = serverData.runningInstances;
     if (currentState.length > 0 && !workerRunning) {
-        powerStatisticWorker();
+        powerFetchingWorker();
     }
 };
 
-const startInterval = () => {
+export const setupPowerStatisticWatcher = () => {
     if (!intervalId) {
         intervalId = setInterval(
             checkForChangesAndStartWorker,
             CHECK_CHANGES_TIMEOUT_MS,
         );
     }
-};
-
-export const setupPowerStatisticWatcher = () => {
-    if (watcherSetup) {
-        return;
-    }
-    watcherSetup = true;
-    console.log("Setting up power statistic watcher...");
-    startInterval();
 };
