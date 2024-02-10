@@ -3,7 +3,6 @@ import { InstanceData, instancesData, serverData } from "../../store";
 export type StopReport = {
     success: boolean;
     statusCode: number;
-    isLastEmergencyStop?: boolean;
     triggeredPowerOff?: boolean;
     message: string;
     instanceId?: string;
@@ -48,9 +47,23 @@ export const stopInstance = (id: string): StopReport => {
         success: true,
         message: `Instance with ID ${id} stopped successfully.`,
         triggeredPowerOff: false,
-        isLastEmergencyStop: false,
         instanceId: id,
     };
+
+    /**
+     * If the instance running is the last one, trigger a power off.
+     */
+    if (
+        serverData.runningInstances.length === 1 &&
+        serverData.runningInstances[0] === id
+    ) {
+        serverData.powerStatus[serverData.powerStatus.length - 1].powerOff = {
+            instanceId: id,
+            timestamp: new Date(),
+        };
+        report.triggeredPowerOff = true;
+        instancesData[id].powerOffTimestamp = new Date();
+    }
 
     serverData.runningInstances = serverData.runningInstances.filter(
         (instanceId) => instanceId !== id,
@@ -61,19 +74,6 @@ export const stopInstance = (id: string): StopReport => {
             serverData.runningInstancesWithEmergencyStop.filter(
                 (instanceId) => instanceId !== id,
             );
-    }
-
-    if (serverData.latestEmergencyStopTimeoutInstanceId === id) {
-        serverData.latestEmergencyStopTimeout = null;
-        serverData.latestEmergencyStopTimeoutInstanceId = null;
-
-        serverData.powerStatus[serverData.powerStatus.length - 1].powerOff = {
-            instanceId: id,
-            timestamp: new Date(),
-        };
-        report.isLastEmergencyStop = true;
-        report.triggeredPowerOff = true;
-        instancesData[id].powerOffTimestamp = new Date();
     }
 
     report.instance = instancesData[id];

@@ -59,8 +59,6 @@ router.post(
 
       const {
         instanceId,
-        isLastEmergencyStop,
-        triggeredPowerOn,
         success,
         message,
         instance,
@@ -74,8 +72,6 @@ router.post(
       }
       setupPowerStatisticWatcher();
       return res.status(200).json({
-        isLastEmergencyStop,
-        triggeredPowerOn,
         instance,
       });
     } catch (error) {
@@ -103,7 +99,6 @@ router.put(
         statusCode,
         message,
         triggeredPowerOff,
-        isLastEmergencyStop,
         instance,
       } = stopInstance(instanceId);
 
@@ -117,7 +112,6 @@ router.put(
       if (!triggeredPowerOff) {
         return res.status(200).json({
           instance,
-          isLastEmergencyStop,
           triggeredPowerOff,
         });
       }
@@ -131,7 +125,6 @@ router.put(
       if (powerData === "OFF")
         return res.status(200).json({
           instance,
-          isLastEmergencyStop,
           triggeredPowerOff,
         });
 
@@ -220,7 +213,6 @@ router.delete(
         statusCode,
         instanceId,
         instance,
-        isLastEmergencyStop,
         triggeredPowerOff,
       } = deleteInstance(id);
       if (!success) {
@@ -230,10 +222,12 @@ router.delete(
         });
       }
 
-      if (triggeredPowerOff) {
-        stopSocket();
+      if (!triggeredPowerOff) {
+        return res.status(200).json({
+          instance,
+        });
       }
-
+      stopSocket();
       const eventData = await waitForEventEmitterData(["powerData"]);
       if (eventData === undefined) {
         throw new Error("An error occurred while stopping the socket");
@@ -242,8 +236,6 @@ router.delete(
       if (powerData === "OFF")
         return res.status(200).json({
           instance,
-          isLastEmergencyStop,
-          triggeredPowerOff,
         });
     } catch (error) {
       return res.status(500).json({

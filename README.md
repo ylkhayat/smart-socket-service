@@ -32,11 +32,10 @@ This endpoint allows you to create a new instance.
 - 500 Internal Server Error: An error occurred while managing the socket or fetching the power consumption.
 - 200 OK: The instance was successfully created.
 
-  - | Parameter             | Type                              | Description                                                                  |
-    | --------------------- | --------------------------------- | ---------------------------------------------------------------------------- |
-    | `isLastEmergencyStop` | number                            | The interval used for sampling the amperage                                  |
-    | `triggeredPowerOn`    | boolean                           | Boolean if the creation of this instance triggered a power on for the socket |
-    | `instance`            | [`InstanceData`](src/store.ts#L7) | The instance that was newly created                                          |
+  - | Parameter          | Type                              | Description                                                                  |
+    | ------------------ | --------------------------------- | ---------------------------------------------------------------------------- |
+    | `triggeredPowerOn` | boolean                           | Boolean if the creation of this instance triggered a power on for the socket |
+    | `instance`         | [`InstanceData`](src/store.ts#L7) | The instance that was newly created                                          |
 
 ### `PUT /instance/:instanceId`
 
@@ -53,11 +52,10 @@ This endpoint allows you to stop an instance.
 - 500 Internal Server Error: An error occurred while stopping the instance.
 - 200 OK: The instance was successfully stopped. The response body contains the instance ID, whether the stop triggered a power off, and whether the stop was the last emergency stop.
 
-  - | Parameter             | Type                              | Description                                                            |
-    | --------------------- | --------------------------------- | ---------------------------------------------------------------------- |
-    | `isLastEmergencyStop` | boolean                           | Boolean to denote if this instance was the last of the emergency stops |
-    | `triggeredPowerOff`   | boolean                           | Boolean stopping of this instance triggered a power off for the socket |
-    | `instance`            | [`InstanceData`](src/store.ts#L7) | The instance that was newly created                                    |
+  - | Parameter           | Type                              | Description                                                            |
+    | ------------------- | --------------------------------- | ---------------------------------------------------------------------- |
+    | `triggeredPowerOff` | boolean                           | Boolean stopping of this instance triggered a power off for the socket |
+    | `instance`          | [`InstanceData`](src/store.ts#L7) | The instance that was newly created                                    |
 
 ### `DELETE /instance/:instanceId`
 

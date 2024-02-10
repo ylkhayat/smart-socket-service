@@ -3,8 +3,6 @@ import { InstanceData, instancesData, serverData } from "../../store";
 
 type OperationReport = {
     success: boolean;
-    isLastEmergencyStop?: boolean;
-    triggeredPowerOn?: boolean;
     message: string;
     instanceId?: string;
     instance?: InstanceData;
@@ -34,8 +32,6 @@ export const startInstance = (data: InstanceData): OperationReport => {
     let report: OperationReport = {
         success: true,
         message: `New instance with ID ${id} initialized successfully.`,
-        triggeredPowerOn: false,
-        isLastEmergencyStop: false,
         instanceId: id,
     };
 
@@ -43,17 +39,6 @@ export const startInstance = (data: InstanceData): OperationReport => {
     serverData.energyToday = 0;
     if (augmentedData.emergencyStopTimeout) {
         serverData.runningInstancesWithEmergencyStop.push(id);
-        const emergencyStopDate = new Date(
-            Date.now() + augmentedData.emergencyStopTimeout,
-        );
-        if (
-            !serverData.latestEmergencyStopTimeout ||
-            serverData.latestEmergencyStopTimeout < emergencyStopDate
-        ) {
-            serverData.latestEmergencyStopTimeout = emergencyStopDate;
-            serverData.latestEmergencyStopTimeoutInstanceId = id;
-            report.isLastEmergencyStop = true;
-        }
     }
 
     const lastPowerStatus =
@@ -66,7 +51,6 @@ export const startInstance = (data: InstanceData): OperationReport => {
             },
             powerOff: null,
         };
-        report.triggeredPowerOn = true;
         augmentedData.powerOnTimestamp = new Date();
     } else if (
         lastPowerStatus.powerOff !== null &&
@@ -80,7 +64,6 @@ export const startInstance = (data: InstanceData): OperationReport => {
             powerOff: null,
         });
         augmentedData.powerOnTimestamp = new Date();
-        report.triggeredPowerOn = true;
     } else {
         augmentedData.powerOnTimestamp = lastPowerStatus.powerOn.timestamp;
     }

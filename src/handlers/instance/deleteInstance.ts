@@ -14,7 +14,6 @@ export const deleteInstance = (id: string): OperationReport => {
     const {
         success,
         statusCode,
-        isLastEmergencyStop,
         triggeredPowerOff,
         message,
         instanceId,
@@ -26,7 +25,6 @@ export const deleteInstance = (id: string): OperationReport => {
             success,
             statusCode,
             message: `Instance with ID ${id} deleted successfully.`,
-            isLastEmergencyStop,
             triggeredPowerOff,
             instance: instanceData,
         };

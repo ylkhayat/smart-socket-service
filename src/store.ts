@@ -94,14 +94,6 @@ type ServerData = {
      */
     energyToday: number;
     runningInstancesWithEmergencyStop: string[];
-    /**
-     * The furthest time in the future when an emergency stop will be triggered
-     */
-    latestEmergencyStopTimeout: Date | null;
-    /**
-     * The instance ID for the latest emergency stop timeout
-     */
-    latestEmergencyStopTimeoutInstanceId: string | null;
     powerStatus: PowerStatus[];
     instancesTriggeringPowerOff: string[];
 };
@@ -112,8 +104,6 @@ export let serverData: ServerData = {
     runningInstances: [],
     energyToday: 0,
     runningInstancesWithEmergencyStop: [],
-    latestEmergencyStopTimeout: null,
-    latestEmergencyStopTimeoutInstanceId: null,
     instancesTriggeringPowerOff: [],
     powerStatus: [
         {
@@ -129,8 +119,6 @@ export const resetAllData = () => {
         runningInstances: [],
         energyToday: 0,
         runningInstancesWithEmergencyStop: [],
-        latestEmergencyStopTimeout: null,
-        latestEmergencyStopTimeoutInstanceId: null,
         instancesTriggeringPowerOff: [],
         powerStatus: [
             {

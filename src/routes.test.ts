@@ -36,8 +36,6 @@ describe("Routes", () => {
             expect(response.status).toBe(200);
             expect(response.body).toHaveProperty("instance");
             expect(response.body.instance).toHaveProperty("id");
-            expect(response.body).toHaveProperty("isLastEmergencyStop");
-            expect(response.body).toHaveProperty("triggeredPowerOn");
         });
 
         it("should return an error if the socket turned off unexpectedly", async () => {
@@ -88,9 +86,7 @@ describe("Routes", () => {
             );
             const response = await request(app).put("/api/instance/123");
             expect(response.status).toBe(200);
-            expect(response.body).toHaveProperty("instanceId");
-            expect(response.body).toHaveProperty("isLastEmergencyStop");
-            expect(response.body).toHaveProperty("triggeredPowerOff");
+            expect(response.body).toHaveProperty("instance");
         });
 
         it("should return an error if instanceId is not provided", async () => {
