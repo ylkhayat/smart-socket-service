@@ -1,4 +1,4 @@
-import { MQTTClient, TOPIC } from "../mqtt/setupMQTT";
+import { MQTTClient, TOPIC } from "../../mqtt/setupMQTT";
 
 const POWER_TOPIC = `cmnd/${TOPIC}/Power`;
 

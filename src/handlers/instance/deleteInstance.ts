@@ -1,4 +1,4 @@
-import { InstanceData, instancesData, serverData } from "./dataStore";
+import { InstanceData, instancesData } from "../../store";
 import { StopReport, stopInstance } from "./stopInstance";
 
 type OperationReport = StopReport & {

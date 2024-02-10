@@ -1,4 +1,4 @@
-import { instancesData, serverData } from "./dataStore";
+import { instancesData, serverData } from "../../store";
 
 type OperationReport = {
     success: boolean;

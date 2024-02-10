@@ -1,12 +1,13 @@
 import mqtt from "mqtt";
-import {
-  POWER_TOPIC_RESULT,
-  STAT_TOPIC_RESULT,
-  subscribeToPowerStatistics,
-} from "../handlers/power-stats";
+
 import mqttEventEmitter from "../eventEmitter";
-import { serverData } from "../store/dataStore";
-import { manualStop } from "../store/manualStop";
+import { serverData } from "../store";
+import { manualStop } from "../handlers/socket/manualStop";
+import {
+  subscribeToPowerStatistics,
+  STAT_TOPIC_RESULT,
+  POWER_TOPIC_RESULT,
+} from "../handlers/socket/powerMonitor";
 
 const PROTOCOL = "mqtt";
 //TUM HOST 131.159.6.111
@@ -25,8 +26,7 @@ export const MQTTClient = mqtt.connect(CONNECT_URL, {
   password: "****",
 });
 
-let previousInstancesTriggeringPowerOff: string[] =
-  [];
+let previousInstancesTriggeringPowerOff: string[] = [];
 
 MQTTClient.on("connect", (ev) => {
   console.log("MQTT connected!");

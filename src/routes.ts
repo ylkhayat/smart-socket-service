@@ -1,17 +1,16 @@
 import { Router, Request, Response } from "express";
-import { retrieveEnergyToday } from "./handlers/power-stats";
-import { startSocket, stopSocket } from "./handlers/socket";
+import { startSocket, stopSocket } from "./handlers/socket/control";
 import { waitForEventEmitterData } from "./eventEmitter";
 import {
   InstanceData,
   InstanceDataInput,
   instancesData,
-} from "./store/dataStore";
-import { stopInstance } from "./store/stopInstance";
-import { startInstance } from "./store/startInstance";
-import { emergencyStop } from "./store/emergyStop";
-import { deleteInstance } from "./store/deleteInstance";
-import { setupPowerStatisticWatcher } from "./store/powerMonitorWorker";
+} from "./store";
+import { stopInstance } from "./handlers/instance/stopInstance";
+import { startInstance } from "./handlers/instance/startInstance";
+import { emergencyStop } from "./handlers/socket/emergencyStop";
+import { deleteInstance } from "./handlers/instance/deleteInstance";
+import { retrieveEnergyToday, setupPowerStatisticWatcher } from "./handlers/socket/powerMonitor";
 
 const router = Router();
 

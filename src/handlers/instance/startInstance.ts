@@ -1,5 +1,5 @@
 import shortid from "shortid";
-import { InstanceData, instancesData, serverData } from "./dataStore";
+import { InstanceData, instancesData, serverData } from "../../store";
 
 type OperationReport = {
     success: boolean;
