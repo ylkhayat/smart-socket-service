@@ -1,9 +1,9 @@
 import { waitForEventEmitterData } from "../../events/eventEmitter";
 import { serverData, instancesData } from "../../store";
-import { MQTTClient, TOPIC } from "../../mqtt/setupMQTT";
+import { MQTTClient } from "../../mqtt/setupMQTT";
+import { TOPIC } from "../../mqtt/topic";
 
 let workerRunning = false;
-let watcherSetup = false;
 let intervalId: NodeJS.Timeout | null = null;
 
 const FETCH_POWER_TIMEOUT_MS = 2000;

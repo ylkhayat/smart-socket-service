@@ -16,7 +16,6 @@ const PORT = "1883";
 const CLIENT_ID = "DVES_%06X";
 
 const CONNECT_URL = `${PROTOCOL}://${HOST}:${PORT}`;
-export const TOPIC = "mixer";
 
 export const MQTTClient = mqtt.connect(CONNECT_URL, {
   clientId: CLIENT_ID,

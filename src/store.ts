@@ -164,10 +164,10 @@ const prettyPrintServerData = () => {
     console.table(prettierServerData);
 };
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV !== "test") {
     setInterval(() => {
         console.table(instancesData);
         prettyPrintServerData();
-        console.log("-".repeat(100));
+        console.log("-".repeat(150));
     }, 10000);
 }
