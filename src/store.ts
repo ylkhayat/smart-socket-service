@@ -123,7 +123,6 @@ export let serverData: ServerData = {
     ],
 };
 
-
 export const resetAllData = () => {
     instancesData = {};
     serverData = {
@@ -140,7 +139,7 @@ export const resetAllData = () => {
             },
         ],
     };
-}
+};
 
 const prettyPrintServerData = () => {
     const prettyServerData = Object.keys(serverData).reduce(
@@ -148,18 +147,23 @@ const prettyPrintServerData = () => {
             ...acc,
             [key]:
                 typeof serverData[key as ServerDataKeys] === "object"
-                    ? serverData[key as ServerDataKeys]?.toString()
+                    ? Array.isArray(serverData[key as ServerDataKeys])
+                        ? serverData[key as ServerDataKeys]?.toString()
+                        : JSON.stringify(serverData[key as ServerDataKeys])
                     : serverData[key as ServerDataKeys],
         }),
         {},
     );
 
-    const length = serverData.powerStatus.length;
+    const prettyPowerStatus = serverData.powerStatus
+        .map(
+            ({ powerOn, powerOff }) =>
+                `ON: ${powerOn?.instanceId}, OFF: ${powerOff?.instanceId}`,
+        )
+        .toString();
     const prettierServerData = {
         ...prettyServerData,
-        powerStatus: `[..${length > 0 ? length - 1 : 0} items..,${JSON.stringify(
-            serverData.powerStatus[length - 1],
-        )}]`,
+        powerStatus: prettyPowerStatus,
     };
     console.table(prettierServerData);
 };

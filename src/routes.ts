@@ -177,8 +177,7 @@ type GetInstanceParams = {
 router.get(
   "/instance/:instanceId",
   async (req: Request<any, any, any, GetInstanceParams>, res: Response) => {
-    console.log(req.params, req.query, req.body);
-    const { instanceId: id } = req.params;
+    const { instanceId: id } = req.query;
     if (!id) return res.status(422).json({ message: "instanceId is required" });
     try {
       const instance = instancesData[id];
