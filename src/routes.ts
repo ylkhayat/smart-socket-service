@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { startSocket, stopSocket } from "./handlers/socket/control";
-import { waitForEventEmitterData } from "./eventEmitter";
+import { waitForEventEmitterData } from "./events/eventEmitter";
 import {
   InstanceData,
   InstanceDataInput,
@@ -43,11 +43,14 @@ router.post(
     try {
       startSocket();
       retrieveEnergyToday();
-      const [energyTodayData, powerData] = await waitForEventEmitterData([
+      const eventData = await waitForEventEmitterData([
         "energyTodayData",
         "powerData",
       ]);
-
+      if (eventData === undefined) {
+        throw new Error("An error occurred while stopping the socket");
+      }
+      const [energyTodayData, powerData] = eventData;
       if (powerData === "OFF") {
         return res.status(409).json({
           message: "The socket turned off unexpectedly",
@@ -72,7 +75,6 @@ router.post(
       }
       setupPowerStatisticWatcher();
       return res.status(200).json({
-        instanceId,
         isLastEmergencyStop,
         triggeredPowerOn,
         instance,
@@ -91,10 +93,9 @@ type PutInstanceParams = {
 };
 
 router.put(
-  "/instance",
+  "/instance/:instanceId?",
   async (req: Request<any, any, any, PutInstanceParams>, res: Response) => {
-    const instanceId = req.query.instanceId;
-
+    const { instanceId } = req.params;
     if (!instanceId)
       return res.status(422).json({ message: "instanceId is required" });
     try {
@@ -117,7 +118,12 @@ router.put(
         stopSocket();
       }
 
-      const [powerData] = await waitForEventEmitterData(["powerData"]);
+      const eventData = await waitForEventEmitterData(["powerData"]);
+      if (eventData === undefined) {
+        throw new Error("An error occurred while stopping the socket");
+      }
+
+      const [powerData] = eventData;
       if (powerData === "OFF")
         return res.status(200).send({
           instanceId,
@@ -132,9 +138,10 @@ router.put(
   },
 );
 
-router.put("/emergency-stop", async (_: Request, res: Response) => {
+router.put("/emergency-stop/:instanceId?", async (req: Request, res: Response) => {
+  const { instanceId: id } = req.params;
   try {
-    const { message, success, instanceId, stoppedInstances } = emergencyStop();
+    const { message, success, instanceId, stoppedInstances } = emergencyStop(id);
     if (!success) {
       return res.status(409).json({
         message,
@@ -143,8 +150,11 @@ router.put("/emergency-stop", async (_: Request, res: Response) => {
     }
 
     stopSocket();
-    const [powerData] = await waitForEventEmitterData(["powerData"]);
-
+    const eventData = await waitForEventEmitterData(["powerData"]);
+    if (eventData === undefined) {
+      throw new Error("An error occurred while stopping the socket");
+    }
+    const [powerData] = eventData;
     if (powerData === "OFF")
       return res.status(200).send({
         instanceId,
@@ -162,9 +172,9 @@ type GetInstanceParams = {
 };
 
 router.get(
-  "/instance",
+  "/instance/:instanceId",
   async (req: Request<any, any, any, GetInstanceParams>, res: Response) => {
-    const { instanceId: id } = req.query;
+    const { instanceId: id } = req.params;
     if (!id) return res.status(422).json({ message: "instanceId is required" });
     try {
       const instance = instancesData[id];
@@ -189,21 +199,22 @@ type DeleteInstanceParams = {
 };
 
 router.delete(
-  "/instance",
+  "/instance/:instanceId?",
   async (req: Request<any, any, any, DeleteInstanceParams>, res: Response) => {
-    const { instanceId: id } = req.query;
+    const { instanceId: id } = req.params;
     if (!id) return res.status(422).json({ message: "instanceId is required" });
     try {
       const {
         message,
         success,
+        statusCode,
         instanceId,
         instance,
         isLastEmergencyStop,
         triggeredPowerOff,
       } = deleteInstance(id);
       if (!success) {
-        return res.status(409).json({
+        return res.status(statusCode).json({
           message,
           instanceId,
         });
@@ -213,7 +224,11 @@ router.delete(
         stopSocket();
       }
 
-      const [powerData] = await waitForEventEmitterData(["powerData"]);
+      const eventData = await waitForEventEmitterData(["powerData"]);
+      if (eventData === undefined) {
+        throw new Error("An error occurred while stopping the socket");
+      }
+      const [powerData] = eventData;
       if (powerData === "OFF")
         return res.status(200).send({
           instance,

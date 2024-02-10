@@ -1,4 +1,4 @@
-import { waitForEventEmitterData } from "../../eventEmitter";
+import { waitForEventEmitterData } from "../../events/eventEmitter";
 import { serverData, instancesData } from "../../store";
 import { MQTTClient, TOPIC } from "../../mqtt/setupMQTT";
 

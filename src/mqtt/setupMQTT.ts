@@ -1,6 +1,6 @@
 import mqtt from "mqtt";
 
-import mqttEventEmitter from "../eventEmitter";
+import mqttEventEmitter from "../events/eventEmitter";
 import { serverData } from "../store";
 import { manualStop } from "../handlers/socket/manualStop";
 import {

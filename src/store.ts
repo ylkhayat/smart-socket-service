@@ -123,6 +123,25 @@ export let serverData: ServerData = {
     ],
 };
 
+
+export const resetAllData = () => {
+    instancesData = {};
+    serverData = {
+        runningInstances: [],
+        energyToday: 0,
+        runningInstancesWithEmergencyStop: [],
+        latestEmergencyStopTimeout: null,
+        latestEmergencyStopTimeoutInstanceId: null,
+        instancesTriggeringPowerOff: [],
+        powerStatus: [
+            {
+                powerOn: null,
+                powerOff: null,
+            },
+        ],
+    };
+}
+
 const prettyPrintServerData = () => {
     const prettyServerData = Object.keys(serverData).reduce(
         (acc, key) => ({
@@ -144,8 +163,11 @@ const prettyPrintServerData = () => {
     };
     console.table(prettierServerData);
 };
-setInterval(() => {
-    console.table(instancesData);
-    prettyPrintServerData();
-    console.log("-".repeat(100));
-}, 10000);
+
+if (process.env.NODE_ENV === "development") {
+    setInterval(() => {
+        console.table(instancesData);
+        prettyPrintServerData();
+        console.log("-".repeat(100));
+    }, 10000);
+}
