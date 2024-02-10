@@ -4,7 +4,7 @@ Welcome to the Smart Socket Service, your one-stop shop for controlling and moni
 
 ## 🌐 API Endpoints
 
-### `GET /instance/:instanceId`
+### `GET /api/instance/:instanceId`
 
 This endpoint allows you to check on a specific instance.
 
@@ -16,7 +16,7 @@ This endpoint allows you to check on a specific instance.
 
 You'll get a JSON object with all the details of the instance. The instance object is defined in the [store.ts](src/store.ts) file.
 
-### `POST /instance`
+### `POST /api/instance`
 
 This endpoint allows you to create a new instance.
 
@@ -37,7 +37,7 @@ This endpoint allows you to create a new instance.
     | `triggeredPowerOn` | boolean                           | Boolean if the creation of this instance triggered a power on for the socket |
     | `instance`         | [`InstanceData`](src/store.ts#L7) | The instance that was newly created                                          |
 
-### `PUT /instance/:instanceId`
+### `PUT /api/instance/:instanceId`
 
 This endpoint allows you to stop an instance.
 
@@ -57,7 +57,7 @@ This endpoint allows you to stop an instance.
     | `triggeredPowerOff` | boolean                           | Boolean stopping of this instance triggered a power off for the socket |
     | `instance`          | [`InstanceData`](src/store.ts#L7) | The instance that was newly created                                    |
 
-### `DELETE /instance/:instanceId`
+### `DELETE /api/instance/:instanceId`
 
 This endpoint allows you to delete an instance.
 
@@ -69,7 +69,7 @@ This endpoint allows you to delete an instance.
 
 You'll get a JSON object confirming the deletion of the instance. The instance object is removed from the `instancesData` object in the [store.ts](src/store.ts) file.
 
-### `GET /wait`
+### `GET /api/wait`
 
 This endpoint allows you to wait for a specific duration.
 
@@ -81,7 +81,7 @@ This endpoint allows you to wait for a specific duration.
 
 You'll get a JSON object confirming that the wait has started.
 
-### `POST /emergency-stop/:instanceId`
+### `POST /api/emergency-stop/:instanceId`
 
 This endpoint allows you to perform an emergency stop on an instance.
 
@@ -92,6 +92,10 @@ This endpoint allows you to perform an emergency stop on an instance.
 #### Response
 
 You'll get a JSON object confirming the emergency stop. The `isEmergencyStopped` field of the instance object in the [store.ts](src/store.ts) file is set to `true`.
+
+### `GET /api/download`
+
+This endpoint allows you to download the server's state retrieving both the `serverData` under `server` and the `instancesData` under `instances`.
 
 ## 🎛️ Handlers
 
