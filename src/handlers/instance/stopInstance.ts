@@ -1,4 +1,4 @@
-import { instancesData, serverData } from "../../store";
+import { InstanceData, instancesData, serverData } from "../../store";
 
 export type StopReport = {
     success: boolean;
@@ -7,6 +7,7 @@ export type StopReport = {
     triggeredPowerOff?: boolean;
     message: string;
     instanceId?: string;
+    instance?: InstanceData;
 };
 
 /**
@@ -74,6 +75,8 @@ export const stopInstance = (id: string): StopReport => {
         report.triggeredPowerOff = true;
         instancesData[id].powerOffTimestamp = new Date();
     }
+
+    report.instance = instancesData[id];
 
     return report;
 };

@@ -104,6 +104,7 @@ router.put(
         message,
         triggeredPowerOff,
         isLastEmergencyStop,
+        instance,
       } = stopInstance(instanceId);
 
       if (!success) {
@@ -113,33 +114,30 @@ router.put(
         });
       }
 
-      console.log(
-        success,
-        statusCode,
-        message,
-        triggeredPowerOff,
-        isLastEmergencyStop,
-      );
-
-
-      if (triggeredPowerOff) {
-        stopSocket();
+      if (!triggeredPowerOff) {
+        return res.status(200).json({
+          instance,
+          isLastEmergencyStop,
+          triggeredPowerOff,
+        });
       }
 
+      stopSocket();
       const eventData = await waitForEventEmitterData(["powerData"]);
       if (eventData === undefined) {
         throw new Error("An error occurred while stopping the socket");
       }
-
       const [powerData] = eventData;
       if (powerData === "OFF")
-        return res.status(200).send({
-          instanceId,
+        return res.status(200).json({
+          instance,
           isLastEmergencyStop,
           triggeredPowerOff,
         });
+
+
     } catch (error) {
-      return res.status(500).send({
+      return res.status(500).json({
         message: "An error occurred while stopping the socket",
       });
     }
@@ -167,12 +165,12 @@ router.put(
       }
       const [powerData] = eventData;
       if (powerData === "OFF")
-        return res.status(200).send({
+        return res.status(200).json({
           instanceId,
           stoppedInstances,
         });
     } catch (error) {
-      return res.status(500).send({
+      return res.status(500).json({
         message: "An error occurred while stopping the socket",
       });
     }
@@ -242,13 +240,13 @@ router.delete(
       }
       const [powerData] = eventData;
       if (powerData === "OFF")
-        return res.status(200).send({
+        return res.status(200).json({
           instance,
           isLastEmergencyStop,
           triggeredPowerOff,
         });
     } catch (error) {
-      return res.status(500).send({
+      return res.status(500).json({
         message: "An error occurred while stopping the socket",
       });
     }

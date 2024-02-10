@@ -16,6 +16,49 @@ This endpoint allows you to check on a specific instance.
 
 You'll get a JSON object with all the details of the instance. The instance object is defined in the [store.ts](src/store.ts) file.
 
+### `POST /instance`
+
+This endpoint allows you to create a new instance.
+
+| Parameter              | Type   | Optional | Default | Description                                                        |
+| ---------------------- | ------ | -------- | ------- | ------------------------------------------------------------------ |
+| `samplingInterval`     | number | No       | 2000 ms | The interval used for sampling the amperage                        |
+| `emergencyStopTimeout` | number | No       | `null`  | The timeout used to stop the instance in case it becomes untracked |
+
+#### Response
+
+- 409 Conflict: The instance could not be created.
+- 422 Unprocessable Entity: The `instanceId` parameter was not provided.
+- 500 Internal Server Error: An error occurred while managing the socket or fetching the power consumption.
+- 200 OK: The instance was successfully created.
+
+  - | Parameter             | Type                              | Description                                                                  |
+    | --------------------- | --------------------------------- | ---------------------------------------------------------------------------- |
+    | `isLastEmergencyStop` | number                            | The interval used for sampling the amperage                                  |
+    | `triggeredPowerOn`    | boolean                           | Boolean if the creation of this instance triggered a power on for the socket |
+    | `instance`            | [`InstanceData`](src/store.ts#L7) | The instance that was newly created                                          |
+
+### `PUT /instance/:instanceId`
+
+This endpoint allows you to stop an instance.
+
+| Parameter    | Type   | Optional | Description                              |
+| ------------ | ------ | -------- | ---------------------------------------- |
+| `instanceId` | string | No       | The ID of the instance you want to stop. |
+
+#### Response
+
+- 422 Unprocessable Entity: The `instanceId` parameter was not provided.
+- 409 Conflict: The instance could not be stopped.
+- 500 Internal Server Error: An error occurred while stopping the instance.
+- 200 OK: The instance was successfully stopped. The response body contains the instance ID, whether the stop triggered a power off, and whether the stop was the last emergency stop.
+
+  - | Parameter             | Type                              | Description                                                            |
+    | --------------------- | --------------------------------- | ---------------------------------------------------------------------- |
+    | `isLastEmergencyStop` | boolean                           | Boolean to denote if this instance was the last of the emergency stops |
+    | `triggeredPowerOff`   | boolean                           | Boolean stopping of this instance triggered a power off for the socket |
+    | `instance`            | [`InstanceData`](src/store.ts#L7) | The instance that was newly created                                    |
+
 ### `DELETE /instance/:instanceId`
 
 This endpoint allows you to delete an instance.
