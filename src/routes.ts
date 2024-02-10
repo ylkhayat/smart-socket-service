@@ -113,6 +113,15 @@ router.put(
         });
       }
 
+      console.log(
+        success,
+        statusCode,
+        message,
+        triggeredPowerOff,
+        isLastEmergencyStop,
+      );
+
+
       if (triggeredPowerOff) {
         stopSocket();
       }

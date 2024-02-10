@@ -29,6 +29,26 @@ export const retrieveEnergyToday = () => {
 const waitForFetchTimeout = () =>
     new Promise((resolve) => setTimeout(resolve, FETCH_POWER_TIMEOUT_MS));
 
+
+export const powerFetch = async () => {
+    retrieveEnergyToday();
+    const energyData = await waitForEventEmitterData(["energyTodayData"]);
+    if (energyData === undefined) {
+        return;
+    }
+    const energyTodayData = energyData[0];
+    serverData.energyToday = energyTodayData;
+    serverData.runningInstances.forEach((instanceId) => {
+        const instanceData = instancesData[instanceId];
+        const consumedEnergyToday =
+            energyTodayData - instanceData.initialEnergyToday;
+        instancesData[instanceId].consumedEnergyToday = parseFloat(
+            consumedEnergyToday.toFixed(3),
+        );
+    });
+
+}
+
 export const powerFetchingWorker = async () => {
     workerRunning = true;
     if (intervalId) {
@@ -36,21 +56,7 @@ export const powerFetchingWorker = async () => {
         intervalId = null;
     }
     while (serverData.runningInstances.length > 0) {
-        retrieveEnergyToday();
-        const energyData = await waitForEventEmitterData(["energyTodayData"]);
-        if (energyData === undefined) {
-            return;
-        }
-        const energyTodayData = energyData[0];
-        serverData.energyToday = energyTodayData;
-        serverData.runningInstances.forEach((instanceId) => {
-            const instanceData = instancesData[instanceId];
-            const consumedEnergyToday =
-                energyTodayData - instanceData.initialEnergyToday;
-            instanceData.consumedEnergyToday = parseFloat(
-                consumedEnergyToday.toFixed(3),
-            );
-        });
+        await powerFetch();
         await waitForFetchTimeout();
     }
     if (intervalId) {
