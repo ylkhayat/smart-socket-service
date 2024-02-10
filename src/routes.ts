@@ -6,7 +6,6 @@ import {
   InstanceData,
   InstanceDataInput,
   instancesData,
-  serverData,
 } from "./store/dataStore";
 import { stopInstance } from "./store/stopInstance";
 import { startInstance } from "./store/startInstance";
@@ -167,7 +166,6 @@ router.get(
   "/instance",
   async (req: Request<any, any, any, GetInstanceParams>, res: Response) => {
     const { instanceId: id } = req.query;
-    console.log("Instance Id", id);
     if (!id) return res.status(422).json({ message: "instanceId is required" });
     try {
       const instance = instancesData[id];
@@ -231,13 +229,13 @@ router.delete(
   },
 );
 
-type WaitParams = {
+type GetWaitParams = {
   duration: string;
 };
 
-router.put(
+router.get(
   "/wait",
-  async (req: Request<any, any, any, WaitParams>, res: Response) => {
+  async (req: Request<any, any, any, GetWaitParams>, res: Response) => {
     const duration = parseInt(req.query.duration, 10);
 
     if (isNaN(duration)) {
@@ -246,7 +244,7 @@ router.put(
 
     try {
       const callbackUrl = req.get("CPEE-CALLBACK");
-      setTimeout(function () {
+      setTimeout(() => {
         if (callbackUrl) {
           fetch(callbackUrl, {
             method: "PUT",
