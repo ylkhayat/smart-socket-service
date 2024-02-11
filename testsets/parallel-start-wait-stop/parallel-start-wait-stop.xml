@@ -24,7 +24,7 @@
                 <label/>
                 <arguments>
                   <behavior>wait_running</behavior>
-                  <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/lehre-version/testsets/start-wait-stop.xml</url>
+                  <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/lehre-version/testsets/start-wait-stop/start-wait-stop.xml</url>
                   <init>
                     <toggleDuration>30</toggleDuration>
                   </init>
@@ -124,7 +124,7 @@
                 <label/>
                 <arguments>
                   <behavior>wait_running</behavior>
-                  <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/lehre-version/testsets/start-wait-stop.xml</url>
+                  <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/lehre-version/testsets/start-wait-stop/start-wait-stop.xml</url>
                   <init>
                     <toggleDuration>15</toggleDuration>
                   </init>
