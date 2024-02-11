@@ -48,6 +48,7 @@ MQTTClient.on("connect", (ev) => {
         const data = message.toString();
         if (data === "OFF") {
           if (
+            serverData.runningInstances.length > 0 &&
             serverData.instancesTriggeringPowerOff.length > 0 &&
             serverData.instancesTriggeringPowerOff.length ===
             previousInstancesTriggeringPowerOff.length

@@ -17,15 +17,17 @@
   <description>
     <description xmlns="http://cpee.org/ns/description/1.0">
       <loop mode="pre_test" condition="true">
-        <parallel wait="-1" cancel="last">
+        <parallel wait="-1" cancel="first">
           <parallel_branch pass="" local="">
             <call id="a2" endpoint="subprocess">
               <parameters>
                 <label/>
                 <arguments>
                   <behavior>wait_running</behavior>
-                  <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/lehre-version/testset/mixer-control-scenario-a.xml</url>
-                  <init/>
+                  <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/lehre-version/testsets/start-wait-stop.xml</url>
+                  <init>
+                    <toggleDuration>30</toggleDuration>
+                  </init>
                   <endpoints/>
                   <attributes/>
                   <customization/>
@@ -122,8 +124,10 @@
                 <label/>
                 <arguments>
                   <behavior>wait_running</behavior>
-                  <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/lehre-version/testset/mixer-control-scenario-a.xml</url>
-                  <init/>
+                  <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/lehre-version/testsets/start-wait-stop.xml</url>
+                  <init>
+                    <toggleDuration>15</toggleDuration>
+                  </init>
                   <endpoints/>
                   <attributes/>
                   <customization/>

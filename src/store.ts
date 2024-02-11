@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import Table from "cli-table3";
 
 export type InstanceDataInput = {
     [K in keyof Pick<
@@ -59,6 +60,20 @@ export type InstanceData = {
      */
     isManuallyStopped: boolean;
 };
+const instanceDataKeys = [
+    "id",
+    "initialEnergyToday",
+    "consumedEnergyToday",
+    "amperage",
+    "samplingInterval",
+    "emergencyStopTimeout",
+    "startTimestamp",
+    "stopTimestamp",
+    "powerOnTimestamp",
+    "powerOffTimestamp",
+    "isEmergencyStopped",
+    "isManuallyStopped",
+] as const;
 
 type InstancesData = {
     [id: string]: InstanceData;
@@ -101,6 +116,12 @@ type ServerData = {
     instancesTriggeringPowerOff: string[];
 };
 
+const serverDataKeys = [
+    "energyToday",
+    "runningInstancesWithEmergencyStop",
+    "instancesTriggeringPowerOff",
+] as const;
+
 type ServerDataKeys = keyof ServerData;
 
 export let serverData: ServerData = {
@@ -139,36 +160,78 @@ if (process.env.NODE_ENV !== "test") {
     });
     console.log(`Setting up server log, in ${file}`);
     const prettyPrintServerData = () => {
-        logStream.write(`Time: ${new Date().toISOString()}\n`);
-        logStream.write("Instances:\n");
-        logStream.write(JSON.stringify(instancesData, null, 2));
+        if (Object.values(instancesData).length > 0) {
+            const instancesDataTable = new Table({
+                chars: {
+                    top: "═",
+                    "top-mid": "╤",
+                    "top-left": "╔",
+                    "top-right": "╗",
+                    bottom: "═",
+                    "bottom-mid": "╧",
+                    "bottom-left": "╚",
+                    "bottom-right": "╝",
+                    left: "║",
+                    "left-mid": "╟",
+                    mid: "─",
+                    "mid-mid": "┼",
+                    right: "║",
+                    "right-mid": "╢",
+                    middle: "│",
+                },
+                head: instanceDataKeys.map((key) => key),
+            });
 
-        const prettyServerData = Object.keys(serverData).reduce(
-            (acc, key) => ({
-                ...acc,
-                [key]:
-                    typeof serverData[key as ServerDataKeys] === "object"
-                        ? Array.isArray(serverData[key as ServerDataKeys])
-                            ? serverData[key as ServerDataKeys]?.toString()
-                            : JSON.stringify(serverData[key as ServerDataKeys])
-                        : serverData[key as ServerDataKeys],
-            }),
-            {},
+            Object.values(instancesData).forEach((instance) => {
+                instancesDataTable.push(
+                    instanceDataKeys.map((key) => JSON.stringify(instance[key])),
+                );
+            });
+
+            logStream.write(`Time: ${new Date().toISOString()}\n`);
+            logStream.write("Instances:\n");
+
+            logStream.write(instancesDataTable.toString());
+            logStream.write("\n");
+        }
+
+        const powerStatusTable = new Table({
+            head: ["On", "Off"],
+        });
+
+        serverData.powerStatus.forEach(({ powerOn, powerOff }) => {
+            powerStatusTable.push([powerOn?.instanceId, powerOff?.instanceId]);
+        });
+
+        const serverDataTable = new Table({
+            head: serverDataKeys.map((key) => key),
+        });
+        serverDataTable.push(
+            serverDataKeys.map((key) => JSON.stringify(serverData[key])),
         );
-        const prettyPowerStatus = serverData.powerStatus.map(
-            ({ powerOn, powerOff }) =>
-                `[ON: ${powerOn?.instanceId}, OFF: ${powerOff?.instanceId}]`,
-        );
-        const prettierServerData = {
-            ...prettyServerData,
-            powerStatus: prettyPowerStatus,
-        };
-        logStream.write("\nServer:\n");
-        logStream.write(JSON.stringify(prettierServerData, null, 2));
-        logStream.write("\n-".repeat(150) + "\n");
+
+        logStream.write("Server:\n");
+        logStream.write(serverDataTable.toString());
+        logStream.write("\n");
+
+        const runningInstancesTable = new Table({
+            head: ["id"],
+        });
+        runningInstancesTable.push(serverData.runningInstances);
+
+        logStream.write("Running Instances:\n");
+        logStream.write(runningInstancesTable.toString());
+        logStream.write("\n");
+
+        logStream.write("Power Status:\n");
+        logStream.write(powerStatusTable.toString());
+        logStream.write("\n");
+        logStream.write("\n");
+        logStream.write("\n");
+        logStream.write("\n");
     };
 
     setInterval(() => {
         prettyPrintServerData();
-    }, 20000);
+    }, 10000);
 }
