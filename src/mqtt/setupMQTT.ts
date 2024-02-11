@@ -12,10 +12,6 @@ import {
 } from "../handlers/socket/powerMonitor";
 import { manualStart } from "../handlers/socket/manualStart";
 
-
-let eventCounter = 0;
-
-
 const PROTOCOL = "mqtt";
 //TUM HOST 131.159.6.111
 const HOST = "broker.emqx.io";
@@ -31,7 +27,6 @@ export const MQTTClient = mqtt.connect(CONNECT_URL, {
   username: "DVES_USER",
   password: "****",
 });
-
 
 export type Status10Energy = {
   apparentPower: number;
@@ -94,7 +89,7 @@ MQTTClient.on("connect", (ev) => {
           return;
         }
 
-        mqttEventEmitter.emit("energyData", eventCounter++, {
+        mqttEventEmitter.emit("energyData", {
           today: ENERGY.Today,
           apparentPower: ENERGY.ApparentPower,
           current: ENERGY.Current,
@@ -108,11 +103,9 @@ MQTTClient.on("connect", (ev) => {
       case POWER_TOPIC_RESULT: {
         const data = message.toString();
 
-        mqttEventEmitter.emit("powerData", eventCounter++, data);
+        mqttEventEmitter.emit("powerData", data);
         if (data === "OFF") {
-          if (
-            serverData.instancesStopping.length === 0
-          ) {
+          if (serverData.instancesStopping.length === 0) {
             const { stoppedInstances } = manualStop();
             console.info(
               `Manual stop occurred, stopped instances [${stoppedInstances?.toString()}]!`,
@@ -124,7 +117,6 @@ MQTTClient.on("connect", (ev) => {
             console.info("Manual start occurred!");
           }
         }
-
 
         break;
       }

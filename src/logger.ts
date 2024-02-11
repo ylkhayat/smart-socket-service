@@ -16,7 +16,6 @@ const instanceDataEnergyKeys = [
 const serverDataKeys = [
     "connectedSocketName",
     "energyToday",
-    "initialEnergy",
     "instancesStarting",
     "instancesStopping",
     "runningInstancesWithEmergencyStop",
@@ -52,7 +51,7 @@ export const logServerData = () => {
             instanceDataEnergyKeys.map((key) => serverData.initialEnergy![key]),
         );
 
-        serverLogStream.write("Server Energy Data:\n");
+        serverLogStream.write("Server Initial Energy Data:\n");
         serverLogStream.write(serverEnergyDataTable.toString());
         serverLogStream.write("\n");
 
