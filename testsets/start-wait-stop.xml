@@ -1,6 +1,7 @@
 <testset xmlns="http://cpee.org/ns/properties/2.0">
   <executionhandler>ruby</executionhandler>
   <dataelements>
+    <toggleDuration>20</toggleDuration>
   </dataelements>
   <endpoints>
     <user>https-post://cpee.org/services/timeout-user.php</user>
@@ -17,8 +18,8 @@
   </endpoints>
   <attributes>
     <guarded>none</guarded>
-    <theme>extended</theme>
     <guarded_id/>
+    <theme>extended</theme>
     <modeltype>CPEE</modeltype>
     <info>mixer-control</info>
   </attributes>
@@ -88,7 +89,7 @@
                   <label>Wait for duration</label>
                   <method>:get</method>
                   <arguments>
-                    <duration>20</duration>
+                    <duration>!data.toggleDuration</duration>
                   </arguments>
                 </parameters>
                 <code>
@@ -119,10 +120,14 @@
                   </_notes>
                 </annotations>
                 <documentation>
-                  <input/>
-                  <output/>
+                  <input>
+                    <item label="toggleDuration">Duration in seconds between the start and the stop of the instance</item>
+                  </input>
+                  <output>
+                    <item label="instance">Instance that was running</item>
+                  </output>
                   <implementation>
-                    <description/>
+                    <description>Simple scenario of starting an instance (potentially powering on the mixer), waiting for some time and then stopping the instance (potentially powering off the mixer)</description>
                   </implementation>
                   <code>
                     <description/>

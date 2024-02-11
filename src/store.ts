@@ -1,3 +1,6 @@
+import fs from "fs";
+import path from "path";
+
 export type InstanceDataInput = {
     [K in keyof Pick<
         InstanceData,
@@ -129,39 +132,41 @@ export const resetAllData = () => {
     };
 };
 
+if (process.env.NODE_ENV !== "test") {
+    const file = path.join(__dirname, "..", "server.log");
+    const logStream = fs.createWriteStream(file, {
+        flags: "w",
+    });
+    console.log(`Setting up server log, in ${file}`);
+    const prettyPrintServerData = () => {
+        logStream.write(`Time: ${new Date().toISOString()}\n`);
+        logStream.write("Instances:\n");
+        logStream.write(JSON.stringify(instancesData, null, 2));
 
-export const prettyPrintServerData = () => {
-    console.clear();
-    console.log("Instances:");
-    console.table(instancesData);
-    const prettyServerData = Object.keys(serverData).reduce(
-        (acc, key) => ({
-            ...acc,
-            [key]:
-                typeof serverData[key as ServerDataKeys] === "object"
-                    ? Array.isArray(serverData[key as ServerDataKeys])
-                        ? serverData[key as ServerDataKeys]?.toString()
-                        : JSON.stringify(serverData[key as ServerDataKeys])
-                    : serverData[key as ServerDataKeys],
-        }),
-        {},
-    );
-
-    const prettyPowerStatus = serverData.powerStatus
-        .map(
+        const prettyServerData = Object.keys(serverData).reduce(
+            (acc, key) => ({
+                ...acc,
+                [key]:
+                    typeof serverData[key as ServerDataKeys] === "object"
+                        ? Array.isArray(serverData[key as ServerDataKeys])
+                            ? serverData[key as ServerDataKeys]?.toString()
+                            : JSON.stringify(serverData[key as ServerDataKeys])
+                        : serverData[key as ServerDataKeys],
+            }),
+            {},
+        );
+        const prettyPowerStatus = serverData.powerStatus.map(
             ({ powerOn, powerOff }) =>
                 `[ON: ${powerOn?.instanceId}, OFF: ${powerOff?.instanceId}]`,
-        ).join(" | ");
-    const prettierServerData = {
-        ...prettyServerData,
-        powerStatus: prettyPowerStatus,
+        );
+        const prettierServerData = {
+            ...prettyServerData,
+            powerStatus: prettyPowerStatus,
+        };
+        logStream.write("\nServer:\n");
+        logStream.write(JSON.stringify(prettierServerData, null, 2));
+        logStream.write("\n-".repeat(150) + "\n");
     };
-    console.log("Server:");
-    console.table(prettierServerData);
-};
-
-if (process.env.NODE_ENV !== "test") {
-
 
     setInterval(() => {
         prettyPrintServerData();
