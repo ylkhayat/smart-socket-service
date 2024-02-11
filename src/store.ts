@@ -166,14 +166,14 @@ export const resetAllData = () => {
 if (process.env.NODE_ENV !== "test") {
     const serverFile = path.join(__dirname, "..", "server-monitor.log");
     const energyFile = path.join(__dirname, "..", "energy-monitor.log");
+
     const serverLogStream = fs.createWriteStream(serverFile, {
         flags: "w",
     });
-    const energyLogStream = fs.createWriteStream(energyFile, {
-        flags: "w",
-    });
+
     console.log(`Setting up server monitor log, in ${serverFile}`);
     console.log(`Setting up instance energy monitor log, in ${energyFile}`);
+
     const prettyPrintServerData = () => {
         if (Object.values(instancesData).length > 0) {
             const instancesDataTable = new Table({
@@ -210,13 +210,13 @@ if (process.env.NODE_ENV !== "test") {
                     ]);
                 }
             });
+            const energyLogStream = fs.createWriteStream(energyFile, {
+                flags: "w",
+            });
             energyLogStream.write("Instances Energy Data:\n");
             energyLogStream.write(instancesEnergyDataTable.toString());
             energyLogStream.write("\n");
-
-            energyLogStream.write("\n");
-            energyLogStream.write("\n");
-            energyLogStream.write("\n");
+            energyLogStream.end();
         }
 
         const serverDataTable = new Table({
