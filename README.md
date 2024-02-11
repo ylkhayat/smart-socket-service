@@ -10,17 +10,10 @@ One scenario for the usage of the smart-socket service is illustrated in the fol
 
 ### Testsets
 
-- [Mixer Control Scenario B](testsets/mixer-control-scenario-b.xml)
-- Parallel Start Wait Stop
-  - [Run 1](testsets/parallel-start-wait-stop/run-1)
-  - [Run 2](testsets/parallel-start-wait-stop/run-2)
-  - [Run 3](testsets/parallel-start-wait-stop/run-3)
-  - [Run 4](testsets/parallel-start-wait-stop/run-4)
-- Start Wait Stop
-  - [Run 1](testsets/start-wait-stop/run-1)
-  - [Run 2](testsets/start-wait-stop/run-2)
-  - [Run 3](testsets/start-wait-stop/run-3)
-  - [Run 4](testsets/start-wait-stop/run-4)
+This project contains testsets for various scenarios. Jump in there to check them out!
+
+- [Parallel Start Wait Stop](testsets/parallel-start-wait-stop/README.md)
+- [Start Wait Stop](testsets/start-wait-stop/README.md)
 
 ## 🌐 API Endpoints
 
