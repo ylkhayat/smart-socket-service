@@ -8,6 +8,20 @@ One scenario for the usage of the smart-socket service is illustrated in the fol
 
 ![Process Diagram](docs/process-scenario-a.svg)
 
+### Testsets
+
+- [Mixer Control Scenario B](testsets/mixer-control-scenario-b.xml)
+- Parallel Start Wait Stop
+  - [Run 1](testsets/parallel-start-wait-stop/run-1)
+  - [Run 2](testsets/parallel-start-wait-stop/run-2)
+  - [Run 3](testsets/parallel-start-wait-stop/run-3)
+  - [Run 4](testsets/parallel-start-wait-stop/run-4)
+- Start Wait Stop
+  - [Run 1](testsets/start-wait-stop/run-1)
+  - [Run 2](testsets/start-wait-stop/run-2)
+  - [Run 3](testsets/start-wait-stop/run-3)
+  - [Run 4](testsets/start-wait-stop/run-4)
+
 ## 🌐 API Endpoints
 
 ### `GET /api/instance/:instanceId`
