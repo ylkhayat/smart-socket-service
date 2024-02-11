@@ -6,7 +6,7 @@ import { manualStop } from "../handlers/socket/manualStop";
 import {
   ENERGY_TOPIC_RESULT,
   POWER_TOPIC_RESULT,
-  GENERAL_TOPIC_RESULT,
+  STATUS_TOPIC_RESULT,
   powerFetch,
   retrieveGeneralStatus,
 } from "../handlers/socket/powerMonitor";
@@ -47,10 +47,12 @@ export type Status0 = {
 
 export const subscribeToTopics = () => {
   MQTTClient.subscribe(
-    [ENERGY_TOPIC_RESULT, POWER_TOPIC_RESULT, GENERAL_TOPIC_RESULT],
+    [ENERGY_TOPIC_RESULT, POWER_TOPIC_RESULT, STATUS_TOPIC_RESULT],
     (err) => {
       if (!err) {
-        console.log(`Subscribed to topics: [${ENERGY_TOPIC_RESULT}, ${POWER_TOPIC_RESULT}, ${GENERAL_TOPIC_RESULT}]`);
+        console.log(
+          `Subscribed to topics: [${ENERGY_TOPIC_RESULT}, ${POWER_TOPIC_RESULT}, ${STATUS_TOPIC_RESULT}]`,
+        );
         /**
          * Fetch very initial power statistics
          */
@@ -67,7 +69,7 @@ MQTTClient.on("connect", (ev) => {
 
   MQTTClient.on("message", (topic, message) => {
     switch (topic) {
-      case GENERAL_TOPIC_RESULT: {
+      case STATUS_TOPIC_RESULT: {
         const data = JSON.parse(message.toString());
         const { DeviceName, Power } = data.Status;
         serverData.connectedSocketName = DeviceName;

@@ -9,17 +9,17 @@ let intervalId: NodeJS.Timeout | null = null;
 const FETCH_POWER_TIMEOUT_MS = 5000;
 const CHECK_CHANGES_TIMEOUT_MS = 2000;
 
-export const CMND_ENERGY_TOPIC = `cmnd/${TOPIC}/STATUS`;
-export const GENERAL_TOPIC_RESULT = `stat/${TOPIC}/STATUS`;
+export const CMND_STATUS_TOPIC = `cmnd/${TOPIC}/STATUS`;
+export const STATUS_TOPIC_RESULT = `stat/${TOPIC}/STATUS`;
 export const ENERGY_TOPIC_RESULT = `stat/${TOPIC}/STATUS10`;
 export const POWER_TOPIC_RESULT = `stat/${TOPIC}/POWER`;
 
 export const retrieveGeneralStatus = () => {
-    MQTTClient.publish(CMND_ENERGY_TOPIC, "");
+    MQTTClient.publish(CMND_STATUS_TOPIC, "");
 };
 
 export const retrieveEnergyToday = () => {
-    MQTTClient.publish(CMND_ENERGY_TOPIC, "10");
+    MQTTClient.publish(CMND_STATUS_TOPIC, "10");
 };
 
 const waitForFetchTimeout = () =>

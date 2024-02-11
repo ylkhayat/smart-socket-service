@@ -137,7 +137,8 @@ export const logServerData = () => {
     serverLogStream.write("\n");
 };
 
-if (process.env.NODE_ENV !== "test") {
+
+if (process.env.NODE_ENV === 'development') {
     setInterval(() => {
         logServerData();
     }, 20000);

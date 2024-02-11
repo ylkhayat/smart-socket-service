@@ -7,6 +7,8 @@ import { InstanceData, instancesData, resetAllData, serverData } from "./store";
 import shortid from "shortid";
 
 jest.mock("shortid");
+jest.mock("mqtt");
+jest.useFakeTimers();
 
 jest.mock("./events/eventEmitter.ts");
 
@@ -26,6 +28,7 @@ app.use("/api", routes);
 describe("Routes", () => {
     beforeEach(() => {
         resetAllData();
+        (waitForEventEmitterData as jest.Mock).mockReset();
     });
     describe("POST /api/instance", () => {
         it("should start a new instance and return success", async () => {

@@ -1,14 +1,8 @@
 import {
-    CMND_ENERGY_TOPIC,
-    POWER_TOPIC_RESULT,
-    ENERGY_TOPIC_RESULT,
-    powerFetch,
-    powerFetchingWorker,
-    retrieveEnergyToday,
-    setupPowerStatisticWatcher,
-    subscribeToPowerStatistics,
-} from "./powerMonitor";
-import { MQTTClient, Status10Energy } from "../../mqtt/setupMQTT";
+    MQTTClient,
+    Status10Energy,
+    subscribeToTopics,
+} from "../../mqtt/setupMQTT";
 import {
     InstanceData,
     instancesData,
@@ -19,6 +13,7 @@ import * as powerMonitor from "./powerMonitor";
 import mqttEventEmitter from "../../events/eventEmitter";
 
 jest.mock("../../store");
+jest.mock("mqtt");
 
 jest.useFakeTimers();
 
@@ -26,10 +21,10 @@ const powerFetchingWorkerSpy = jest
     .spyOn(powerMonitor, "powerFetchingWorker")
     .mockImplementation(async () => {
         for (let i = 0; i < 2; i++) {
-            powerFetch();
+            powerMonitor.powerFetch();
         }
         if (serverData.runningInstances.length === 0) {
-            setupPowerStatisticWatcher();
+            powerMonitor.setupPowerStatisticWatcher();
         }
     });
 
@@ -37,29 +32,31 @@ jest
     .spyOn(powerMonitor, "setupPowerStatisticWatcher")
     .mockImplementation(async () => {
         if (serverData.runningInstances.length > 0) {
-            powerFetchingWorker();
+            powerMonitor.powerFetchingWorker();
         }
     });
 
-jest.mock("../../mqtt/setupMQTT", () => ({
-    MQTTClient: {
-        subscribe: jest.fn(),
-        publish: jest.fn(),
-    },
-    TOPIC: "mixer",
-}));
-
 describe("Power Monitor", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
         resetAllData();
     });
 
     describe("subscribeToPowerStatistics", () => {
+
+        beforeEach(() => {
+            // jest.resetAllMocks();
+            resetAllData();
+        });
+
+
         it("should subscribe to power statistics topics", () => {
-            subscribeToPowerStatistics();
+            subscribeToTopics();
             expect(MQTTClient.subscribe).toHaveBeenCalledWith(
-                [ENERGY_TOPIC_RESULT, POWER_TOPIC_RESULT],
+                [
+                    powerMonitor.ENERGY_TOPIC_RESULT,
+                    powerMonitor.POWER_TOPIC_RESULT,
+                    powerMonitor.STATUS_TOPIC_RESULT,
+                ],
                 expect.any(Function),
             );
         });
@@ -67,21 +64,30 @@ describe("Power Monitor", () => {
 
     describe("retrieveEnergyToday", () => {
         it("should publish a message to retrieve energy today", () => {
-            retrieveEnergyToday();
-            expect(MQTTClient.publish).toHaveBeenCalledWith(CMND_ENERGY_TOPIC, "");
+            powerMonitor.retrieveEnergyToday();
+            expect(MQTTClient.publish).toHaveBeenCalledWith(
+                powerMonitor.CMND_STATUS_TOPIC,
+                "10",
+            );
         });
     });
 
     describe("setupPowerStatisticWatcher", () => {
+
+        beforeEach(() => {
+            jest.clearAllMocks();
+            resetAllData();
+        });
+
         it("should start the power statistic worker if there are running instances", () => {
             serverData.runningInstances = ["instance1", "instance2"];
-            setupPowerStatisticWatcher();
+            powerMonitor.setupPowerStatisticWatcher();
             expect(powerFetchingWorkerSpy).toHaveBeenCalledTimes(1);
         });
 
         it("should not start the power statistic worker if there are no running instances", () => {
             serverData.runningInstances = [];
-            setupPowerStatisticWatcher();
+            powerMonitor.setupPowerStatisticWatcher();
             expect(powerFetchingWorkerSpy).not.toHaveBeenCalled();
         });
     });
@@ -111,7 +117,7 @@ describe("Power Monitor", () => {
                     today: [5],
                 },
             } as InstanceData;
-            setupPowerStatisticWatcher();
+            powerMonitor.setupPowerStatisticWatcher();
             mqttEventEmitter.emit("energyData", mockEnergyTodayData);
             jest.runAllTimers();
         });
@@ -119,8 +125,8 @@ describe("Power Monitor", () => {
         it("should update the power data if the power is connected", async () => {
             let instance1 = instancesData["instance1"];
             let instance2 = instancesData["instance2"];
-            expect(instance1.energy.today).toBe([10]);
-            expect(instance2.energy.today).toBe([10]);
+            expect(instance1.energy.today).toStrictEqual([0, 10, 10, 10, 10]);
+            expect(instance2.energy.today).toStrictEqual([5, 10, 10, 10, 10]);
         });
     });
 });

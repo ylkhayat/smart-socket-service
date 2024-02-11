@@ -6,7 +6,7 @@ const PORT = 40111;
 
 const app = express();
 
-if (process.env.NODE_ENV !== "test") {
+if (process.env.NODE_ENV === 'development') {
   app.use((_, res, next) => {
     res.on("finish", () => {
       if (res.statusCode < 400) {
