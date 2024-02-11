@@ -1,8 +1,8 @@
 import shortid from "shortid";
 import { InstanceData, instancesData, serverData } from "../../store";
 import { waitForEventEmitterPowerData } from "../../events/eventEmitter";
-import { startSocket } from "../socket/control";
 import { energyFetch } from "../socket/powerMonitor";
+import { startSocket } from "../socket/control";
 
 type OperationReport = {
     success: boolean;
@@ -78,13 +78,20 @@ export const startInstance = async (
 
     instancesData[id] = augmentedData;
 
+    if (triggerPowerOn) {
+        startSocket();
+    }
     try {
-        const powerDataPromise = triggerPowerOn ? waitForEventEmitterPowerData() : Promise.resolve(true);
         const energyReportPromise = energyFetch();
+        const powerDataPromise = triggerPowerOn
+            ? waitForEventEmitterPowerData()
+            : Promise.resolve(true);
 
-        const results = await Promise.allSettled([energyReportPromise, powerDataPromise]);
-        const energyReport = results[0].status === 'fulfilled' ? results[0].value : null;
-        const powerData = results[1].status === 'fulfilled' ? results[1].value : null;
+        const [energyReport, powerData] = await Promise.all([
+            energyReportPromise,
+            powerDataPromise,
+        ]);
+
         if (triggerPowerOn) {
             if (powerData === "OFF") {
                 return {
@@ -99,11 +106,11 @@ export const startInstance = async (
             return {
                 success: false,
                 statusCode: 500,
-                message: "An error occurred while waiting for the socket to start or while fetching the energy report",
+                message:
+                    "An error occurred while waiting for the socket to start or while fetching the energy report",
                 instanceId: id,
             };
         }
-
 
         serverData.instancesStarting = serverData.instancesStarting.filter(
             (instance) => instance !== id,

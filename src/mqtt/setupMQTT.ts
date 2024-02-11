@@ -12,6 +12,10 @@ import {
 } from "../handlers/socket/powerMonitor";
 import { manualStart } from "../handlers/socket/manualStart";
 
+
+let eventCounter = 0;
+
+
 const PROTOCOL = "mqtt";
 //TUM HOST 131.159.6.111
 const HOST = "broker.emqx.io";
@@ -52,11 +56,11 @@ export const subscribeToTopics = () => {
         console.log(
           `Subscribed to topics: [${ENERGY_TOPIC_RESULT}, ${POWER_TOPIC_RESULT}, ${STATUS_TOPIC_RESULT}]`,
         );
+        retrieveGeneralStatus();
         /**
          * Fetch very initial power statistics
          */
         energyFetch();
-        retrieveGeneralStatus();
       }
     },
   );
@@ -71,8 +75,8 @@ MQTTClient.on("connect", (ev) => {
       case STATUS_TOPIC_RESULT: {
         const data = JSON.parse(message.toString());
         const { DeviceName, Power } = data.Status;
-        serverData.connectedSocketName = DeviceName;
         console.log(`Connected to smart plug '${DeviceName}'`!);
+        serverData.connectedSocketName = DeviceName;
         serverData.powerStatus[0].powerOn =
           Power === 1
             ? {
@@ -90,7 +94,7 @@ MQTTClient.on("connect", (ev) => {
           return;
         }
 
-        mqttEventEmitter.emit("energyData", {
+        mqttEventEmitter.emit("energyData", eventCounter++, {
           today: ENERGY.Today,
           apparentPower: ENERGY.ApparentPower,
           current: ENERGY.Current,
@@ -103,6 +107,8 @@ MQTTClient.on("connect", (ev) => {
       }
       case POWER_TOPIC_RESULT: {
         const data = message.toString();
+
+        mqttEventEmitter.emit("powerData", eventCounter++, data);
         if (data === "OFF") {
           if (
             serverData.instancesStopping.length === 0
@@ -119,7 +125,6 @@ MQTTClient.on("connect", (ev) => {
           }
         }
 
-        mqttEventEmitter.emit("powerData", data);
 
         break;
       }
