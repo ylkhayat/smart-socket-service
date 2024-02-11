@@ -177,35 +177,38 @@ describe("DELETE /api/instance", () => {
     });
 });
 
-describe('GET /download', () => {
+describe("GET /download", () => {
     beforeAll(() => {
         resetAllData();
         instancesData["instance1"] = {
-            initialEnergyToday: 0,
-            consumedEnergyToday: 0,
+            energy: {
+                initialToday: 0,
+                consumedToday: 0,
+            },
             id: "instance1",
         } as InstanceData;
         instancesData["instance2"] = {
-            initialEnergyToday: 5,
-            consumedEnergyToday: 0,
+            energy: {
+                initialToday: 5,
+                consumedToday: 0,
+            },
             id: "instance2",
         } as InstanceData;
     });
-    it('should return a JSON file with the current server state', async () => {
-
-        const res = await request(app).get('/api/download');
+    it("should return a JSON file with the current server state", async () => {
+        const res = await request(app).get("/api/download");
 
         expect(res.status).toBe(200);
-        expect(res.headers['content-type']).toContain('application/json');
-        expect(res.headers['content-disposition']).toEqual('attachment; filename=server_state.json');
+        expect(res.headers["content-type"]).toContain("application/json");
+        expect(res.headers["content-disposition"]).toEqual(
+            "attachment; filename=server_state.json",
+        );
 
         const expectedData = {
             instances: instancesData,
-            server: serverData
+            server: serverData,
         };
 
-        expect(JSON.parse(res.text)).toEqual(
-            expect.objectContaining(expectedData)
-        );
+        expect(JSON.parse(res.text)).toEqual(expect.objectContaining(expectedData));
     });
 });

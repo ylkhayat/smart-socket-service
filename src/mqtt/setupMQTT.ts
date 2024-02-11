@@ -5,7 +5,7 @@ import { serverData } from "../store";
 import { manualStop } from "../handlers/socket/manualStop";
 import {
   subscribeToPowerStatistics,
-  STAT_TOPIC_RESULT,
+  ENERGY_TOPIC_RESULT,
   POWER_TOPIC_RESULT,
 } from "../handlers/socket/powerMonitor";
 
@@ -27,21 +27,39 @@ export const MQTTClient = mqtt.connect(CONNECT_URL, {
 
 let previousInstancesTriggeringPowerOff: string[] = [];
 
+export type Status10Energy = {
+  today: number;
+  apparentPower: number;
+  current: number;
+  factor: number;
+  power: number;
+  reactivePower: number;
+  voltage: number;
+};
+
 MQTTClient.on("connect", (ev) => {
   console.log("MQTT connected!");
   subscribeToPowerStatistics();
 
   MQTTClient.on("message", (topic, message) => {
     switch (topic) {
-      case STAT_TOPIC_RESULT: {
+      case ENERGY_TOPIC_RESULT: {
         const data = JSON.parse(message.toString());
-        const { EnergyToday } = data;
-        const todayEnergy = EnergyToday?.Today;
+        const { ENERGY } = data.StatusSNS;
 
-        if (todayEnergy === undefined) {
+        if (ENERGY === undefined) {
           return;
         }
-        mqttEventEmitter.emit("energyTodayData", todayEnergy);
+
+        mqttEventEmitter.emit("energyData", {
+          today: ENERGY.Today,
+          apparentPower: ENERGY.ApparentPower,
+          current: ENERGY.Current,
+          factor: ENERGY.Factor,
+          power: ENERGY.Power,
+          reactivePower: ENERGY.ReactivePower,
+          voltage: ENERGY.Voltage,
+        } as Status10Energy);
         break;
       }
       case POWER_TOPIC_RESULT: {

@@ -1,14 +1,14 @@
 import {
     CMND_ENERGY_TOPIC,
     POWER_TOPIC_RESULT,
-    STAT_TOPIC_RESULT,
+    ENERGY_TOPIC_RESULT,
     powerFetch,
     powerFetchingWorker,
     retrieveEnergyToday,
     setupPowerStatisticWatcher,
     subscribeToPowerStatistics,
 } from "./powerMonitor";
-import { MQTTClient } from "../../mqtt/setupMQTT";
+import { MQTTClient, Status10Energy } from "../../mqtt/setupMQTT";
 import {
     InstanceData,
     instancesData,
@@ -59,7 +59,7 @@ describe("Power Monitor", () => {
         it("should subscribe to power statistics topics", () => {
             subscribeToPowerStatistics();
             expect(MQTTClient.subscribe).toHaveBeenCalledWith(
-                [STAT_TOPIC_RESULT, POWER_TOPIC_RESULT],
+                [ENERGY_TOPIC_RESULT, POWER_TOPIC_RESULT],
                 expect.any(Function),
             );
         });
@@ -87,33 +87,46 @@ describe("Power Monitor", () => {
     });
 
     describe("powerFetchingWorker", () => {
-        const mockEnergyTodayData = 10;
+        const mockEnergyTodayData = {
+            today: 10,
+            apparentPower: 10,
+            current: 10,
+            factor: 10,
+            power: 10,
+            reactivePower: 10,
+            voltage: 10,
+        } as Status10Energy;
 
         beforeEach(() => {
             serverData.runningInstances = ["instance1", "instance2"];
             instancesData["instance1"] = {
-                initialEnergyToday: 0,
-                consumedEnergyToday: 0,
+
                 id: "instance1",
+                energy: {
+                    initialToday: 0,
+                    consumedToday: 0,
+                },
             } as InstanceData;
             instancesData["instance2"] = {
-                initialEnergyToday: 5,
-                consumedEnergyToday: 0,
                 id: "instance2",
+                energy: {
+                    initialToday: 5,
+                    consumedToday: 0,
+                },
             } as InstanceData;
             setupPowerStatisticWatcher();
-            mqttEventEmitter.emit("energyTodayData", mockEnergyTodayData);
+            mqttEventEmitter.emit("energyData", mockEnergyTodayData);
             jest.runAllTimers();
         });
 
         it("should update the power data if the power is connected", async () => {
             let instance1 = instancesData["instance1"];
             let instance2 = instancesData["instance2"];
-            expect(instance1.consumedEnergyToday).toBe(
-                mockEnergyTodayData - instance1.initialEnergyToday,
+            expect(instance1.energy.consumedToday).toBe(
+                mockEnergyTodayData.today - instance1.energy.initialToday,
             );
-            expect(instance2.consumedEnergyToday).toBe(
-                mockEnergyTodayData - instance2.initialEnergyToday,
+            expect(instance2.energy.consumedToday).toBe(
+                mockEnergyTodayData.today - instance2.energy.initialToday,
             );
         });
     });

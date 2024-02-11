@@ -1,32 +1,35 @@
 import fs from "fs";
 import path from "path";
 import Table from "cli-table3";
+import { Status10Energy } from "./mqtt/setupMQTT";
 
 export type InstanceDataInput = {
-    [K in keyof Pick<
-        InstanceData,
-        "samplingInterval" | "emergencyStopTimeout"
-    >]?: string;
+    [K in keyof Pick<InstanceData, "emergencyStopTimeout">]?: string;
 };
-export type InstanceData = {
-    id: string;
+
+type InstanceDataEnergy = {
     /**
      * The energy consumption queried from the device at the start of the instance
      */
-    initialEnergyToday: number;
+    initialToday: number;
     /**
      * Cummulative energy consumption for the instance per interval
-     * @example consumedEnergyToday = initialEnergyToday - API.newEnergyToday
+     * @example consumedToday = initialEnergyToday - API.newEnergyToday
      */
-    consumedEnergyToday: number;
+    consumedToday: number;
     /**
-     * Amperage report per interval
+     * The amperage per second queried from the device at the start of the instance
      */
-    amperage: number[];
+} & {
+        [K in keyof Omit<Status10Energy, "today">]: number[];
+    };
+
+export type InstanceData = {
+    id: string;
     /**
-     * The interval in milliseconds at which the power monitoring is sampled
+     * Energy report per interval
      */
-    samplingInterval: number;
+    energy: InstanceDataEnergy;
     /**
      * The time in milliseconds after which the device will be stopped if it is not stopped manually
      */
@@ -62,17 +65,14 @@ export type InstanceData = {
 };
 const instanceDataKeys = [
     "id",
-    "initialEnergyToday",
-    "consumedEnergyToday",
-    "amperage",
-    "samplingInterval",
     "emergencyStopTimeout",
-    "startTimestamp",
-    "stopTimestamp",
-    "powerOnTimestamp",
-    "powerOffTimestamp",
+    "energy",
     "isEmergencyStopped",
     "isManuallyStopped",
+    "powerOffTimestamp",
+    "powerOnTimestamp",
+    "startTimestamp",
+    "stopTimestamp",
 ] as const;
 
 type InstancesData = {

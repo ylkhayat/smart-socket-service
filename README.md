@@ -28,7 +28,6 @@ This endpoint allows you to create a new instance.
 
 | Parameter              | Type   | Optional | Default | Description                                                        |
 | ---------------------- | ------ | -------- | ------- | ------------------------------------------------------------------ |
-| `samplingInterval`     | number | No       | 2000 ms | The interval used for sampling the amperage                        |
 | `emergencyStopTimeout` | number | No       | `null`  | The timeout used to stop the instance in case it becomes untracked |
 
 #### Response
@@ -134,20 +133,18 @@ The application uses a simple in-memory data store to keep track of instances an
 
 The application keeps track of instances data in the `instancesData` object in the [store.ts](src/store.ts) file. Each instance is represented by an `InstanceData` object, which contains the following fields:
 
-| Field                  | Type     | Description                                                                                                                               |
-| ---------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`                   | string   | The ID of the instance.                                                                                                                   |
-| `initialEnergyToday`   | number   | The energy consumption queried from the device at the start of the instance.                                                              |
-| `consumedEnergyToday`  | number   | Cumulative energy consumption for the instance per interval.                                                                              |
-| `amperage`             | number[] | Amperage report per interval.                                                                                                             |
-| `samplingInterval`     | number   | The interval in milliseconds at which the power monitoring is sampled.                                                                    |
-| `emergencyStopTimeout` | number   | The time in milliseconds after which the device will be stopped if it is not stopped manually.                                            |
-| `startTimestamp`       | Date     | Timestamp when the instance was started.                                                                                                  |
-| `stopTimestamp`        | Date     | Timestamp when the instance was stopped. Might be `null` if the instance is still running.                                                |
-| `powerOnTimestamp`     | Date     | Timestamp when the socket was powered on.                                                                                                 |
-| `powerOffTimestamp`    | Date     | Timestamp when the socket was powered off. Might be `null` if the socket is still handling other instances yet this instance has stopped. |
-| `isEmergencyStopped`   | boolean  | Flag indicating if the instance was stopped due to an emergency stop.                                                                     |
-| `isManuallyStopped`    | boolean  | Flag indicating if the instance was stopped manually.                                                                                     |
+| Field                  | Type                                   | Description                                                                                                                               |
+| ---------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                   | string                                 | The ID of the instance.                                                                                                                   |
+| `energy`               | [InstanceDataEnergy](src/store.ts#L10) | The energy object queried from the device at the start of the instance.                                                                   |
+| `amperagePerSecond`    | number[]                               | Amperage report per interval.                                                                                                             |
+| `emergencyStopTimeout` | number                                 | The time in milliseconds after which the device will be stopped if it is not stopped manually.                                            |
+| `startTimestamp`       | Date                                   | Timestamp when the instance was started.                                                                                                  |
+| `stopTimestamp`        | Date                                   | Timestamp when the instance was stopped. Might be `null` if the instance is still running.                                                |
+| `powerOnTimestamp`     | Date                                   | Timestamp when the socket was powered on.                                                                                                 |
+| `powerOffTimestamp`    | Date                                   | Timestamp when the socket was powered off. Might be `null` if the socket is still handling other instances yet this instance has stopped. |
+| `isEmergencyStopped`   | boolean                                | Flag indicating if the instance was stopped due to an emergency stop.                                                                     |
+| `isManuallyStopped`    | boolean                                | Flag indicating if the instance was stopped manually.                                                                                     |
 
 ### Server Data
 

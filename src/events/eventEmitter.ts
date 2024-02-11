@@ -1,11 +1,12 @@
 import EventEmitter from "events";
+import { Status10Energy } from "../mqtt/setupMQTT";
 class Emitter extends EventEmitter { }
 const mqttEventEmitter = new Emitter();
 export default mqttEventEmitter;
 
-export type MqttEvent = "energyTodayData" | "powerData";
-type MqttData<Event extends MqttEvent> = Event extends "energyTodayData"
-    ? number
+export type MqttEvent = "energyData" | "powerData";
+type MqttData<Event extends MqttEvent> = Event extends "energyData"
+    ? Status10Energy
     : "ON" | "OFF";
 
 export function waitForEventEmitterData<Events extends MqttEvent[]>(
@@ -15,7 +16,7 @@ export function waitForEventEmitterData<Events extends MqttEvent[]>(
         (event) =>
             new Promise<MqttData<typeof event>>((resolve, reject) => {
                 mqttEventEmitter.once(event, (data: MqttData<typeof event>) => {
-                    if (event === "energyTodayData" && typeof data === "number") {
+                    if (event === "energyData" && typeof data === "object") {
                         resolve(data);
                     } else if (
                         event === "powerData" &&

@@ -22,20 +22,12 @@ router.post(
   "/instance",
   async (req: Request<any, any, any, InstanceDataInput>, res: Response) => {
     const query = req.query;
-    /**
-     * @default 2000 ms
-     */
-    const samplingInterval = query.samplingInterval
-      ? parseInt(query.samplingInterval, 10)
-      : 2000;
+
     const emergencyStopTimeout = query.emergencyStopTimeout
       ? parseInt(query.emergencyStopTimeout, 10)
       : null;
 
     let instanceData: Partial<InstanceData> = {
-      consumedEnergyToday: 0.0,
-      amperage: [],
-      samplingInterval,
       startTimestamp: new Date(),
       stopTimestamp: null,
       powerOffTimestamp: null,
@@ -48,19 +40,28 @@ router.post(
       startSocket();
       retrieveEnergyToday();
       const eventData = await waitForEventEmitterData([
-        "energyTodayData",
+        "energyData",
         "powerData",
       ]);
       if (eventData === undefined) {
         throw new Error("An error occurred while stopping the socket");
       }
-      const [energyTodayData, powerData] = eventData;
+      const [energyData, powerData] = eventData;
       if (powerData === "OFF") {
         return res.status(409).json({
           message: "The socket turned off unexpectedly",
         });
       }
-      instanceData.initialEnergyToday = energyTodayData;
+      instanceData.energy = {
+        apparentPower: [energyData.apparentPower],
+        consumedToday: 0,
+        current: [energyData.current],
+        factor: [energyData.factor],
+        initialToday: energyData.today,
+        power: [energyData.power],
+        reactivePower: [energyData.reactivePower],
+        voltage: [energyData.voltage],
+      };
 
       const { instanceId, success, message, instance } = startInstance(
         instanceData as InstanceData,
