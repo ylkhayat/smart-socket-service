@@ -24,6 +24,17 @@ type InstanceDataEnergy = {
         [K in keyof Omit<Status10Energy, "today">]: number[];
     };
 
+const instanceDataEnergyKeys = [
+    "apparentPower",
+    "consumedToday",
+    "current",
+    "factor",
+    "initialToday",
+    "power",
+    "reactivePower",
+    "voltage",
+] as const;
+
 export type InstanceData = {
     id: string;
     /**
@@ -66,7 +77,6 @@ export type InstanceData = {
 const instanceDataKeys = [
     "id",
     "emergencyStopTimeout",
-    "energy",
     "isEmergencyStopped",
     "isManuallyStopped",
     "powerOffTimestamp",
@@ -154,31 +164,19 @@ export const resetAllData = () => {
 };
 
 if (process.env.NODE_ENV !== "test") {
-    const file = path.join(__dirname, "..", "server.log");
-    const logStream = fs.createWriteStream(file, {
+    const serverFile = path.join(__dirname, "..", "server-monitor.log");
+    const energyFile = path.join(__dirname, "..", "energy-monitor.log");
+    const serverLogStream = fs.createWriteStream(serverFile, {
         flags: "w",
     });
-    console.log(`Setting up server log, in ${file}`);
+    const energyLogStream = fs.createWriteStream(energyFile, {
+        flags: "w",
+    });
+    console.log(`Setting up server monitor log, in ${serverFile}`);
+    console.log(`Setting up instance energy monitor log, in ${energyFile}`);
     const prettyPrintServerData = () => {
         if (Object.values(instancesData).length > 0) {
             const instancesDataTable = new Table({
-                chars: {
-                    top: "═",
-                    "top-mid": "╤",
-                    "top-left": "╔",
-                    "top-right": "╗",
-                    bottom: "═",
-                    "bottom-mid": "╧",
-                    "bottom-left": "╚",
-                    "bottom-right": "╝",
-                    left: "║",
-                    "left-mid": "╟",
-                    mid: "─",
-                    "mid-mid": "┼",
-                    right: "║",
-                    "right-mid": "╢",
-                    middle: "│",
-                },
                 head: instanceDataKeys.map((key) => key),
             });
 
@@ -188,12 +186,58 @@ if (process.env.NODE_ENV !== "test") {
                 );
             });
 
-            logStream.write(`Time: ${new Date().toISOString()}\n`);
-            logStream.write("Instances:\n");
+            serverLogStream.write(`Time: ${new Date().toISOString()}\n`);
+            serverLogStream.write("Instances:\n");
 
-            logStream.write(instancesDataTable.toString());
-            logStream.write("\n");
+            serverLogStream.write(instancesDataTable.toString());
+            serverLogStream.write("\n");
+
+            const instancesEnergyDataTable = new Table({
+                head: ["id", ...instanceDataEnergyKeys],
+            });
+            Object.values(instancesData).forEach((instance) => {
+                const numberOfLines = instance.energy.apparentPower.length;
+                for (let i = 0; i < numberOfLines; i++) {
+                    instancesEnergyDataTable.push([
+                        i === 0 ? instance.id : "",
+                        ...instanceDataEnergyKeys.map((key) =>
+                            typeof instance.energy[key] === "object"
+                                ? (instance.energy[key] as any)[i]
+                                : i === 0
+                                    ? instance.energy[key]
+                                    : "",
+                        ),
+                    ]);
+                }
+            });
+            energyLogStream.write("Instances Energy Data:\n");
+            energyLogStream.write(instancesEnergyDataTable.toString());
+            energyLogStream.write("\n");
+
+            energyLogStream.write("\n");
+            energyLogStream.write("\n");
+            energyLogStream.write("\n");
         }
+
+        const serverDataTable = new Table({
+            head: serverDataKeys.map((key) => key),
+        });
+        serverDataTable.push(
+            serverDataKeys.map((key) => JSON.stringify(serverData[key])),
+        );
+
+        serverLogStream.write("Server:\n");
+        serverLogStream.write(serverDataTable.toString());
+        serverLogStream.write("\n");
+
+        const runningInstancesTable = new Table({
+            head: ["id"],
+        });
+        runningInstancesTable.push(serverData.runningInstances);
+
+        serverLogStream.write("Running Instances:\n");
+        serverLogStream.write(runningInstancesTable.toString());
+        serverLogStream.write("\n");
 
         const powerStatusTable = new Table({
             head: ["On", "Off"],
@@ -203,32 +247,13 @@ if (process.env.NODE_ENV !== "test") {
             powerStatusTable.push([powerOn?.instanceId, powerOff?.instanceId]);
         });
 
-        const serverDataTable = new Table({
-            head: serverDataKeys.map((key) => key),
-        });
-        serverDataTable.push(
-            serverDataKeys.map((key) => JSON.stringify(serverData[key])),
-        );
+        serverLogStream.write("Power Status:\n");
+        serverLogStream.write(powerStatusTable.toString());
+        serverLogStream.write("\n");
 
-        logStream.write("Server:\n");
-        logStream.write(serverDataTable.toString());
-        logStream.write("\n");
-
-        const runningInstancesTable = new Table({
-            head: ["id"],
-        });
-        runningInstancesTable.push(serverData.runningInstances);
-
-        logStream.write("Running Instances:\n");
-        logStream.write(runningInstancesTable.toString());
-        logStream.write("\n");
-
-        logStream.write("Power Status:\n");
-        logStream.write(powerStatusTable.toString());
-        logStream.write("\n");
-        logStream.write("\n");
-        logStream.write("\n");
-        logStream.write("\n");
+        serverLogStream.write("\n");
+        serverLogStream.write("\n");
+        serverLogStream.write("\n");
     };
 
     setInterval(() => {

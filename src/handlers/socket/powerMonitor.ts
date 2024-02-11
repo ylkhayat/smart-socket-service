@@ -6,10 +6,10 @@ import { TOPIC } from "../../mqtt/topic";
 let workerRunning = false;
 let intervalId: NodeJS.Timeout | null = null;
 
-const FETCH_POWER_TIMEOUT_MS = 2000;
+const FETCH_POWER_TIMEOUT_MS = 5000;
 const CHECK_CHANGES_TIMEOUT_MS = 2000;
 
-export const CMND_ENERGY_TOPIC = `cmnd/${TOPIC}/EnergyToday`;
+export const CMND_ENERGY_TOPIC = `cmnd/${TOPIC}/STATUS`;
 export const ENERGY_TOPIC_RESULT = `stat/${TOPIC}/STATUS10`;
 export const POWER_TOPIC_RESULT = `stat/${TOPIC}/POWER`;
 
@@ -23,7 +23,7 @@ export const subscribeToPowerStatistics = () => {
 };
 
 export const retrieveEnergyToday = () => {
-    MQTTClient.publish(CMND_ENERGY_TOPIC, "");
+    MQTTClient.publish(CMND_ENERGY_TOPIC, "10");
 };
 
 const waitForFetchTimeout = () =>

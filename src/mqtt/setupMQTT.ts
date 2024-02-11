@@ -28,12 +28,12 @@ export const MQTTClient = mqtt.connect(CONNECT_URL, {
 let previousInstancesTriggeringPowerOff: string[] = [];
 
 export type Status10Energy = {
-  today: number;
   apparentPower: number;
   current: number;
   factor: number;
   power: number;
   reactivePower: number;
+  today: number;
   voltage: number;
 };
 
