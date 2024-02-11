@@ -24,7 +24,7 @@ export const stopInstance = (id: string): StopReport => {
         };
     }
 
-    if (instancesData[id].stopTimestamp) {
+    if (instancesData[id].stopTimestamp && !(instancesData[id].isEmergencyStopped || instancesData[id].isManuallyStopped)) {
         return {
             success: false,
             statusCode: 409,
