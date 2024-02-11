@@ -182,15 +182,13 @@ describe("GET /download", () => {
         resetAllData();
         instancesData["instance1"] = {
             energy: {
-                initialToday: 0,
-                consumedToday: 0,
+                today: [0],
             },
             id: "instance1",
         } as InstanceData;
         instancesData["instance2"] = {
             energy: {
-                initialToday: 5,
-                consumedToday: 0,
+                today: [5],
             },
             id: "instance2",
         } as InstanceData;

@@ -37,33 +37,7 @@ router.post(
       instanceData.emergencyStopTimeout = emergencyStopTimeout;
 
     try {
-      startSocket();
-      retrieveEnergyToday();
-      const eventData = await waitForEventEmitterData([
-        "energyData",
-        "powerData",
-      ]);
-      if (eventData === undefined) {
-        throw new Error("An error occurred while stopping the socket");
-      }
-      const [energyData, powerData] = eventData;
-      if (powerData === "OFF") {
-        return res.status(409).json({
-          message: "The socket turned off unexpectedly",
-        });
-      }
-      instanceData.energy = {
-        apparentPower: [energyData.apparentPower],
-        consumedToday: 0,
-        current: [energyData.current],
-        factor: [energyData.factor],
-        initialToday: energyData.today,
-        power: [energyData.power],
-        reactivePower: [energyData.reactivePower],
-        voltage: [energyData.voltage],
-      };
-
-      const { instanceId, success, message, instance } = startInstance(
+      const { instanceId, success, message, instance } = await startInstance(
         instanceData as InstanceData,
       );
 
@@ -78,7 +52,6 @@ router.post(
         instance,
       });
     } catch (error) {
-      console.log(error)
       return res.status(500).json({
         message:
           "An error occurred while controlling the socket or fetching power statistics",

@@ -100,18 +100,15 @@ describe("Power Monitor", () => {
         beforeEach(() => {
             serverData.runningInstances = ["instance1", "instance2"];
             instancesData["instance1"] = {
-
                 id: "instance1",
                 energy: {
-                    initialToday: 0,
-                    consumedToday: 0,
+                    today: [0],
                 },
             } as InstanceData;
             instancesData["instance2"] = {
                 id: "instance2",
                 energy: {
-                    initialToday: 5,
-                    consumedToday: 0,
+                    today: [5],
                 },
             } as InstanceData;
             setupPowerStatisticWatcher();
@@ -122,12 +119,8 @@ describe("Power Monitor", () => {
         it("should update the power data if the power is connected", async () => {
             let instance1 = instancesData["instance1"];
             let instance2 = instancesData["instance2"];
-            expect(instance1.energy.consumedToday).toBe(
-                mockEnergyTodayData.today - instance1.energy.initialToday,
-            );
-            expect(instance2.energy.consumedToday).toBe(
-                mockEnergyTodayData.today - instance2.energy.initialToday,
-            );
+            expect(instance1.energy.today).toBe([10]);
+            expect(instance2.energy.today).toBe([10]);
         });
     });
 });

@@ -1,39 +1,15 @@
-import fs from "fs";
-import path from "path";
-import Table from "cli-table3";
 import { Status10Energy } from "./mqtt/setupMQTT";
 
 export type InstanceDataInput = {
     [K in keyof Pick<InstanceData, "emergencyStopTimeout">]?: string;
 };
 
+type ServerDataEnergy = {
+    [K in keyof Status10Energy]: number;
+};
 type InstanceDataEnergy = {
-    /**
-     * The energy consumption queried from the device at the start of the instance
-     */
-    initialToday: number;
-    /**
-     * Cummulative energy consumption for the instance per interval
-     * @example consumedToday = initialEnergyToday - API.newEnergyToday
-     */
-    consumedToday: number;
-    /**
-     * The amperage per second queried from the device at the start of the instance
-     */
-} & {
-        [K in keyof Omit<Status10Energy, "today">]: number[];
-    };
-
-const instanceDataEnergyKeys = [
-    "apparentPower",
-    "consumedToday",
-    "current",
-    "factor",
-    "initialToday",
-    "power",
-    "reactivePower",
-    "voltage",
-] as const;
+    [K in keyof Status10Energy]: number[];
+};
 
 export type InstanceData = {
     id: string;
@@ -74,16 +50,6 @@ export type InstanceData = {
      */
     isManuallyStopped: boolean;
 };
-const instanceDataKeys = [
-    "id",
-    "emergencyStopTimeout",
-    "isEmergencyStopped",
-    "isManuallyStopped",
-    "powerOffTimestamp",
-    "powerOnTimestamp",
-    "startTimestamp",
-    "stopTimestamp",
-] as const;
 
 type InstancesData = {
     [id: string]: InstanceData;
@@ -121,38 +87,38 @@ type ServerData = {
      * Energy consumption per second
      */
     energyToday: number;
+    initialEnergy: ServerDataEnergy | null;
     runningInstancesWithEmergencyStop: string[];
     powerStatus: PowerStatus[];
+    instancesStarting: string[];
     instancesTriggeringPowerOff: string[];
+    connectedSocketName: string | null;
 };
-
-const serverDataKeys = [
-    "energyToday",
-    "runningInstancesWithEmergencyStop",
-    "instancesTriggeringPowerOff",
-] as const;
-
-type ServerDataKeys = keyof ServerData;
 
 export let serverData: ServerData = {
     runningInstances: [],
     energyToday: 0,
     runningInstancesWithEmergencyStop: [],
     instancesTriggeringPowerOff: [],
+    instancesStarting: [],
     powerStatus: [
         {
             powerOn: null,
             powerOff: null,
         },
     ],
+    connectedSocketName: null,
+    initialEnergy: null,
 };
 
 export const resetAllData = () => {
     instancesData = {};
     serverData = {
+        connectedSocketName: null,
         runningInstances: [],
         energyToday: 0,
         runningInstancesWithEmergencyStop: [],
+        instancesStarting: [],
         instancesTriggeringPowerOff: [],
         powerStatus: [
             {
@@ -160,103 +126,6 @@ export const resetAllData = () => {
                 powerOff: null,
             },
         ],
+        initialEnergy: null,
     };
 };
-
-if (process.env.NODE_ENV !== "test") {
-    const serverFile = path.join(__dirname, "..", "server-monitor.log");
-    const energyFile = path.join(__dirname, "..", "energy-monitor.log");
-
-    const serverLogStream = fs.createWriteStream(serverFile, {
-        flags: "w",
-    });
-
-    console.log(`Setting up server monitor log, in ${serverFile}`);
-    console.log(`Setting up instance energy monitor log, in ${energyFile}`);
-
-    const prettyPrintServerData = () => {
-        if (Object.values(instancesData).length > 0) {
-            const instancesDataTable = new Table({
-                head: instanceDataKeys.map((key) => key),
-            });
-
-            Object.values(instancesData).forEach((instance) => {
-                instancesDataTable.push(
-                    instanceDataKeys.map((key) => JSON.stringify(instance[key])),
-                );
-            });
-
-            serverLogStream.write(`Time: ${new Date().toISOString()}\n`);
-            serverLogStream.write("Instances:\n");
-
-            serverLogStream.write(instancesDataTable.toString());
-            serverLogStream.write("\n");
-
-            const instancesEnergyDataTable = new Table({
-                head: ["id", ...instanceDataEnergyKeys],
-            });
-            Object.values(instancesData).forEach((instance) => {
-                const numberOfLines = instance.energy.apparentPower.length;
-                for (let i = 0; i < numberOfLines; i++) {
-                    instancesEnergyDataTable.push([
-                        i === 0 ? instance.id : "",
-                        ...instanceDataEnergyKeys.map((key) =>
-                            typeof instance.energy[key] === "object"
-                                ? (instance.energy[key] as any)[i]
-                                : i === 0
-                                    ? instance.energy[key]
-                                    : "",
-                        ),
-                    ]);
-                }
-            });
-            const energyLogStream = fs.createWriteStream(energyFile, {
-                flags: "w",
-            });
-            energyLogStream.write("Instances Energy Data:\n");
-            energyLogStream.write(instancesEnergyDataTable.toString());
-            energyLogStream.write("\n");
-            energyLogStream.end();
-        }
-
-        const serverDataTable = new Table({
-            head: serverDataKeys.map((key) => key),
-        });
-        serverDataTable.push(
-            serverDataKeys.map((key) => JSON.stringify(serverData[key])),
-        );
-
-        serverLogStream.write("Server:\n");
-        serverLogStream.write(serverDataTable.toString());
-        serverLogStream.write("\n");
-
-        const runningInstancesTable = new Table({
-            head: ["id"],
-        });
-        runningInstancesTable.push(serverData.runningInstances);
-
-        serverLogStream.write("Running Instances:\n");
-        serverLogStream.write(runningInstancesTable.toString());
-        serverLogStream.write("\n");
-
-        const powerStatusTable = new Table({
-            head: ["On", "Off"],
-        });
-
-        serverData.powerStatus.forEach(({ powerOn, powerOff }) => {
-            powerStatusTable.push([powerOn?.instanceId, powerOff?.instanceId]);
-        });
-
-        serverLogStream.write("Power Status:\n");
-        serverLogStream.write(powerStatusTable.toString());
-        serverLogStream.write("\n");
-
-        serverLogStream.write("\n");
-        serverLogStream.write("\n");
-        serverLogStream.write("\n");
-    };
-
-    setInterval(() => {
-        prettyPrintServerData();
-    }, 10000);
-}

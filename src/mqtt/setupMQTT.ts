@@ -4,10 +4,13 @@ import mqttEventEmitter from "../events/eventEmitter";
 import { serverData } from "../store";
 import { manualStop } from "../handlers/socket/manualStop";
 import {
-  subscribeToPowerStatistics,
   ENERGY_TOPIC_RESULT,
   POWER_TOPIC_RESULT,
+  GENERAL_TOPIC_RESULT,
+  powerFetch,
+  retrieveGeneralStatus,
 } from "../handlers/socket/powerMonitor";
+import { manualStart } from "../handlers/socket/manualStart";
 
 const PROTOCOL = "mqtt";
 //TUM HOST 131.159.6.111
@@ -37,12 +40,47 @@ export type Status10Energy = {
   voltage: number;
 };
 
+export type Status0 = {
+  deviceName: string;
+  power: number;
+};
+
+export const subscribeToTopics = () => {
+  MQTTClient.subscribe(
+    [ENERGY_TOPIC_RESULT, POWER_TOPIC_RESULT, GENERAL_TOPIC_RESULT],
+    (err) => {
+      if (!err) {
+        console.log(`Subscribed to topics: [${ENERGY_TOPIC_RESULT}, ${POWER_TOPIC_RESULT}, ${GENERAL_TOPIC_RESULT}]`);
+        /**
+         * Fetch very initial power statistics
+         */
+        powerFetch();
+        retrieveGeneralStatus();
+      }
+    },
+  );
+};
+
 MQTTClient.on("connect", (ev) => {
   console.log("MQTT connected!");
-  subscribeToPowerStatistics();
+  subscribeToTopics();
 
   MQTTClient.on("message", (topic, message) => {
     switch (topic) {
+      case GENERAL_TOPIC_RESULT: {
+        const data = JSON.parse(message.toString());
+        const { DeviceName, Power } = data.Status;
+        serverData.connectedSocketName = DeviceName;
+        console.log(`Connected to smart plug '${DeviceName}'`!);
+        serverData.powerStatus[0].powerOn =
+          Power === 1
+            ? {
+              timestamp: new Date(),
+              instanceId: "<unknown>",
+            }
+            : null;
+        break;
+      }
       case ENERGY_TOPIC_RESULT: {
         const data = JSON.parse(message.toString());
         const { ENERGY } = data.StatusSNS;
@@ -66,18 +104,21 @@ MQTTClient.on("connect", (ev) => {
         const data = message.toString();
         if (data === "OFF") {
           if (
-            serverData.runningInstances.length > 0 &&
-            serverData.instancesTriggeringPowerOff.length > 0 &&
             serverData.instancesTriggeringPowerOff.length ===
             previousInstancesTriggeringPowerOff.length
           ) {
             const { stoppedInstances } = manualStop();
-            console.log(
-              `Manual stop occurred, stopped instances ${stoppedInstances?.toString()}`,
+            console.info(
+              `Manual stop occurred, stopped instances [${stoppedInstances?.toString()}]!`,
             );
           }
           previousInstancesTriggeringPowerOff =
             serverData.instancesTriggeringPowerOff;
+        } else {
+          if (serverData.instancesStarting.length === 0) {
+            manualStart();
+            console.info("Manual start occurred!");
+          }
         }
 
         mqttEventEmitter.emit("powerData", data);

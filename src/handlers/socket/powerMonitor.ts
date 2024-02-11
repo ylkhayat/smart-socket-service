@@ -10,16 +10,12 @@ const FETCH_POWER_TIMEOUT_MS = 5000;
 const CHECK_CHANGES_TIMEOUT_MS = 2000;
 
 export const CMND_ENERGY_TOPIC = `cmnd/${TOPIC}/STATUS`;
+export const GENERAL_TOPIC_RESULT = `stat/${TOPIC}/STATUS`;
 export const ENERGY_TOPIC_RESULT = `stat/${TOPIC}/STATUS10`;
 export const POWER_TOPIC_RESULT = `stat/${TOPIC}/POWER`;
 
-export const subscribeToPowerStatistics = () => {
-    MQTTClient.subscribe([ENERGY_TOPIC_RESULT, POWER_TOPIC_RESULT], (err) => {
-        if (!err) {
-            console.log(`Subscribed to topic: '${ENERGY_TOPIC_RESULT}'`);
-            console.log(`Subscribed to topic: '${POWER_TOPIC_RESULT}'`);
-        }
-    });
+export const retrieveGeneralStatus = () => {
+    MQTTClient.publish(CMND_ENERGY_TOPIC, "");
 };
 
 export const retrieveEnergyToday = () => {
@@ -45,12 +41,19 @@ export const powerFetch = async () => {
         voltage,
     } = energyData[0];
     serverData.energyToday = today;
+    if (serverData.initialEnergy === null) {
+        serverData.initialEnergy = {
+            today,
+            apparentPower,
+            current,
+            factor,
+            power,
+            reactivePower,
+            voltage,
+        };
+    }
     serverData.runningInstances.forEach((instanceId) => {
-        const instanceData = instancesData[instanceId];
-        const consumedToday = today - instanceData.energy?.initialToday;
-        instancesData[instanceId].energy.consumedToday = parseFloat(
-            consumedToday.toFixed(3),
-        );
+        instancesData[instanceId].energy.today?.push(today);
         instancesData[instanceId].energy.apparentPower?.push(apparentPower);
         instancesData[instanceId].energy.current?.push(current);
         instancesData[instanceId].energy.factor?.push(factor);
