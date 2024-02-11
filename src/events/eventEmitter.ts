@@ -13,7 +13,7 @@ export const waitForEventEmitterEnergyData = (): Promise<Status10Energy> =>
         });
         setTimeout(
             () => reject(new Error("Timeout waiting for energyData MQTT data")),
-            2000,
+            5000,
         );
     });
 
@@ -24,6 +24,6 @@ export const waitForEventEmitterPowerData = (): Promise<"ON" | "OFF"> =>
         });
         setTimeout(
             () => reject(new Error("Timeout waiting for powerData MQTT data")),
-            2000,
+            5000,
         );
     });
