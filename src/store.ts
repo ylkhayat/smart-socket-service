@@ -150,9 +150,8 @@ export const prettyPrintServerData = () => {
     const prettyPowerStatus = serverData.powerStatus
         .map(
             ({ powerOn, powerOff }) =>
-                `ON: ${powerOn?.instanceId}, OFF: ${powerOff?.instanceId}`,
-        )
-        .toString();
+                `[ON: ${powerOn?.instanceId}, OFF: ${powerOff?.instanceId}]`,
+        ).join(" | ");
     const prettierServerData = {
         ...prettyServerData,
         powerStatus: prettyPowerStatus,

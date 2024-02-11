@@ -31,13 +31,7 @@ export const stopInstance = (id: string): StopReport => {
             message: `Instance with ID ${id} is already stopped.`,
         };
     }
-    if (serverData.powerStatus[serverData.powerStatus.length - 1].powerOff) {
-        return {
-            success: false,
-            statusCode: 409,
-            message: `Socket is already stopped.`,
-        };
-    }
+
 
     serverData.instancesTriggeringPowerOff.push(id);
     instancesData[id].stopTimestamp = new Date();
