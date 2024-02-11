@@ -44,7 +44,7 @@ console.log(`Setting up server monitor log, in ${serverFile}`);
 console.log(`Setting up instance energy monitor log, in ${energyFile}`);
 
 export const logServerData = () => {
-    if (serverData.initialEnergy !== null && !printedServerEnergyData) {
+    if (serverData.initialEnergy !== null && !printedServerEnergyData && serverData.initialEnergy["today"] !== undefined) {
         const serverEnergyDataTable = new Table({
             head: instanceDataEnergyKeys.map((key) => key),
         });
