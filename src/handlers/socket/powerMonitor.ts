@@ -29,7 +29,6 @@ export const retrieveEnergyToday = () => {
 const waitForFetchTimeout = () =>
     new Promise((resolve) => setTimeout(resolve, FETCH_POWER_TIMEOUT_MS));
 
-
 export const powerFetch = async () => {
     retrieveEnergyToday();
     const energyData = await waitForEventEmitterData(["energyTodayData"]);
@@ -46,8 +45,7 @@ export const powerFetch = async () => {
             consumedEnergyToday.toFixed(3),
         );
     });
-
-}
+};
 
 export const powerFetchingWorker = async () => {
     workerRunning = true;

@@ -1,6 +1,12 @@
-# 🚀 Smart Socket Service 🚀
+# 🚀 Smart Socket Service
 
 Welcome to the Smart Socket Service, your one-stop shop for controlling and monitoring smart sockets. This service is like a remote control for your smart sockets, but with superpowers! 💪
+
+## Usage Scenario
+
+One scenario for the usage of the smart-socket service is illustrated in the following diagram:
+
+![Process Diagram](docs/process-scenario-a.svg)
 
 ## 🌐 API Endpoints
 

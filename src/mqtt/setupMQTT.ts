@@ -67,16 +67,16 @@ MQTTClient.on("connect", (ev) => {
         break;
     }
   });
+});
 
-  MQTTClient.on("error", (error) => {
-    console.error("Connection failed", error);
-  });
+MQTTClient.on("error", (error) => {
+  console.error("Connection failed", error);
+});
 
-  MQTTClient.on("disconnect", (error) => {
-    console.error("Disconnected", error);
-  });
+MQTTClient.on("disconnect", (error) => {
+  console.error("Disconnected", error);
+});
 
-  MQTTClient.on("close", () => {
-    console.log("Closed");
-  });
+MQTTClient.on("close", () => {
+  console.log("Closed");
 });

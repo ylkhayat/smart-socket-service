@@ -11,13 +11,8 @@ type OperationReport = StopReport & {
  * @returns {OperationReport} An object indicating the operation's report.
  */
 export const deleteInstance = (id: string): OperationReport => {
-    const {
-        success,
-        statusCode,
-        triggeredPowerOff,
-        message,
-        instanceId,
-    } = stopInstance(id);
+    const { success, statusCode, triggeredPowerOff, message, instanceId } =
+        stopInstance(id);
     if (success) {
         const instanceData = instancesData[id];
         delete instancesData[id];

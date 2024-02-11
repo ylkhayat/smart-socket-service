@@ -1,7 +1,12 @@
 import { Router, Request, Response } from "express";
 import { startSocket, stopSocket } from "./handlers/socket/control";
 import { waitForEventEmitterData } from "./events/eventEmitter";
-import { InstanceData, InstanceDataInput, instancesData, serverData } from "./store";
+import {
+  InstanceData,
+  InstanceDataInput,
+  instancesData,
+  serverData,
+} from "./store";
 import { stopInstance } from "./handlers/instance/stopInstance";
 import { startInstance } from "./handlers/instance/startInstance";
 import { emergencyStop } from "./handlers/socket/emergencyStop";
@@ -57,12 +62,9 @@ router.post(
       }
       instanceData.initialEnergyToday = energyTodayData;
 
-      const {
-        instanceId,
-        success,
-        message,
-        instance,
-      } = startInstance(instanceData as InstanceData);
+      const { instanceId, success, message, instance } = startInstance(
+        instanceData as InstanceData,
+      );
 
       if (!success) {
         return res.status(409).json({
@@ -94,13 +96,8 @@ router.put(
     if (!instanceId)
       return res.status(422).json({ message: "instanceId is required" });
     try {
-      const {
-        success,
-        statusCode,
-        message,
-        triggeredPowerOff,
-        instance,
-      } = stopInstance(instanceId);
+      const { success, statusCode, message, triggeredPowerOff, instance } =
+        stopInstance(instanceId);
 
       if (!success) {
         return res.status(statusCode).json({
@@ -127,8 +124,6 @@ router.put(
           instance,
           triggeredPowerOff,
         });
-
-
     } catch (error) {
       return res.status(500).json({
         message: "An error occurred while stopping the socket",
@@ -282,17 +277,18 @@ router.get(
   },
 );
 
-
-router.get('/download', (_: Request, res: Response) => {
+router.get("/download", (_: Request, res: Response) => {
   const data = {
     instances: instancesData,
-    server: serverData
+    server: serverData,
   };
 
-  res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Content-Disposition', 'attachment; filename=server_state.json');
+  res.setHeader("Content-Type", "application/json");
+  res.setHeader(
+    "Content-Disposition",
+    "attachment; filename=server_state.json",
+  );
   res.status(200).send(JSON.stringify(data, null, 4));
 });
-
 
 export default router;

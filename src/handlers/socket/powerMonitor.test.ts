@@ -115,7 +115,6 @@ describe("Power Monitor", () => {
             expect(instance2.consumedEnergyToday).toBe(
                 mockEnergyTodayData - instance2.initialEnergyToday,
             );
-
         });
     });
 });
