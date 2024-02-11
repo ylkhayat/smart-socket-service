@@ -21,7 +21,7 @@ const powerFetchingWorkerSpy = jest
     .spyOn(powerMonitor, "powerFetchingWorker")
     .mockImplementation(async () => {
         for (let i = 0; i < 2; i++) {
-            powerMonitor.powerFetch();
+            powerMonitor.energyFetch();
         }
         if (serverData.runningInstances.length === 0) {
             powerMonitor.setupPowerStatisticWatcher();

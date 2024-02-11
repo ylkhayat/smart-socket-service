@@ -2,24 +2,20 @@ import request from "supertest";
 import express from "express";
 import routes from "./routes";
 
-import { waitForEventEmitterData } from "./events/eventEmitter";
+import {
+    waitForEventEmitterEnergyData,
+    waitForEventEmitterPowerData
+} from "./events/eventEmitter";
 import { InstanceData, instancesData, resetAllData, serverData } from "./store";
 import shortid from "shortid";
 
 jest.mock("shortid");
 jest.mock("mqtt");
+
 jest.useFakeTimers();
 
-jest.mock("./events/eventEmitter.ts");
+jest.mock("./events/eventEmitter");
 
-jest.mock("./handlers/socket/powerMonitor.ts", () => ({
-    retrieveEnergyToday: jest.fn(),
-    setupPowerStatisticWatcher: jest.fn(),
-}));
-jest.mock("./handlers/socket/control.ts", () => ({
-    startSocket: jest.fn(),
-    stopSocket: jest.fn(),
-}));
 
 const app = express();
 app.use(express.json());
@@ -28,13 +24,13 @@ app.use("/api", routes);
 describe("Routes", () => {
     beforeEach(() => {
         resetAllData();
-        (waitForEventEmitterData as jest.Mock).mockReset();
+        jest.resetAllMocks();
+        (shortid.generate as jest.Mock).mockImplementationOnce(() => "123");
     });
     describe("POST /api/instance", () => {
         it("should start a new instance and return success", async () => {
-            (waitForEventEmitterData as jest.Mock).mockImplementationOnce(() =>
-                Promise.resolve([0.25, "ON"]),
-            );
+            (waitForEventEmitterEnergyData as jest.Mock).mockResolvedValueOnce(0.25);
+            (waitForEventEmitterPowerData as jest.Mock).mockResolvedValueOnce("ON");
             const response = await request(app).post("/api/instance");
             expect(response.status).toBe(200);
             expect(response.body).toHaveProperty("instance");
@@ -42,22 +38,20 @@ describe("Routes", () => {
         });
 
         it("should return an error if the socket turned off unexpectedly", async () => {
-            (waitForEventEmitterData as jest.Mock).mockImplementationOnce(() =>
-                Promise.resolve([0, "OFF"]),
-            );
+            (waitForEventEmitterEnergyData as jest.Mock).mockResolvedValueOnce(0);
+            (waitForEventEmitterPowerData as jest.Mock).mockResolvedValueOnce("OFF");
             const response = await request(app).post("/api/instance");
             expect(response.status).toBe(409);
             expect(response.body).toHaveProperty("message");
         });
 
         it("should return an error if starting the instance fails", async () => {
-            (shortid.generate as jest.Mock).mockImplementationOnce(() => "123");
+
             instancesData["123"] = {
                 id: "123",
             } as any;
-            (waitForEventEmitterData as jest.Mock).mockImplementationOnce(() =>
-                Promise.resolve([0.25, "ON"]),
-            );
+            (waitForEventEmitterEnergyData as jest.Mock).mockResolvedValueOnce(0.25);
+            (waitForEventEmitterPowerData as jest.Mock).mockResolvedValueOnce("ON");
             const response = await request(app).post("/api/instance");
             expect(response.status).toBe(409);
             expect(response.body).toHaveProperty("message");
@@ -65,9 +59,8 @@ describe("Routes", () => {
         });
 
         it("should return an error if an error occurs while controlling the socket", async () => {
-            (waitForEventEmitterData as jest.Mock).mockImplementationOnce(() =>
-                Promise.reject(),
-            );
+            (waitForEventEmitterPowerData as jest.Mock).mockRejectedValue(undefined);
+            (waitForEventEmitterEnergyData as jest.Mock).mockRejectedValue(undefined);
             const response = await request(app).post("/api/instance");
             expect(response.status).toBe(500);
             expect(response.body).toHaveProperty("message");
@@ -80,16 +73,14 @@ describe("Routes", () => {
         });
         it("should stop the instance and return success", async () => {
             (shortid.generate as jest.Mock).mockImplementationOnce(() => "123");
-            (waitForEventEmitterData as jest.Mock).mockImplementationOnce(() =>
-                Promise.resolve([0.25, "ON"]),
-            );
+            (waitForEventEmitterEnergyData as jest.Mock).mockResolvedValueOnce(0.25);
+            (waitForEventEmitterPowerData as jest.Mock).mockResolvedValueOnce("ON");
             await request(app).post("/api/instance");
-            (waitForEventEmitterData as jest.Mock).mockImplementationOnce(() =>
-                Promise.resolve(["OFF"]),
-            );
+            (waitForEventEmitterPowerData as jest.Mock).mockResolvedValueOnce("OFF");
             const response = await request(app).put("/api/instance/123");
             expect(response.status).toBe(200);
             expect(response.body).toHaveProperty("instance");
+            expect(response.body.instance).toHaveProperty("powerOffTimestamp");
         });
 
         it("should return an error if instanceId is not provided", async () => {
@@ -100,14 +91,10 @@ describe("Routes", () => {
 
         it("should return an error if stopping the instance fails", async () => {
             (shortid.generate as jest.Mock).mockImplementationOnce(() => "123");
-            (waitForEventEmitterData as jest.Mock).mockImplementationOnce(() =>
-                Promise.resolve([0.25, "ON"]),
-            );
+            (waitForEventEmitterEnergyData as jest.Mock).mockResolvedValueOnce(0.25);
+            (waitForEventEmitterPowerData as jest.Mock).mockResolvedValueOnce("ON");
             await request(app).post("/api/instance");
-
-            (waitForEventEmitterData as jest.Mock).mockImplementationOnce(() =>
-                Promise.reject(),
-            );
+            (waitForEventEmitterPowerData as jest.Mock).mockRejectedValueOnce(undefined);
             const response = await request(app).put("/api/instance/123");
             expect(response.status).toBe(500);
             expect(response.body).toHaveProperty("message");
@@ -123,14 +110,11 @@ describe("Routes", () => {
         });
 
         it("should call emergencyStop and return the expected values", async () => {
-            (waitForEventEmitterData as jest.Mock).mockImplementation(() =>
-                Promise.resolve([0.25, "ON"]),
-            );
+            (waitForEventEmitterEnergyData as jest.Mock).mockResolvedValueOnce(0.25);
+            (waitForEventEmitterPowerData as jest.Mock).mockResolvedValueOnce("ON");
             await request(app).post("/api/instance");
             await request(app).post("/api/instance");
-            (waitForEventEmitterData as jest.Mock).mockImplementationOnce(() =>
-                Promise.resolve(["OFF"]),
-            );
+            (waitForEventEmitterPowerData as jest.Mock).mockResolvedValueOnce("OFF");
             const response = await request(app).put("/api/emergency-stop");
             expect(response.status).toBe(200);
             expect(response.body.stoppedInstances).toHaveLength(2);
@@ -147,13 +131,10 @@ describe("DELETE /api/instance", () => {
     it("should delete the instance and return success", async () => {
         const id = "123";
         (shortid.generate as jest.Mock).mockImplementationOnce(() => id);
-        (waitForEventEmitterData as jest.Mock).mockImplementationOnce(() =>
-            Promise.resolve([0.25, "ON"]),
-        );
+        (waitForEventEmitterEnergyData as jest.Mock).mockResolvedValueOnce(0.25);
+        (waitForEventEmitterPowerData as jest.Mock).mockResolvedValueOnce("ON");
         await request(app).post("/api/instance");
-        (waitForEventEmitterData as jest.Mock).mockImplementationOnce(() =>
-            Promise.resolve(["OFF"]),
-        );
+        (waitForEventEmitterPowerData as jest.Mock).mockResolvedValueOnce("OFF");
         const response = await request(app).delete(`/api/instance/${id}`);
         expect(response.status).toBe(200);
         expect(response.body.instance.id).toBe(id);
@@ -168,13 +149,10 @@ describe("DELETE /api/instance", () => {
     it("should return an error if an error occurs while deleting the instance", async () => {
         const id = "123";
         (shortid.generate as jest.Mock).mockImplementationOnce(() => id);
-        (waitForEventEmitterData as jest.Mock).mockImplementationOnce(() =>
-            Promise.resolve([0.25, "ON"]),
-        );
+        (waitForEventEmitterEnergyData as jest.Mock).mockResolvedValueOnce(0.25);
+        (waitForEventEmitterPowerData as jest.Mock).mockResolvedValueOnce("ON");
         await request(app).post("/api/instance");
-        (waitForEventEmitterData as jest.Mock).mockImplementationOnce(() =>
-            Promise.reject(),
-        );
+        (waitForEventEmitterPowerData as jest.Mock).mockRejectedValueOnce(undefined);
         const response = await request(app).delete(`/api/instance/${id}`);
         expect(response.status).toBe(500);
     });

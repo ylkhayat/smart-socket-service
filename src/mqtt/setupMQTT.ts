@@ -7,7 +7,7 @@ import {
   ENERGY_TOPIC_RESULT,
   POWER_TOPIC_RESULT,
   STATUS_TOPIC_RESULT,
-  powerFetch,
+  energyFetch,
   retrieveGeneralStatus,
 } from "../handlers/socket/powerMonitor";
 import { manualStart } from "../handlers/socket/manualStart";
@@ -28,7 +28,6 @@ export const MQTTClient = mqtt.connect(CONNECT_URL, {
   password: "****",
 });
 
-let previousInstancesTriggeringPowerOff: string[] = [];
 
 export type Status10Energy = {
   apparentPower: number;
@@ -56,7 +55,7 @@ export const subscribeToTopics = () => {
         /**
          * Fetch very initial power statistics
          */
-        powerFetch();
+        energyFetch();
         retrieveGeneralStatus();
       }
     },
@@ -106,16 +105,13 @@ MQTTClient.on("connect", (ev) => {
         const data = message.toString();
         if (data === "OFF") {
           if (
-            serverData.instancesTriggeringPowerOff.length ===
-            previousInstancesTriggeringPowerOff.length
+            serverData.instancesStopping.length === 0
           ) {
             const { stoppedInstances } = manualStop();
             console.info(
               `Manual stop occurred, stopped instances [${stoppedInstances?.toString()}]!`,
             );
           }
-          previousInstancesTriggeringPowerOff =
-            serverData.instancesTriggeringPowerOff;
         } else {
           if (serverData.instancesStarting.length === 0) {
             manualStart();

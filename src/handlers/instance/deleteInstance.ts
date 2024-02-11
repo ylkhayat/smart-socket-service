@@ -10,24 +10,15 @@ type OperationReport = StopReport & {
  * @param {string} id - identifier for the instance.
  * @returns {OperationReport} An object indicating the operation's report.
  */
-export const deleteInstance = (id: string): OperationReport => {
-    const { success, statusCode, triggeredPowerOff, message, instanceId } =
-        stopInstance(id);
-    if (success) {
-        const instanceData = instancesData[id];
-        delete instancesData[id];
-        return {
-            success,
-            statusCode,
-            message: `Instance with ID ${id} deleted successfully.`,
-            triggeredPowerOff,
-            instance: instanceData,
-        };
-    }
+export const deleteInstance = async (id: string): Promise<OperationReport> => {
+    const { success, statusCode, message, instanceId } =
+        await stopInstance(id);
+    const instanceData = instancesData[id];
+    delete instancesData[id];
     return {
         success,
-        message,
-        instanceId,
         statusCode,
+        message,
+        instance: instanceData,
     };
 };

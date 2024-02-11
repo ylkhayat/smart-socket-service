@@ -1,4 +1,4 @@
-import { waitForEventEmitterData } from "../../events/eventEmitter";
+import { waitForEventEmitterEnergyData } from "../../events/eventEmitter";
 import { serverData, instancesData } from "../../store";
 import { MQTTClient } from "../../mqtt/setupMQTT";
 import { TOPIC } from "../../mqtt/topic";
@@ -25,11 +25,21 @@ export const retrieveEnergyToday = () => {
 const waitForFetchTimeout = () =>
     new Promise((resolve) => setTimeout(resolve, FETCH_POWER_TIMEOUT_MS));
 
-export const powerFetch = async () => {
+type EnergyFetchReport = {
+    today: number;
+    apparentPower: number;
+    current: number;
+    factor: number;
+    power: number;
+    reactivePower: number;
+    voltage: number;
+} | null;
+
+export const energyFetch = async (): Promise<EnergyFetchReport> => {
     retrieveEnergyToday();
-    const energyData = await waitForEventEmitterData(["energyData"]);
+    const energyData = await waitForEventEmitterEnergyData();
     if (energyData === undefined) {
-        return;
+        return null;
     }
     const {
         today,
@@ -39,7 +49,7 @@ export const powerFetch = async () => {
         power,
         reactivePower,
         voltage,
-    } = energyData[0];
+    } = energyData;
     serverData.energyToday = today;
     if (serverData.initialEnergy === null) {
         serverData.initialEnergy = {
@@ -52,15 +62,32 @@ export const powerFetch = async () => {
             voltage,
         };
     }
+
     serverData.runningInstances.forEach((instanceId) => {
-        instancesData[instanceId].energy.today?.push(today);
-        instancesData[instanceId].energy.apparentPower?.push(apparentPower);
-        instancesData[instanceId].energy.current?.push(current);
-        instancesData[instanceId].energy.factor?.push(factor);
-        instancesData[instanceId].energy.power?.push(power);
-        instancesData[instanceId].energy.reactivePower?.push(reactivePower);
-        instancesData[instanceId].energy.voltage?.push(voltage);
+        /**
+         * If the instance does not have energy data, create it.
+         */
+        if (!instancesData[instanceId].energy) {
+            instancesData[instanceId].energy = {
+                today: [today],
+                apparentPower: [apparentPower],
+                current: [current],
+                factor: [factor],
+                power: [power],
+                reactivePower: [reactivePower],
+                voltage: [voltage],
+            };
+        } else {
+            instancesData[instanceId].energy.today?.push(today);
+            instancesData[instanceId].energy.apparentPower?.push(apparentPower);
+            instancesData[instanceId].energy.current?.push(current);
+            instancesData[instanceId].energy.factor?.push(factor);
+            instancesData[instanceId].energy.power?.push(power);
+            instancesData[instanceId].energy.reactivePower?.push(reactivePower);
+            instancesData[instanceId].energy.voltage?.push(voltage);
+        }
     });
+    return energyData;
 };
 
 export const powerFetchingWorker = async () => {
@@ -70,7 +97,7 @@ export const powerFetchingWorker = async () => {
         intervalId = null;
     }
     while (serverData.runningInstances.length > 0) {
-        await powerFetch();
+        await energyFetch();
         await waitForFetchTimeout();
     }
     if (intervalId) {

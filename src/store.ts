@@ -91,7 +91,7 @@ type ServerData = {
     runningInstancesWithEmergencyStop: string[];
     powerStatus: PowerStatus[];
     instancesStarting: string[];
-    instancesTriggeringPowerOff: string[];
+    instancesStopping: string[];
     connectedSocketName: string | null;
 };
 
@@ -99,7 +99,7 @@ export let serverData: ServerData = {
     runningInstances: [],
     energyToday: 0,
     runningInstancesWithEmergencyStop: [],
-    instancesTriggeringPowerOff: [],
+    instancesStopping: [],
     instancesStarting: [],
     powerStatus: [
         {
@@ -119,7 +119,7 @@ export const resetAllData = () => {
         energyToday: 0,
         runningInstancesWithEmergencyStop: [],
         instancesStarting: [],
-        instancesTriggeringPowerOff: [],
+        instancesStopping: [],
         powerStatus: [
             {
                 powerOn: null,

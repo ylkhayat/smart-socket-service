@@ -1,6 +1,4 @@
 import { Router, Request, Response } from "express";
-import { startSocket, stopSocket } from "./handlers/socket/control";
-import { waitForEventEmitterData } from "./events/eventEmitter";
 import {
   InstanceData,
   InstanceDataInput,
@@ -12,7 +10,6 @@ import { startInstance } from "./handlers/instance/startInstance";
 import { emergencyStop } from "./handlers/socket/emergencyStop";
 import { deleteInstance } from "./handlers/instance/deleteInstance";
 import {
-  retrieveEnergyToday,
   setupPowerStatisticWatcher,
 } from "./handlers/socket/powerMonitor";
 
@@ -37,12 +34,12 @@ router.post(
       instanceData.emergencyStopTimeout = emergencyStopTimeout;
 
     try {
-      const { instanceId, success, message, instance } = await startInstance(
+      const { instanceId, success, message, instance, statusCode } = await startInstance(
         instanceData as InstanceData,
       );
 
       if (!success) {
-        return res.status(409).json({
+        return res.status(statusCode).json({
           message,
           instanceId,
         });
@@ -71,34 +68,19 @@ router.put(
     if (!instanceId)
       return res.status(422).json({ message: "instanceId is required" });
     try {
-      const { success, statusCode, message, triggeredPowerOff, instance } =
-        stopInstance(instanceId);
-
+      const { success, statusCode, message, instance } = await stopInstance(
+        instanceId,
+        false,
+      );
       if (!success) {
         return res.status(statusCode).json({
           message,
-          instanceId,
-        });
-      }
-
-      if (!triggeredPowerOff) {
-        return res.status(200).json({
           instance,
-          triggeredPowerOff,
         });
       }
-
-      stopSocket();
-      const eventData = await waitForEventEmitterData(["powerData"]);
-      if (eventData === undefined) {
-        throw new Error("An error occurred while stopping the socket");
-      }
-      const [powerData] = eventData;
-      if (powerData === "OFF")
-        return res.status(200).json({
-          instance,
-          triggeredPowerOff,
-        });
+      return res.status(200).json({
+        instance,
+      });
     } catch (error) {
       return res.status(500).json({
         message: "An error occurred while stopping the socket",
@@ -112,26 +94,13 @@ router.put(
   async (req: Request, res: Response) => {
     const { instanceId: id } = req.params;
     try {
-      const { message, success, instanceId, stoppedInstances } =
-        emergencyStop(id);
-      if (!success) {
-        return res.status(409).json({
-          message,
-          instanceId,
-        });
-      }
-
-      stopSocket();
-      const eventData = await waitForEventEmitterData(["powerData"]);
-      if (eventData === undefined) {
-        throw new Error("An error occurred while stopping the socket");
-      }
-      const [powerData] = eventData;
-      if (powerData === "OFF")
-        return res.status(200).json({
-          instanceId,
-          stoppedInstances,
-        });
+      const { message, instanceId, stoppedInstances, statusCode } =
+        await emergencyStop(id);
+      return res.status(statusCode).json({
+        message,
+        instanceId,
+        stoppedInstances,
+      });
     } catch (error) {
       return res.status(500).json({
         message: "An error occurred while stopping the socket",
@@ -176,42 +145,15 @@ router.delete(
   async (req: Request<any, any, any, DeleteInstanceParams>, res: Response) => {
     const { instanceId: id } = req.params;
     if (!id) return res.status(422).json({ message: "instanceId is required" });
-    try {
-      const {
+    const { message, success, statusCode, instance } = await deleteInstance(id);
+    if (!success) {
+      return res.status(statusCode).json({
         message,
-        success,
-        statusCode,
-        instanceId,
-        instance,
-        triggeredPowerOff,
-      } = deleteInstance(id);
-      if (!success) {
-        return res.status(statusCode).json({
-          message,
-          instanceId,
-        });
-      }
-
-      if (!triggeredPowerOff) {
-        return res.status(200).json({
-          instance,
-        });
-      }
-      stopSocket();
-      const eventData = await waitForEventEmitterData(["powerData"]);
-      if (eventData === undefined) {
-        throw new Error("An error occurred while stopping the socket");
-      }
-      const [powerData] = eventData;
-      if (powerData === "OFF")
-        return res.status(200).json({
-          instance,
-        });
-    } catch (error) {
-      return res.status(500).json({
-        message: "An error occurred while stopping the socket",
       });
     }
+    return res.status(statusCode).json({
+      instance,
+    });
   },
 );
 

@@ -18,7 +18,7 @@ const serverDataKeys = [
     "energyToday",
     "initialEnergy",
     "instancesStarting",
-    "instancesTriggeringPowerOff",
+    "instancesStopping",
     "runningInstancesWithEmergencyStop",
 ] as const;
 
