@@ -46,18 +46,19 @@ MQTTClient.on("connect", (ev) => {
       }
       case POWER_TOPIC_RESULT: {
         const data = message.toString();
-        if (
-          data === "OFF" &&
-          serverData.instancesTriggeringPowerOff.length ===
-          previousInstancesTriggeringPowerOff.length
-        ) {
-          const { stoppedInstances } = manualStop();
-          console.log(
-            `Manual stop occurred, stopped instances ${stoppedInstances?.toString()}`,
-          );
+        if (data === "OFF") {
+          if (
+            serverData.instancesTriggeringPowerOff.length ===
+            previousInstancesTriggeringPowerOff.length
+          ) {
+            const { stoppedInstances } = manualStop();
+            console.log(
+              `Manual stop occurred, stopped instances ${stoppedInstances?.toString()}`,
+            );
+          }
+          previousInstancesTriggeringPowerOff =
+            serverData.instancesTriggeringPowerOff;
         }
-        previousInstancesTriggeringPowerOff =
-          serverData.instancesTriggeringPowerOff;
 
         mqttEventEmitter.emit("powerData", data);
 
