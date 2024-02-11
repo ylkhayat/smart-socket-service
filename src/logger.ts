@@ -83,7 +83,7 @@ export const logServerData = () => {
             head: ["id", ...instanceDataEnergyKeys],
         });
         Object.values(instancesData).forEach((instance) => {
-            const numberOfLines = instance.energy.apparentPower.length;
+            const numberOfLines = instance.energy?.apparentPower.length || 0;
             for (let i = 0; i < numberOfLines; i++) {
                 instancesEnergyDataTable.push([
                     i === 0 ? instance.id : "",
