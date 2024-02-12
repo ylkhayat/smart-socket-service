@@ -1,0 +1,41 @@
+{
+  "mixer-control-scenario-b.xml": "mixer-control-scenario-b.xml",
+  "parallel-start-wait-stop": {
+    "parallel-start-wait-stop.xml": "parallel-start-wait-stop/parallel-start-wait-stop.xml",
+    "run-1": {
+      "energy-monitor.html": "parallel-start-wait-stop/run-1/energy-monitor.html",
+      "server-monitor.html": "parallel-start-wait-stop/run-1/server-monitor.html"
+    },
+    "run-2": {
+      "energy-monitor.html": "parallel-start-wait-stop/run-2/energy-monitor.html",
+      "server-monitor.html": "parallel-start-wait-stop/run-2/server-monitor.html"
+    },
+    "run-3": {
+      "energy-monitor.html": "parallel-start-wait-stop/run-3/energy-monitor.html",
+      "server-monitor.html": "parallel-start-wait-stop/run-3/server-monitor.html"
+    },
+    "run-4": {
+      "energy-monitor.html": "parallel-start-wait-stop/run-4/energy-monitor.html",
+      "server-monitor.html": "parallel-start-wait-stop/run-4/server-monitor.html"
+    }
+  },
+  "start-wait-stop": {
+    "run-1": {
+      "energy-monitor.html": "start-wait-stop/run-1/energy-monitor.html",
+      "server-monitor.html": "start-wait-stop/run-1/server-monitor.html"
+    },
+    "run-2": {
+      "energy-monitor.html": "start-wait-stop/run-2/energy-monitor.html",
+      "server-monitor.html": "start-wait-stop/run-2/server-monitor.html"
+    },
+    "run-3": {
+      "energy-monitor.html": "start-wait-stop/run-3/energy-monitor.html",
+      "server-monitor.html": "start-wait-stop/run-3/server-monitor.html"
+    },
+    "run-4": {
+      "energy-monitor.html": "start-wait-stop/run-4/energy-monitor.html",
+      "server-monitor.html": "start-wait-stop/run-4/server-monitor.html"
+    },
+    "start-wait-stop.xml": "start-wait-stop/start-wait-stop.xml"
+  }
+}

@@ -1,5 +1,5 @@
 .DS_Store
 *.log
-!testsets/**/*.log
+!docs/testsets/**/*.html
 node_modules
 dist

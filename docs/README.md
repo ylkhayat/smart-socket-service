@@ -1,6 +1,7 @@
 # 🚀 Smart Socket Service
 
 Welcome to the Smart Socket Service, your one-stop shop for controlling and monitoring smart sockets. This service is like a remote control for your smart sockets, but with superpowers! 💪
+This documentation also has a [github page](https://ylkhayat.github.io/smart-socket-service/), maybe check it out for better visualization when it comes to testsets.
 
 ## Usage Scenario
 
