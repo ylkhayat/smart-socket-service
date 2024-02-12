@@ -1,6 +1,10 @@
-# 🧪 Parallel Start Wait Stop Testset
+# 🧪 Parallel Subprocesses Testset
 
-This directory contains all the runs for the Parallel Start Wait Stop testset.
+This directory contains all the runs for the Parallel Subprocesses testset.
+
+This process uses instances of the previously defined `Start Wait Stop` testset!
+
+![Process Diagram](./parallel-subprocesses.svg)
 
 ## 📊 HTML Reports
 

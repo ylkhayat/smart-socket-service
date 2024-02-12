@@ -3,18 +3,12 @@
 Welcome to the Smart Socket Service, your one-stop shop for controlling and monitoring smart sockets. This service is like a remote control for your smart sockets, but with superpowers! 💪
 This documentation also has a [github page](https://ylkhayat.github.io/smart-socket-service/), maybe check it out for better visualization when it comes to testsets.
 
-## Usage Scenario
-
-One scenario for the usage of the smart-socket service is illustrated in the following diagram:
-
-![Process Diagram](docs/process-scenario-a.svg)
-
-### Testsets
+### Usage Scenario & Testsets
 
 This project contains testsets for various scenarios. Jump in there to check them out!
+We have two test sets, but you can be more adventurous!
 
-- [Parallel Start Wait Stop](testsets/parallel-start-wait-stop/README.md)
-- [Start Wait Stop](testsets/start-wait-stop/README.md)
+Navigate to [testsets](./testsets/) so we can discover them further!
 
 ## 🌐 API Endpoints
 

@@ -2,6 +2,8 @@
 
 This directory contains all the runs for the Start Wait Stop testset.
 
+![Process Diagram](start-wait-stop.svg)
+
 ## 📊 HTML Reports
 
 Each run generates an HTML report. Here are the reports:
