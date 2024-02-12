@@ -1,36 +1,29 @@
 import EventEmitter from "events";
+import { Status0, Status10Energy } from "../mqtt/setupMQTT";
 class Emitter extends EventEmitter { }
 const mqttEventEmitter = new Emitter();
 export default mqttEventEmitter;
 
-export type MqttEvent = "energyTodayData" | "powerData";
-type MqttData<Event extends MqttEvent> = Event extends "energyTodayData"
-    ? number
-    : "ON" | "OFF";
+export type MqttEvent = "energyData" | "powerData";
 
-export function waitForEventEmitterData<Events extends MqttEvent[]>(
-    events: [...Events],
-): Promise<{ [K in keyof Events]: MqttData<Events[K]> }> {
-    const promises = events.map(
-        (event) =>
-            new Promise<MqttData<typeof event>>((resolve, reject) => {
-                mqttEventEmitter.once(event, (data: MqttData<typeof event>) => {
-                    if (event === "energyTodayData" && typeof data === "number") {
-                        resolve(data);
-                    } else if (
-                        event === "powerData" &&
-                        (data === "ON" || data === "OFF")
-                    ) {
-                        resolve(data);
-                    } else {
-                        reject(new Error(`Invalid data for ${event}`));
-                    }
-                });
-                setTimeout(
-                    () => reject(new Error(`Timeout waiting for ${event} MQTT data`)),
-                    2000,
-                );
-            }),
-    );
-    return Promise.all(promises) as Promise<any>;
-}
+export const waitForEventEmitterEnergyData = (): Promise<Status10Energy> =>
+    new Promise((resolve, reject) => {
+        mqttEventEmitter.once("energyData", (data: Status10Energy) => {
+            resolve(data);
+        });
+        setTimeout(
+            () => reject(new Error("Timeout waiting for energyData MQTT data")),
+            5000,
+        );
+    });
+
+export const waitForEventEmitterPowerData = (): Promise<"ON" | "OFF"> =>
+    new Promise((resolve, reject) => {
+        mqttEventEmitter.once("powerData", (data: "ON" | "OFF") => {
+            resolve(data);
+        });
+        setTimeout(
+            () => reject(new Error("Timeout waiting for powerData MQTT data")),
+            5000,
+        );
+    });

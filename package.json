@@ -4,10 +4,12 @@
   "description": "REST API service for controlling and monitoring a smart socket. This service allows users to start and stop a smart socket, wait asynchronously for a set duration, receive real-time updates on power consumption, and fetch power usage statistics for specified time intervals. Integrates with MQTT for communication with smart socket devices.",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "npm run build && node dist/app.js",
+    "build": "rm -rfd ./dist && tsc",
+    "start": "NODE_ENV=development ts-node src/app.ts",
+    "prod": "NODE_ENV=production npm run build && node dist/app.js",
     "dev": "nodemon --watch src -e .ts --exec 'npm run build && node dist/app.js'",
-    "test": "jest"
+    "test": "jest",
+    "prepare-page": "./prepare_pages.sh"
   },
   "repository": {
     "type": "git",
@@ -24,9 +26,11 @@
     "@types/jest": "^29.5.12",
     "@types/shortid": "^0.0.32",
     "@types/supertest": "^6.0.2",
+    "cli-table3": "^0.6.3",
     "jest": "^29.7.0",
     "supertest": "^6.3.4",
     "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
   "dependencies": {

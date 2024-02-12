@@ -1,28 +1,22 @@
+import { Status10Energy } from "./mqtt/setupMQTT";
+
 export type InstanceDataInput = {
-    [K in keyof Pick<
-        InstanceData,
-        "samplingInterval" | "emergencyStopTimeout"
-    >]?: string;
+    [K in keyof Pick<InstanceData, "emergencyStopTimeout">]?: string;
 };
+
+type ServerDataEnergy = {
+    [K in keyof Status10Energy]: number;
+};
+type InstanceDataEnergy = {
+    [K in keyof Status10Energy]: number[];
+};
+
 export type InstanceData = {
     id: string;
     /**
-     * The energy consumption queried from the device at the start of the instance
+     * Energy report per interval
      */
-    initialEnergyToday: number;
-    /**
-     * Cummulative energy consumption for the instance per interval
-     * @example consumedEnergyToday = initialEnergyToday - API.newEnergyToday
-     */
-    consumedEnergyToday: number;
-    /**
-     * Amperage report per interval
-     */
-    amperage: number[];
-    /**
-     * The interval in milliseconds at which the power monitoring is sampled
-     */
-    samplingInterval: number;
+    energy: InstanceDataEnergy;
     /**
      * The time in milliseconds after which the device will be stopped if it is not stopped manually
      */
@@ -93,85 +87,45 @@ type ServerData = {
      * Energy consumption per second
      */
     energyToday: number;
+    initialEnergy: ServerDataEnergy | null;
     runningInstancesWithEmergencyStop: string[];
-    /**
-     * The furthest time in the future when an emergency stop will be triggered
-     */
-    latestEmergencyStopTimeout: Date | null;
-    /**
-     * The instance ID for the latest emergency stop timeout
-     */
-    latestEmergencyStopTimeoutInstanceId: string | null;
     powerStatus: PowerStatus[];
-    instancesTriggeringPowerOff: string[];
+    instancesStarting: string[];
+    instancesStopping: string[];
+    connectedSocketName: string | null;
 };
-
-type ServerDataKeys = keyof ServerData;
 
 export let serverData: ServerData = {
     runningInstances: [],
     energyToday: 0,
     runningInstancesWithEmergencyStop: [],
-    latestEmergencyStopTimeout: null,
-    latestEmergencyStopTimeoutInstanceId: null,
-    instancesTriggeringPowerOff: [],
+    instancesStopping: [],
+    instancesStarting: [],
     powerStatus: [
         {
             powerOn: null,
             powerOff: null,
         },
     ],
+    connectedSocketName: null,
+    initialEnergy: null,
 };
 
 export const resetAllData = () => {
     instancesData = {};
     serverData = {
+        connectedSocketName: null,
         runningInstances: [],
         energyToday: 0,
         runningInstancesWithEmergencyStop: [],
-        latestEmergencyStopTimeout: null,
-        latestEmergencyStopTimeoutInstanceId: null,
-        instancesTriggeringPowerOff: [],
+        instancesStarting: [],
+        instancesStopping: [],
         powerStatus: [
             {
                 powerOn: null,
                 powerOff: null,
             },
         ],
+        initialEnergy: null,
     };
 };
-
-const prettyPrintServerData = () => {
-    const prettyServerData = Object.keys(serverData).reduce(
-        (acc, key) => ({
-            ...acc,
-            [key]:
-                typeof serverData[key as ServerDataKeys] === "object"
-                    ? Array.isArray(serverData[key as ServerDataKeys])
-                        ? serverData[key as ServerDataKeys]?.toString()
-                        : JSON.stringify(serverData[key as ServerDataKeys])
-                    : serverData[key as ServerDataKeys],
-        }),
-        {},
-    );
-
-    const prettyPowerStatus = serverData.powerStatus
-        .map(
-            ({ powerOn, powerOff }) =>
-                `ON: ${powerOn?.instanceId}, OFF: ${powerOff?.instanceId}`,
-        )
-        .toString();
-    const prettierServerData = {
-        ...prettyServerData,
-        powerStatus: prettyPowerStatus,
-    };
-    console.table(prettierServerData);
-};
-
-if (process.env.NODE_ENV !== "test") {
-    setInterval(() => {
-        console.table(instancesData);
-        prettyPrintServerData();
-        console.log("-".repeat(150));
-    }, 10000);
-}

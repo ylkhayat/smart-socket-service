@@ -1,1 +1,6 @@
+.DS_Store
+*.log
+!docs/testsets/**/*.html
 node_modules
+dist
+.env

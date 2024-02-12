@@ -1,11 +1,13 @@
 import shortid from "shortid";
 import { InstanceData, instancesData, serverData } from "../../store";
+import { waitForEventEmitterPowerData } from "../../events/eventEmitter";
+import { energyFetch } from "../socket/powerMonitor";
+import { startSocket } from "../socket/control";
 
 type OperationReport = {
     success: boolean;
-    isLastEmergencyStop?: boolean;
-    triggeredPowerOn?: boolean;
     message: string;
+    statusCode: number;
     instanceId?: string;
     instance?: InstanceData;
 };
@@ -15,7 +17,10 @@ type OperationReport = {
  * @param {InstanceData} data - Data for the instance being initialized.
  * @returns {OperationReport} An object indicating the operation's report.
  */
-export const startInstance = (data: InstanceData): OperationReport => {
+export const startInstance = async (
+    data: InstanceData,
+): Promise<OperationReport> => {
+    let triggerPowerOn = false;
     const id = shortid.generate();
     const augmentedData = {
         ...data,
@@ -26,6 +31,7 @@ export const startInstance = (data: InstanceData): OperationReport => {
         // Instance already exists, return a failure message
         return {
             success: false,
+            statusCode: 409,
             message: `Instance with ID ${id} already exists. Initialization aborted.`,
             instanceId: id,
         };
@@ -33,9 +39,8 @@ export const startInstance = (data: InstanceData): OperationReport => {
 
     let report: OperationReport = {
         success: true,
+        statusCode: 200,
         message: `New instance with ID ${id} initialized successfully.`,
-        triggeredPowerOn: false,
-        isLastEmergencyStop: false,
         instanceId: id,
     };
 
@@ -43,19 +48,8 @@ export const startInstance = (data: InstanceData): OperationReport => {
     serverData.energyToday = 0;
     if (augmentedData.emergencyStopTimeout) {
         serverData.runningInstancesWithEmergencyStop.push(id);
-        const emergencyStopDate = new Date(
-            Date.now() + augmentedData.emergencyStopTimeout,
-        );
-        if (
-            !serverData.latestEmergencyStopTimeout ||
-            serverData.latestEmergencyStopTimeout < emergencyStopDate
-        ) {
-            serverData.latestEmergencyStopTimeout = emergencyStopDate;
-            serverData.latestEmergencyStopTimeoutInstanceId = id;
-            report.isLastEmergencyStop = true;
-        }
     }
-
+    serverData.instancesStarting.push(id);
     const lastPowerStatus =
         serverData.powerStatus[serverData.powerStatus.length - 1];
     if (lastPowerStatus.powerOn === null) {
@@ -66,12 +60,9 @@ export const startInstance = (data: InstanceData): OperationReport => {
             },
             powerOff: null,
         };
-        report.triggeredPowerOn = true;
         augmentedData.powerOnTimestamp = new Date();
-    } else if (
-        lastPowerStatus.powerOff !== null &&
-        lastPowerStatus.powerOff.timestamp < augmentedData.startTimestamp
-    ) {
+        triggerPowerOn = true;
+    } else if (lastPowerStatus.powerOff !== null) {
         serverData.powerStatus.push({
             powerOn: {
                 instanceId: id,
@@ -80,9 +71,68 @@ export const startInstance = (data: InstanceData): OperationReport => {
             powerOff: null,
         });
         augmentedData.powerOnTimestamp = new Date();
-        report.triggeredPowerOn = true;
+        triggerPowerOn = true;
     } else {
         augmentedData.powerOnTimestamp = lastPowerStatus.powerOn.timestamp;
+    }
+
+    instancesData[id] = augmentedData;
+
+    if (triggerPowerOn) {
+        startSocket();
+    }
+    try {
+        const energyReportPromise = energyFetch();
+        const powerDataPromise = triggerPowerOn
+            ? waitForEventEmitterPowerData()
+            : Promise.resolve(true);
+
+        const [energyReport, powerData] = await Promise.all([
+            energyReportPromise,
+            powerDataPromise,
+        ]);
+
+        if (triggerPowerOn) {
+            if (powerData === "OFF") {
+                return {
+                    success: false,
+                    statusCode: 409,
+                    message: "The socket turned off unexpectedly",
+                    instanceId: id,
+                };
+            }
+        }
+        if (!powerData || !energyReport) {
+            return {
+                success: false,
+                statusCode: 500,
+                message:
+                    "An error occurred while waiting for the socket to start or while fetching the energy report",
+                instanceId: id,
+            };
+        }
+
+        serverData.instancesStarting = serverData.instancesStarting.filter(
+            (instance) => instance !== id,
+        );
+
+        augmentedData.energy = {
+            apparentPower: [energyReport.apparentPower],
+            current: [energyReport.current],
+            factor: [energyReport.factor],
+            today: [energyReport.today],
+            power: [energyReport.power],
+            reactivePower: [energyReport.reactivePower],
+            voltage: [energyReport.voltage],
+        };
+    } catch (e) {
+        return {
+            success: false,
+            statusCode: 500,
+            message:
+                "An error occurred while starting the socket and fetching the data",
+            instanceId: id,
+        };
     }
 
     instancesData[id] = augmentedData;

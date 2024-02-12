@@ -1,10 +1,14 @@
+import { waitForEventEmitterPowerData } from "../../events/eventEmitter";
 import { instancesData, serverData } from "../../store";
+import { stopInstance } from "../instance/stopInstance";
+import { stopSocket } from "./control";
 
 type OperationReport = {
     success: boolean;
     stoppedInstances?: string[];
     instanceId?: string;
     message: string;
+    statusCode: number;
 };
 
 /**
@@ -12,10 +16,11 @@ type OperationReport = {
  * @param {string} id - identifier for the instance that triggered the emergency stop.
  * @returns {OperationReport} An object indicating the operation's report.
  */
-export const emergencyStop = (id?: string): OperationReport => {
+export const emergencyStop = async (id?: string): Promise<OperationReport> => {
     if (id && !instancesData[id]) {
         return {
             success: false,
+            statusCode: 404,
             message: `Instance with ID ${id} does not exist.`,
         };
     }
@@ -23,17 +28,29 @@ export const emergencyStop = (id?: string): OperationReport => {
     if (serverData.powerStatus[serverData.powerStatus.length - 1].powerOff) {
         return {
             success: true,
+            statusCode: 200,
             message: `Socket is already stopped.`,
         };
     } else {
         serverData.powerStatus[serverData.powerStatus.length - 1].powerOff = {
-            instanceId: id || "<unknown>",
+            instanceId: `${id + " "}<emergency>`,
             timestamp: new Date(),
+        };
+    }
+
+    stopSocket();
+    const powerData = await waitForEventEmitterPowerData();
+    if (!powerData || powerData === "ON") {
+        return {
+            success: false,
+            statusCode: 500,
+            message: "An error occurred while emergency stopping the socket",
         };
     }
 
     let report: OperationReport = {
         success: true,
+        statusCode: 200,
         message: `All instances stopped successfully.`,
         stoppedInstances: [],
         instanceId: id,
@@ -41,15 +58,10 @@ export const emergencyStop = (id?: string): OperationReport => {
 
     for (const instanceId of serverData.runningInstances) {
         if (instancesData[instanceId].stopTimestamp) continue;
-        instancesData[instanceId].stopTimestamp = new Date();
-        instancesData[instanceId].powerOffTimestamp = new Date();
-        instancesData[instanceId].isEmergencyStopped = true;
-        report.stoppedInstances?.push(instanceId);
+        const { success } = await stopInstance(instanceId, true);
+        if (success) {
+            report.stoppedInstances?.push(instanceId);
+        }
     }
-
-    serverData.runningInstances = serverData.runningInstances.filter(
-        (instanceId) => !report.stoppedInstances?.includes(instanceId),
-    );
-
     return report;
 };

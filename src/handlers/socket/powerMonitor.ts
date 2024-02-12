@@ -1,4 +1,4 @@
-import { waitForEventEmitterData } from "../../events/eventEmitter";
+import { waitForEventEmitterEnergyData } from "../../events/eventEmitter";
 import { serverData, instancesData } from "../../store";
 import { MQTTClient } from "../../mqtt/setupMQTT";
 import { TOPIC } from "../../mqtt/topic";
@@ -6,48 +6,89 @@ import { TOPIC } from "../../mqtt/topic";
 let workerRunning = false;
 let intervalId: NodeJS.Timeout | null = null;
 
-const FETCH_POWER_TIMEOUT_MS = 2000;
+const FETCH_POWER_TIMEOUT_MS = 5000;
 const CHECK_CHANGES_TIMEOUT_MS = 2000;
 
-export const CMND_ENERGY_TOPIC = `cmnd/${TOPIC}/EnergyToday`;
-export const STAT_TOPIC_RESULT = `stat/${TOPIC}/RESULT`;
+export const CMND_STATUS_TOPIC = `cmnd/${TOPIC}/STATUS`;
+export const STATUS_TOPIC_RESULT = `stat/${TOPIC}/STATUS`;
+export const ENERGY_TOPIC_RESULT = `stat/${TOPIC}/STATUS10`;
 export const POWER_TOPIC_RESULT = `stat/${TOPIC}/POWER`;
 
-export const subscribeToPowerStatistics = () => {
-    MQTTClient.subscribe([STAT_TOPIC_RESULT, POWER_TOPIC_RESULT], (err) => {
-        if (!err) {
-            console.log(`Subscribed to topic: '${STAT_TOPIC_RESULT}'`);
-            console.log(`Subscribed to topic: '${POWER_TOPIC_RESULT}'`);
-        }
-    });
+export const retrieveGeneralStatus = () => {
+    MQTTClient.publish(CMND_STATUS_TOPIC, "");
 };
 
 export const retrieveEnergyToday = () => {
-    MQTTClient.publish(CMND_ENERGY_TOPIC, "");
+    MQTTClient.publish(CMND_STATUS_TOPIC, "10");
 };
 
 const waitForFetchTimeout = () =>
     new Promise((resolve) => setTimeout(resolve, FETCH_POWER_TIMEOUT_MS));
 
+type EnergyFetchReport = {
+    today: number;
+    apparentPower: number;
+    current: number;
+    factor: number;
+    power: number;
+    reactivePower: number;
+    voltage: number;
+} | null;
 
-export const powerFetch = async () => {
+export const energyFetch = async (): Promise<EnergyFetchReport> => {
     retrieveEnergyToday();
-    const energyData = await waitForEventEmitterData(["energyTodayData"]);
+    const energyData = await waitForEventEmitterEnergyData();
     if (energyData === undefined) {
-        return;
+        return null;
     }
-    const energyTodayData = energyData[0];
-    serverData.energyToday = energyTodayData;
-    serverData.runningInstances.forEach((instanceId) => {
-        const instanceData = instancesData[instanceId];
-        const consumedEnergyToday =
-            energyTodayData - instanceData.initialEnergyToday;
-        instancesData[instanceId].consumedEnergyToday = parseFloat(
-            consumedEnergyToday.toFixed(3),
-        );
-    });
+    const {
+        today,
+        apparentPower,
+        current,
+        factor,
+        power,
+        reactivePower,
+        voltage,
+    } = energyData;
+    serverData.energyToday = today;
+    if (serverData.initialEnergy === null) {
+        serverData.initialEnergy = {
+            today,
+            apparentPower,
+            current,
+            factor,
+            power,
+            reactivePower,
+            voltage,
+        };
+    }
 
-}
+    serverData.runningInstances.forEach((instanceId) => {
+        /**
+         * If the instance does not have energy data, create it.
+         */
+        if (!instancesData[instanceId].energy) {
+            instancesData[instanceId].energy = {
+                today: [today],
+                apparentPower: [apparentPower],
+                current: [current],
+                factor: [factor],
+                power: [power],
+                reactivePower: [reactivePower],
+                voltage: [voltage],
+            };
+        } else {
+            instancesData[instanceId].energy.today?.push(today);
+            instancesData[instanceId].energy.apparentPower?.push(apparentPower);
+            instancesData[instanceId].energy.current?.push(current);
+            instancesData[instanceId].energy.factor?.push(factor);
+            instancesData[instanceId].energy.power?.push(power);
+            instancesData[instanceId].energy.reactivePower?.push(reactivePower);
+            instancesData[instanceId].energy.voltage?.push(voltage);
+        }
+    });
+    return energyData;
+};
 
 export const powerFetchingWorker = async () => {
     workerRunning = true;
@@ -56,7 +97,7 @@ export const powerFetchingWorker = async () => {
         intervalId = null;
     }
     while (serverData.runningInstances.length > 0) {
-        await powerFetch();
+        await energyFetch();
         await waitForFetchTimeout();
     }
     if (intervalId) {
