@@ -11,7 +11,6 @@ function isDirectory(filePath) {
 const ignore = [
   "node_modules",
   "index.html",
-  "README.md",
   "tree.json",
   "js",
   "css",

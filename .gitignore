@@ -3,3 +3,4 @@
 !docs/testsets/**/*.html
 node_modules
 dist
+.env

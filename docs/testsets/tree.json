@@ -1,25 +1,27 @@
 {
-  "mixer-control-scenario-b.xml": "mixer-control-scenario-b.xml",
-  "parallel-start-wait-stop": {
-    "parallel-start-wait-stop.xml": "parallel-start-wait-stop/parallel-start-wait-stop.xml",
+  "parallel-subprocesses": {
+    "README.md": "parallel-subprocesses/README.md",
+    "parallel-subprocesses.svg": "parallel-subprocesses/parallel-subprocesses.svg",
+    "parallel-subprocesses.xml": "parallel-subprocesses/parallel-subprocesses.xml",
     "run-1": {
-      "energy-monitor.html": "parallel-start-wait-stop/run-1/energy-monitor.html",
-      "server-monitor.html": "parallel-start-wait-stop/run-1/server-monitor.html"
+      "energy-monitor.html": "parallel-subprocesses/run-1/energy-monitor.html",
+      "server-monitor.html": "parallel-subprocesses/run-1/server-monitor.html"
     },
     "run-2": {
-      "energy-monitor.html": "parallel-start-wait-stop/run-2/energy-monitor.html",
-      "server-monitor.html": "parallel-start-wait-stop/run-2/server-monitor.html"
+      "energy-monitor.html": "parallel-subprocesses/run-2/energy-monitor.html",
+      "server-monitor.html": "parallel-subprocesses/run-2/server-monitor.html"
     },
     "run-3": {
-      "energy-monitor.html": "parallel-start-wait-stop/run-3/energy-monitor.html",
-      "server-monitor.html": "parallel-start-wait-stop/run-3/server-monitor.html"
+      "energy-monitor.html": "parallel-subprocesses/run-3/energy-monitor.html",
+      "server-monitor.html": "parallel-subprocesses/run-3/server-monitor.html"
     },
     "run-4": {
-      "energy-monitor.html": "parallel-start-wait-stop/run-4/energy-monitor.html",
-      "server-monitor.html": "parallel-start-wait-stop/run-4/server-monitor.html"
+      "energy-monitor.html": "parallel-subprocesses/run-4/energy-monitor.html",
+      "server-monitor.html": "parallel-subprocesses/run-4/server-monitor.html"
     }
   },
   "start-wait-stop": {
+    "README.md": "start-wait-stop/README.md",
     "run-1": {
       "energy-monitor.html": "start-wait-stop/run-1/energy-monitor.html",
       "server-monitor.html": "start-wait-stop/run-1/server-monitor.html"
@@ -36,6 +38,11 @@
       "energy-monitor.html": "start-wait-stop/run-4/energy-monitor.html",
       "server-monitor.html": "start-wait-stop/run-4/server-monitor.html"
     },
+    "run-5": {
+      "energy-monitor.html": "start-wait-stop/run-5/energy-monitor.html",
+      "server-monitor.html": "start-wait-stop/run-5/server-monitor.html"
+    },
+    "start-wait-stop.svg": "start-wait-stop/start-wait-stop.svg",
     "start-wait-stop.xml": "start-wait-stop/start-wait-stop.xml"
   }
 }

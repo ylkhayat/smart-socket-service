@@ -8,7 +8,7 @@ This documentation also has a [github page](https://ylkhayat.github.io/smart-soc
 This project contains testsets for various scenarios. Jump in there to check them out!
 We have two test sets, but you can be more adventurous!
 
-Navigate to [testsets](./testsets/) so we can discover them further!
+Navigate to [testsets](https://ylkhayat.github.io/smart-socket-service/testsets/) so we can discover them further!
 
 ## 🌐 API Endpoints
 
