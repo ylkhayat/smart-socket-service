@@ -1,4 +1,5 @@
 {
+  "README.md": "README.md",
   "parallel-subprocesses": {
     "README.md": "parallel-subprocesses/README.md",
     "parallel-subprocesses.svg": "parallel-subprocesses/parallel-subprocesses.svg",
@@ -28,23 +29,27 @@
       "server-monitor.html": "start-wait-stop/run-1/server-monitor.html"
     },
     "run-2": {
+      "README.md": "start-wait-stop/run-2/README.md",
       "energy-monitor.html": "start-wait-stop/run-2/energy-monitor.html",
       "server-monitor.html": "start-wait-stop/run-2/server-monitor.html"
     },
     "run-3": {
+      "README.md": "start-wait-stop/run-3/README.md",
       "energy-monitor.html": "start-wait-stop/run-3/energy-monitor.html",
       "server-monitor.html": "start-wait-stop/run-3/server-monitor.html"
     },
     "run-4": {
+      "README.md": "start-wait-stop/run-4/README.md",
       "energy-monitor.html": "start-wait-stop/run-4/energy-monitor.html",
       "server-monitor.html": "start-wait-stop/run-4/server-monitor.html"
     },
     "run-5": {
+      "README.md": "start-wait-stop/run-5/README.md",
       "energy-monitor.html": "start-wait-stop/run-5/energy-monitor.html",
       "server-monitor.html": "start-wait-stop/run-5/server-monitor.html"
     },
     "start-wait-stop.svg": "start-wait-stop/start-wait-stop.svg",
     "start-wait-stop.xml": "start-wait-stop/start-wait-stop.xml"
   },
-  "start-wait-stop-portrait.pdf": "start-wait-stop-portrait.pdf"
+  "start-wait-stop.pdf": "start-wait-stop.pdf"
 }

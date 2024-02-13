@@ -19,12 +19,12 @@
       <loop mode="pre_test" condition="true">
         <parallel wait="-1" cancel="first">
           <parallel_branch pass="" local="">
-            <call id="a2" endpoint="subprocess">
+            <call id="a1" endpoint="subprocess">
               <parameters>
                 <label/>
                 <arguments>
                   <behavior>wait_running</behavior>
-                  <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/lehre-version/testsets/start-wait-stop/start-wait-stop.xml</url>
+                  <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/main/docs/testsets/start-wait-stop/start-wait-stop.xml</url>
                   <init>
                     <toggleDuration>30</toggleDuration>
                   </init>
@@ -73,7 +73,7 @@
             </call>
           </parallel_branch>
           <parallel_branch pass="" local="">
-            <call id="a1" endpoint="timeout">
+            <call id="a2" endpoint="timeout">
               <parameters>
                 <label/>
                 <method>:post</method>
@@ -119,12 +119,12 @@
                 </code>
               </documentation>
             </call>
-            <call id="a5" endpoint="subprocess">
+            <call id="a3" endpoint="subprocess">
               <parameters>
                 <label/>
                 <arguments>
                   <behavior>wait_running</behavior>
-                  <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/lehre-version/testsets/start-wait-stop/start-wait-stop.xml</url>
+                  <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/main/docs/testsets/start-wait-stop/start-wait-stop.xml</url>
                   <init>
                     <toggleDuration>15</toggleDuration>
                   </init>
@@ -179,7 +179,6 @@
           <_probability_avg/>
         </_probability>
       </loop>
-      <stop id="a3"/>
     </description>
   </description>
   <transformation>

@@ -6,7 +6,7 @@ Welcome to the testsets directory! This is where we store our testsets, which ar
 
 A testset is a collection of test cases. Each test case is a specific scenario where a test is conducted to ensure the functionality of a part of our application. It includes the input, expected output, and the process of executing the test. Without further due, please check the handwritten explanation of a simple testset which in our case is the `start-wait-stop`,
 
-The document [start-wait-stop-portrait.pdf](./start-wait-stop-portrait.pdf) 🚀
+The document [start-wait-stop.pdf](./start-wait-stop.pdf) 🚀
 
 ## Our Testsets
 

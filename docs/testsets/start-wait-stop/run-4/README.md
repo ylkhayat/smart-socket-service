@@ -1,4 +1,4 @@
-# 🧪 Start Wait Stop Testset - Run 1
+# 🧪 Start Wait Stop Testset - Run 4
 
 A run is simply the environment or the setup in which the testset was executed.
 
@@ -18,7 +18,8 @@ For this run, the testset was executed for me, connecting my personal laptop and
 
 ### Manual Intervention
 
-- Socket was `off` before starting.
+- Socket was `on` before starting.
+- I manually turnt `off` the socket after some time of charging.
 
 ## Results
 
