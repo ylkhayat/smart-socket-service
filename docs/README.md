@@ -3,14 +3,50 @@
 Welcome to the Smart Socket Service, your one-stop shop for controlling and monitoring smart sockets. This service is like a remote control for your smart sockets, but with superpowers! 💪
 This documentation also has a [github page](https://ylkhayat.github.io/smart-socket-service/), maybe check it out for better visualization when it comes to testsets.
 
-### Usage Scenario & Testsets
+## Usage Scenario & Testsets
 
-This project contains testsets for various scenarios. Jump in there to check them out!
-We have two test sets, but you can be more adventurous!
+What is a testset though? And what are we talking about? 🤔
 
-Navigate to [testsets](https://ylkhayat.github.io/smart-socket-service/testsets/) so we can discover them further!
+Let me show you a little bit of what we have in store for you! I have annotated this personally over a "testset" that we have that simulates a real life scenario.
+
+Yallaa habibi go to [testsets](https://ylkhayat.github.io/smart-socket-service/testsets/) to know more 🚀
+
+## 🎛️ Smart Socket Configuration
+
+The `.env` file is where you can configure the MQTT client used by the Smart Socket Service. Here's an example of what this file might look like:
+
+```Environment Variables
+PROTOCOL=mqtt
+HOST=<your preferred host>
+PORT=1883
+CLIENT_ID=SOME_CLIENT_ID
+USERNAME=THE_USER
+PASSWORD=password
+```
+
+This file should be located at the root of your project directory. The `PROTOCOL`, `HOST`, and `PORT` fields are used to construct the URL that the MQTT client connects to. The `CLIENT_ID`, `USERNAME`, and `PASSWORD` fields are used for authentication.
+
+You can also include any additional options that are supported by the MQTT.js library. For a full list of options, refer to the [MQTT.js documentation](https://github.com/mqttjs/MQTT.js?tab=readme-ov-file#mqttclientstreambuilder-options).
 
 ## 🌐 API Endpoints
+
+### You can ask me: "Hey Youssef, I want to start an instance, wait for 5 seconds, and then stop the instance. How can I do that? 🧠"
+
+For a non overwhelming documentation, here's one endpoint that you can use without further diving deeper or further! 🎉
+
+### `POST /api/start-wait-stop`
+
+This endpoint allows you to start an instance, wait for a specific duration, and then stop the instance.
+
+| Parameter  | Type   | Optional | Description                                |
+| ---------- | ------ | -------- | ------------------------------------------ |
+| `duration` | number | No       | The duration you want to wait, in seconds. |
+
+#### Response
+
+You'll get a JSON object confirming the start, wait, and stop of the instance. The instance object is defined in the [store.ts](../src/store.ts) file.
+
+### However, we provide even more that that. You can keep reading if you'd like to take control over things!
 
 ### `GET /api/instance/:instanceId`
 
@@ -22,7 +58,7 @@ This endpoint allows you to check on a specific instance.
 
 #### Response
 
-You'll get a JSON object with all the details of the instance. The instance object is defined in the [store.ts](src/store.ts) file.
+You'll get a JSON object with all the details of the instance. The instance object is defined below [Instance Data](#instance-data) file.
 
 ### `POST /api/instance`
 
@@ -39,10 +75,10 @@ This endpoint allows you to create a new instance.
 - 500 Internal Server Error: An error occurred while managing the socket or fetching the power consumption.
 - 200 OK: The instance was successfully created.
 
-  - | Parameter          | Type                              | Description                                                                  |
-    | ------------------ | --------------------------------- | ---------------------------------------------------------------------------- |
-    | `triggeredPowerOn` | boolean                           | Boolean if the creation of this instance triggered a power on for the socket |
-    | `instance`         | [`InstanceData`](src/store.ts#L7) | The instance that was newly created                                          |
+  - | Parameter          | Type                                 | Description                                                                  |
+    | ------------------ | ------------------------------------ | ---------------------------------------------------------------------------- |
+    | `triggeredPowerOn` | boolean                              | Boolean if the creation of this instance triggered a power on for the socket |
+    | `instance`         | [`InstanceData`](../src/store.ts#L7) | The instance that was newly created                                          |
 
 ### `PUT /api/instance/:instanceId`
 
@@ -59,10 +95,10 @@ This endpoint allows you to stop an instance.
 - 500 Internal Server Error: An error occurred while stopping the instance.
 - 200 OK: The instance was successfully stopped. The response body contains the instance ID, whether the stop triggered a power off, and whether the stop was the last emergency stop.
 
-  - | Parameter           | Type                              | Description                                                            |
-    | ------------------- | --------------------------------- | ---------------------------------------------------------------------- |
-    | `triggeredPowerOff` | boolean                           | Boolean stopping of this instance triggered a power off for the socket |
-    | `instance`          | [`InstanceData`](src/store.ts#L7) | The instance that was newly created                                    |
+  - | Parameter           | Type                                 | Description                                                            |
+    | ------------------- | ------------------------------------ | ---------------------------------------------------------------------- |
+    | `triggeredPowerOff` | boolean                              | Boolean stopping of this instance triggered a power off for the socket |
+    | `instance`          | [`InstanceData`](../src/store.ts#L7) | The instance that was newly created                                    |
 
 ### `DELETE /api/instance/:instanceId`
 
@@ -74,7 +110,7 @@ This endpoint allows you to delete an instance.
 
 #### Response
 
-You'll get a JSON object confirming the deletion of the instance. The instance object is removed from the `instancesData` object in the [store.ts](src/store.ts) file.
+You'll get a JSON object confirming the deletion of the instance. The instance object is removed from the `instancesData` object in the [store.ts](../src/store.ts) file.
 
 ### `GET /api/wait`
 
@@ -98,7 +134,7 @@ This endpoint allows you to perform an emergency stop on an instance.
 
 #### Response
 
-You'll get a JSON object confirming the emergency stop. The `isEmergencyStopped` field of the instance object in the [store.ts](src/store.ts) file is set to `true`.
+You'll get a JSON object confirming the emergency stop. The `isEmergencyStopped` field of the instance object in the [store.ts](../src/store.ts) file is set to `true`.
 
 ### `GET /api/download`
 
@@ -106,51 +142,51 @@ This endpoint allows you to download the server's state retrieving both the `ser
 
 ## 🎛️ Handlers
 
-Handlers in this project are responsible for processing specific actions related to instances and sockets. They are located in the `src/handlers` directory.
+Handlers in this project are responsible for processing specific actions related to instances and sockets. They are located in the `../src/handlers` directory.
 
 ### Instance Handlers
 
-Instance handlers are located in `src/handlers/instance`. They include:
+Instance handlers are located in `../src/handlers/instance`. They include:
 
-- [`deleteInstance`](src/handlers/instance/deleteInstance.ts): This handler is responsible for deleting an instance.
-- [`startInstance`](src/handlers/instance/startInstance.ts): This handler is responsible for starting an instance.
-- [`stopInstance`](src/handlers/instance/stopInstance.ts): This handler is responsible for stopping an instance.
+- [`deleteInstance`](../src/handlers/instance/deleteInstance.ts): This handler is responsible for deleting an instance.
+- [`startInstance`](../src/handlers/instance/startInstance.ts): This handler is responsible for starting an instance.
+- [`stopInstance`](../src/handlers/instance/stopInstance.ts): This handler is responsible for stopping an instance.
 
 ### Socket Handlers
 
-Socket handlers are located in `src/handlers/socket`. They include:
+Socket handlers are located in `../src/handlers/socket`. They include:
 
-- [`control`](src/handlers/socket/control.ts): This handler is responsible for sending control commands to the socket. It includes `startSocket` and `stopSocket` functions.
-- [`emergencyStop`](src/handlers/socket/emergencyStop.ts): This handler is responsible for performing an emergency stop on the socket.
-- [`manualStop`](src/handlers/socket/manualStop.ts): This handler is responsible for performing a manual stop on the socket.
-- [`powerMonitor`](src/handlers/socket/powerMonitor.ts): This handler is responsible for monitoring the power usage of the socket.
+- [`control`](../src/handlers/socket/control.ts): This handler is responsible for sending control commands to the socket. It includes `startSocket` and `stopSocket` functions.
+- [`emergencyStop`](../src/handlers/socket/emergencyStop.ts): This handler is responsible for performing an emergency stop on the socket.
+- [`manualStop`](../src/handlers/socket/manualStop.ts): This handler is responsible for performing a manual stop on the socket.
+- [`powerMonitor`](../src/handlers/socket/powerMonitor.ts): This handler is responsible for monitoring the power usage of the socket.
 
-Each handler interacts with the [`store`](src/store.ts) to get or update the data of instances and sockets.
+Each handler interacts with the [`store`](../src/store.ts) to get or update the data of instances and sockets.
 
 ## 📚 Data Store
 
-The application uses a simple in-memory data store to keep track of instances and server data. The data store is defined in the [store.ts](src/store.ts) file.
+The application uses a simple in-memory data store to keep track of instances and server data. The data store is defined in the [store.ts](../src/store.ts) file.
 
 ### Instance Data
 
-The application keeps track of instances data in the `instancesData` object in the [store.ts](src/store.ts) file. Each instance is represented by an `InstanceData` object, which contains the following fields:
+The application keeps track of instances data in the `instancesData` object in the [store.ts](../src/store.ts) file. Each instance is represented by an `InstanceData` object, which contains the following fields:
 
-| Field                  | Type                                   | Description                                                                                                                               |
-| ---------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`                   | string                                 | The ID of the instance.                                                                                                                   |
-| `energy`               | [InstanceDataEnergy](src/store.ts#L10) | The energy object queried from the device at the start of the instance.                                                                   |
-| `amperagePerSecond`    | number[]                               | Amperage report per interval.                                                                                                             |
-| `emergencyStopTimeout` | number                                 | The time in milliseconds after which the device will be stopped if it is not stopped manually.                                            |
-| `startTimestamp`       | Date                                   | Timestamp when the instance was started.                                                                                                  |
-| `stopTimestamp`        | Date                                   | Timestamp when the instance was stopped. Might be `null` if the instance is still running.                                                |
-| `powerOnTimestamp`     | Date                                   | Timestamp when the socket was powered on.                                                                                                 |
-| `powerOffTimestamp`    | Date                                   | Timestamp when the socket was powered off. Might be `null` if the socket is still handling other instances yet this instance has stopped. |
-| `isEmergencyStopped`   | boolean                                | Flag indicating if the instance was stopped due to an emergency stop.                                                                     |
-| `isManuallyStopped`    | boolean                                | Flag indicating if the instance was stopped manually.                                                                                     |
+| Field                  | Type                                      | Description                                                                                                                               |
+| ---------------------- | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                   | string                                    | The ID of the instance.                                                                                                                   |
+| `energy`               | [InstanceDataEnergy](../src/store.ts#L10) | The energy object queried from the device at the start of the instance.                                                                   |
+| `amperagePerSecond`    | number[]                                  | Amperage report per interval.                                                                                                             |
+| `emergencyStopTimeout` | number                                    | The time in milliseconds after which the device will be stopped if it is not stopped manually.                                            |
+| `startTimestamp`       | Date                                      | Timestamp when the instance was started.                                                                                                  |
+| `stopTimestamp`        | Date                                      | Timestamp when the instance was stopped. Might be `null` if the instance is still running.                                                |
+| `powerOnTimestamp`     | Date                                      | Timestamp when the socket was powered on.                                                                                                 |
+| `powerOffTimestamp`    | Date                                      | Timestamp when the socket was powered off. Might be `null` if the socket is still handling other instances yet this instance has stopped. |
+| `isEmergencyStopped`   | boolean                                   | Flag indicating if the instance was stopped due to an emergency stop.                                                                     |
+| `isManuallyStopped`    | boolean                                   | Flag indicating if the instance was stopped manually.                                                                                     |
 
 ### Server Data
 
-The application also maintains a `serverData` object in the [store.ts](src/store.ts) file. This object contains data related to the server and its interactions with instances and sockets. Here are the fields in the `serverData` object:
+The application also maintains a `serverData` object in the [store.ts](../src/store.ts) file. This object contains data related to the server and its interactions with instances and sockets. Here are the fields in the `serverData` object:
 
 | Field                                  | Type          | Description                                                                                                                                                                                                                          |
 | -------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -159,7 +195,7 @@ The application also maintains a `serverData` object in the [store.ts](src/store
 | `latestEmergencyStopTimeoutInstanceId` | string        | The ID of the instance that last triggered an emergency stop timeout.                                                                                                                                                                |
 | `powerStatus`                          | PowerStatus[] | An array of `PowerStatus` objects representing the power status of the server. Each `PowerStatus` object contains a `powerOn` field and a `powerOff` field, each of which is an object containing an `instanceId` and a `timestamp`. |
 
-The `serverData` object is updated by various handlers in the `src/handlers` directory. For example, the [`startInstance`](src/handlers/instance/startInstance.ts) handler adds the started instance's ID to the `runningInstances` array, and the [`stopInstance`](src/handlers/instance/stopInstance.ts) handler removes the stopped instance's ID from the `runningInstances` array and adds it to the `instancesStopping` array.
+The `serverData` object is updated by various handlers in the `../src/handlers` directory. For example, the [`startInstance`](../src/handlers/instance/startInstance.ts) handler adds the started instance's ID to the `runningInstances` array, and the [`stopInstance`](../src/handlers/instance/stopInstance.ts) handler removes the stopped instance's ID from the `runningInstances` array and adds it to the `instancesStopping` array.
 
 ## 🛠️ Installation
 
@@ -167,11 +203,16 @@ Just clone this repository, run `npm install` to install the dependencies, and y
 
 ## 🎮 Usage
 
-To start the service, just run `npm start`. To run in development mode, use `npm run dev`.
+To start the service, just run `npm start`.
+To run in production, use `npm run prod`.
 
 ## 🤝 Contributing
 
 We welcome contributions! Feel free to submit a pull request.
+
+## Author
+
+This project is maintained by [ylkhayat](https://github.com/ylkhayat). You can visit my page for more projects.
 
 ## 📜 License
 
