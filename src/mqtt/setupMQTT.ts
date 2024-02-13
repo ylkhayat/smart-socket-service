@@ -12,11 +12,26 @@ import {
 } from "../handlers/socket/powerMonitor";
 import { manualStart } from "../handlers/socket/manualStart";
 
-const PROTOCOL = "mqtt";
-//TUM HOST 131.159.6.111
-const HOST = "broker.emqx.io";
-const PORT = "1883";
-const CLIENT_ID = "DVES_%06X";
+const {
+  PROTOCOL,
+  HOST,
+  PORT,
+  CLIENT_ID,
+  USERNAME,
+  PASSWORD,
+  ...additionalMqttConfig
+} = process.env;
+
+if (
+  PROTOCOL === undefined ||
+  HOST === undefined ||
+  PORT === undefined ||
+  CLIENT_ID === undefined ||
+  USERNAME === undefined ||
+  PASSWORD === undefined
+) {
+  throw new Error("MQTT environment variables are not defined!");
+}
 
 const CONNECT_URL = `${PROTOCOL}://${HOST}:${PORT}`;
 
@@ -24,8 +39,9 @@ export const MQTTClient = mqtt.connect(CONNECT_URL, {
   clientId: CLIENT_ID,
   clean: true,
   connectTimeout: 4000,
-  username: "DVES_USER",
-  password: "****",
+  username: USERNAME,
+  password: PASSWORD,
+  ...additionalMqttConfig,
 });
 
 export type Status10Energy = {

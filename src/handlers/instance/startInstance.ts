@@ -73,7 +73,7 @@ export const startInstance = async (
         augmentedData.powerOnTimestamp = new Date();
         triggerPowerOn = true;
     } else {
-        augmentedData.powerOnTimestamp = lastPowerStatus.powerOn.timestamp;
+        augmentedData.powerOnTimestamp = null;
     }
 
     instancesData[id] = augmentedData;

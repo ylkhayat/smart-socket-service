@@ -33,8 +33,10 @@ export type InstanceData = {
     stopTimestamp: Date | null;
     /**
      * Timestamp when the socket was powered on
+     * 
+     * Might be `null` if the socket was already on when the instance was started
      */
-    powerOnTimestamp: Date;
+    powerOnTimestamp: Date | null;
     /**
      * Timestamp when the socket was powered off.
      *

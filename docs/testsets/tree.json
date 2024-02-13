@@ -23,6 +23,7 @@
   "start-wait-stop": {
     "README.md": "start-wait-stop/README.md",
     "run-1": {
+      "README.md": "start-wait-stop/run-1/README.md",
       "energy-monitor.html": "start-wait-stop/run-1/energy-monitor.html",
       "server-monitor.html": "start-wait-stop/run-1/server-monitor.html"
     },
@@ -44,5 +45,6 @@
     },
     "start-wait-stop.svg": "start-wait-stop/start-wait-stop.svg",
     "start-wait-stop.xml": "start-wait-stop/start-wait-stop.xml"
-  }
+  },
+  "start-wait-stop-portrait.pdf": "start-wait-stop-portrait.pdf"
 }

@@ -55,6 +55,9 @@ function loadContent(filePath) {
         pre.textContent = new XMLSerializer().serializeToString(xmlDoc);
         content.innerHTML = "";
         content.appendChild(pre);
+      } else if (filePath.endsWith(".pdf")) {
+        content.innerHTML = "";
+        PDFObject.embed(filePath, content);
       } else {
         content.innerHTML = text;
       }
