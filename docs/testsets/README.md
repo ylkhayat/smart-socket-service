@@ -14,6 +14,8 @@ We currently have two main testsets in this directory: `parallel-subprocesses` a
 
 - The `parallel-subprocesses` testset builds upon `start-wait-stop`, testing scenarios where multiple subprocesses are running in parallel. This mirrors real-life usage of our application. You can find it in the [parallel-subprocesses](https://ylkhayat.github.io/smart-socket-service/testsets/#parallel-subprocesses/README.md) directory.
 
+- The `emergency-stop-recover` testset builds upon components of the `start-wait-stop`, testing scenarios where one process is trying to accomplish something and an emergency occurs and the process has to recover to finish working. This mirrors real-life usage of our application. You can find it in the [emergency-stop-recover](https://ylkhayat.github.io/smart-socket-service/testsets/#emergency-stop-recover/README.md) directory.
+
 ## Contributing
 
 Feel free to create your own testset and publish it as a reusable subprocess. We would love to see your contributions!

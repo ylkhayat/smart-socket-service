@@ -5,6 +5,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const folder = document.createElement("div");
       createElements(files, folder);
       document.getElementById("sidebar").appendChild(folder);
+
+      if (window.location.hash) {
+        loadContent(window.location.hash.substring(1));
+      }
     });
 });
 
