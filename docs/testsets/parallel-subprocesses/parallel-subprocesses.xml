@@ -1,6 +1,8 @@
 <testset xmlns="http://cpee.org/ns/properties/2.0">
   <executionhandler>ruby</executionhandler>
-  <dataelements/>
+  <dataelements>
+    <iterations>7</iterations>
+  </dataelements>
   <endpoints>
     <user>https-post://cpee.org/services/timeout-user.php</user>
     <auto>https-post://cpee.org/services/timeout-auto.php</auto>
@@ -16,8 +18,16 @@
   </attributes>
   <description>
     <description xmlns="http://cpee.org/ns/description/1.0">
-      <loop mode="pre_test" condition="true">
-        <parallel wait="-1" cancel="first">
+      <loop mode="pre_test" condition="data.iterations &gt; 0">
+        <manipulate id="a6" label="">data.subProcess1ToggleDuration = rand(10..35)
+data.subProcess2ToggleDuration = rand(10..30)
+data.timeoutDuration = rand(1..5)</manipulate>
+        <_probability>
+          <_probability_min/>
+          <_probability_max/>
+          <_probability_avg/>
+        </_probability>
+        <parallel wait="-1" cancel="last">
           <parallel_branch pass="" local="">
             <call id="a1" endpoint="subprocess">
               <parameters>
@@ -26,7 +36,7 @@
                   <behavior>wait_running</behavior>
                   <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/main/docs/testsets/start-wait-stop/start-wait-stop.xml</url>
                   <init>
-                    <toggleDuration>30</toggleDuration>
+                    <toggleDuration>!data.subProcess1ToggleDuration</toggleDuration>
                   </init>
                   <endpoints/>
                   <attributes/>
@@ -78,7 +88,7 @@
                 <label/>
                 <method>:post</method>
                 <arguments>
-                  <timeout>5</timeout>
+                  <timeout>!data.timeoutDuration</timeout>
                 </arguments>
               </parameters>
               <code>
@@ -126,7 +136,7 @@
                   <behavior>wait_running</behavior>
                   <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/main/docs/testsets/start-wait-stop/start-wait-stop.xml</url>
                   <init>
-                    <toggleDuration>15</toggleDuration>
+                    <toggleDuration>!data.subProcess2ToggleDuration</toggleDuration>
                   </init>
                   <endpoints/>
                   <attributes/>
@@ -173,12 +183,9 @@
             </call>
           </parallel_branch>
         </parallel>
-        <_probability>
-          <_probability_min/>
-          <_probability_max/>
-          <_probability_avg/>
-        </_probability>
+        <manipulate id="a4" label="">data.iterations = data.iterations - 1</manipulate>
       </loop>
+      <stop id="a5"/>
     </description>
   </description>
   <transformation>
