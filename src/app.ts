@@ -17,10 +17,6 @@ const {
   LOGGING_ENABLED,
 } = process.env;
 
-if (LOGGING_ENABLED) {
-  console.log("Logging is enabled!")
-}
-
 if (PORT === undefined) {
   throw new Error("PORT is not defined");
 }
@@ -39,17 +35,17 @@ if (
 
 const app = express();
 
-app.use((_, res, next) => {
-  res.on("finish", () => {
-    if (res.statusCode < 400) {
-      if (LOGGING_ENABLED) {
-        const logServerData = require("./logger").logServerData;
-        logServerData?.();
-      }
-    }
+if (LOGGING_ENABLED) {
+  console.log("Logging is enabled!")
+  const logServerData = require("./logger").logServerData;
+
+  app.use((_, res, next) => {
+    res.on("finish", () => {
+      logServerData();
+    });
+    next();
   });
-  next();
-});
+}
 
 app.use(express.json());
 app.use("/api", routes);
