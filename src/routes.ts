@@ -18,72 +18,18 @@ type PostStartWaitStopParams = {
   duration: string;
 };
 
-router.post("/start-wait-stop", async (req: Request<any, any, any, PostStartWaitStopParams>, res: Response) => {
-  const query = req.query;
-  const duration = query.duration ? parseInt(query.duration, 10) : null;
-
-  if (duration === null || isNaN(duration)) {
-    return res.status(422).json({ message: "duration is required" });
-  }
-
-  let instanceData: Partial<InstanceData> = {
-    startTimestamp: new Date(),
-    stopTimestamp: null,
-    powerOffTimestamp: null,
-    isEmergencyStopped: false,
-  };
-
-
-  try {
-    const { instanceId, success, message, instance, statusCode } =
-      await startInstance(instanceData as InstanceData);
-
-    if (!success || !instanceId) {
-      return res.status(statusCode).json({
-        message,
-        instanceId,
-      });
-    }
-    setupPowerStatisticWatcher();
-
-    const callbackUrl = req.get("CPEE-CALLBACK");
-    instancesStartingTimeout[instanceId] = setTimeout(async () => {
-      if (callbackUrl) {
-        const { success, message, instance } = await stopInstance(
-          instanceId,
-        );
-        if (!success) {
-          fetch(callbackUrl, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              message,
-              instance,
-            }),
-          });
-        }
-      }
-    }, duration * 1000);
-    return res.set("CPEE-CALLBACK", "true").status(200).json({
-      instance,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      message:
-        "An error occurred while controlling the socket or fetching power statistics",
-    });
-  }
-});
-
 router.post(
-  "/instance",
-  async (req: Request<any, any, any, InstanceDataInput>, res: Response) => {
+  "/start-wait-stop",
+  async (
+    req: Request<any, any, any, PostStartWaitStopParams>,
+    res: Response,
+  ) => {
     const query = req.query;
-    const timeout = query.timeout
-      ? parseInt(query.timeout, 10)
-      : null;
+    const duration = query.duration ? parseInt(query.duration, 10) : null;
+
+    if (duration === null || isNaN(duration)) {
+      return res.status(422).json({ message: "duration is required" });
+    }
 
     let instanceData: Partial<InstanceData> = {
       startTimestamp: new Date(),
@@ -91,8 +37,62 @@ router.post(
       powerOffTimestamp: null,
       isEmergencyStopped: false,
     };
-    if (timeout)
-      instanceData.timeout = timeout;
+
+    try {
+      const { instanceId, success, message, instance, statusCode } =
+        await startInstance(instanceData as InstanceData);
+
+      if (!success || !instanceId) {
+        return res.status(statusCode).json({
+          message,
+          instanceId,
+        });
+      }
+      setupPowerStatisticWatcher();
+
+      const callbackUrl = req.get("CPEE-CALLBACK");
+      instancesStartingTimeout[instanceId] = setTimeout(async () => {
+        if (callbackUrl) {
+          const { success, message, instance } = await stopInstance(instanceId);
+          if (!success) {
+            fetch(callbackUrl, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                message,
+                instance,
+              }),
+            });
+          }
+        }
+      }, duration * 1000);
+      return res.set("CPEE-CALLBACK", "true").status(200).json({
+        instance,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message:
+          "An error occurred while controlling the socket or fetching power statistics",
+      });
+    }
+  },
+);
+
+router.post(
+  "/instance",
+  async (req: Request<any, any, any, InstanceDataInput>, res: Response) => {
+    const query = req.query;
+    const timeout = query.timeout ? parseInt(query.timeout, 10) : null;
+
+    let instanceData: Partial<InstanceData> = {
+      startTimestamp: new Date(),
+      stopTimestamp: null,
+      powerOffTimestamp: null,
+      isEmergencyStopped: false,
+    };
+    if (timeout) instanceData.timeout = timeout;
 
     try {
       const { instanceId, success, message, instance, statusCode } =
@@ -148,23 +148,19 @@ router.put(
   },
 );
 
-router.post(
-  "/emergency-stop",
-  async (_: Request, res: Response) => {
-    try {
-      const { message, stoppedInstances, statusCode } =
-        await emergencyStop();
-      return res.status(statusCode).json({
-        message,
-        stoppedInstances,
-      });
-    } catch (error) {
-      return res.status(500).json({
-        message: "An error occurred while stopping the socket",
-      });
-    }
-  },
-);
+router.post("/emergency-stop", async (_: Request, res: Response) => {
+  try {
+    const { message, stoppedInstances, statusCode } = await emergencyStop();
+    return res.status(statusCode).json({
+      message,
+      stoppedInstances,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "An error occurred while stopping the socket",
+    });
+  }
+});
 
 router.put("/recover", async (_: Request, res: Response) => {
   try {
@@ -278,7 +274,6 @@ router.get("/download", (_: Request, res: Response) => {
   res.status(200).send(JSON.stringify(data, null, 4));
 });
 
-
 router.get("/server/status", (_: Request, res: Response) => {
   const {
     isEmergencyStopped,
@@ -295,7 +290,6 @@ router.get("/server/status", (_: Request, res: Response) => {
     powerStatus,
     currentTimestamp: new Date(),
   });
-
 });
 
 export default router;

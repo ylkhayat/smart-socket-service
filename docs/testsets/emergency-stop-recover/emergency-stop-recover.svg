@@ -1,0 +1,1257 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+  xmlns:x="http://www.w3.org/1999/xlink" id="graphcanvas" width="382" height="1170.4" style="grid-row: 1 / span 31;">
+  <style xmlns="http://www.w3.org/2000/svg" type="text/css"><![CDATA[/*
+  This file is part of CPEE.
+
+  CPEE is free software: you can redistribute it and/or modify it under the terms
+  of the GNU General Public License as published by the Free Software Foundation,
+  either version 3 of the License, or (at your option) any later version.
+
+  CPEE is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along with
+  CPEE (file COPYING in the main directory).  If not, see
+  <http://www.gnu.org/licenses/>.
+*/
+
+:root {
+  --wfadaptor-exec-passive: #729fcf;
+  --wfadaptor-exec-active: #ef2929;
+  --wfadaptor-exec-active-text: #cc0000;
+  --wfadaptor-exec-vote: #8ae234;
+  --wfadaptor-exec-vote-text: #73d216;
+  --wfadaptor-highlight: #0081c7;
+  --wfadaptor-base: #000000;
+  --wfadaptor-base-light: #A9A9A9;
+  --wfadaptor-label: #d4d4d4;
+  --wfadaptor-mark: #d4d4d4;
+  --wfadaptor-selected: #f57900;
+  --wfadaptor-stripe: #e9e9e9;
+  --wfadaptor-background: #ffffff;
+  --wfadaptor-menu: #ef2929;
+  --wfadaptor-border: #a1a1a1;
+}
+
+svg {
+  display:inline;
+  margin:0;
+  padding:0;
+}
+
+svg rect.group {
+  fill: var(--wfadaptor-highlight);
+  fill-opacity: 0.2;
+}
+
+svg g.passive .rfill {
+  fill: var(--wfadaptor-exec-passive);
+  fill-opacity:1;
+}
+
+svg rect.stripe.even {
+  fill: var(--wfadaptor-background);
+}
+svg rect.stripe.odd {
+  fill: var(--wfadaptor-stripe);
+}
+
+svg g.active .rfill {
+  fill: var(--wfadaptor-exec-active);
+  fill-opacity:1;
+}
+svg g.vote .rfill {
+  fill: var(--wfadaptor-exec-vote);
+  fill-opacity:1;
+}
+svg g.passive .rline {
+  stroke: var(--wfadaptor-exec-passive);
+}
+svg g.active .rline {
+  stroke: var(--wfadaptor-exec-active);
+}
+svg g.vote .rline {
+  stroke: var(--wfadaptor-exec-vote);
+}
+
+svg .rfill.menu {
+  fill: var(--wfadaptor-menu);
+  fill-opacity:1;
+}
+svg .hfill.menu {
+  fill: var(--wfadaptor-menu);
+  fill-opacity:1;
+}
+
+svg line.ourline, svg path.ourline {
+  stroke-opacity:1;
+  stroke: var(--wfadaptor-base);
+  stroke-width: 2;
+  fill: none;
+}
+
+svg rect.block {
+  stroke-width: 1;
+  stroke-dasharray: 3,5;
+  stroke: var(--wfadaptor-base);
+  fill: none;
+}
+svg rect.tile {
+  stroke-width: 1;
+  stroke-dasharray: 3,5;
+  fill: var(--wfadaptor-highlight);
+  fill-opacity: 0.3;
+  display: none;
+}
+svg .stand {
+  fill: var(--wfadaptor-background);
+  fill-opacity:1;
+  stroke: var(--wfadaptor-base);
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+svg .standthin {
+  fill: var(--wfadaptor-background);
+  fill-opacity:1;
+  stroke: var(--wfadaptor-base);
+  stroke-width:1.0;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+svg .standfat {
+  fill: var(--wfadaptor-background);
+  fill-opacity:1;
+  stroke: var(--wfadaptor-base);
+  stroke-width:3;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+svg .greyfat {
+  fill: var(--wfadaptor-background);
+  fill-opacity:1;
+  stroke: var(--wfadaptor-base-light);
+  stroke-width:3;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+svg .standfat.menu {
+  stroke: var(--wfadaptor-menu);
+}
+svg .normal {
+  fill: var(--wfadaptor-base);
+  fill-opacity:1;
+  stroke: var(--wfadaptor-base);
+  stroke-width:0.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+svg .white {
+  fill: var(--wfadaptor-background);
+  fill-opacity:1;
+  stroke: var(--wfadaptor-background);
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+svg .black {
+  fill: var(--wfadaptor-base);
+  fill-opacity:1;
+  stroke: var(--wfadaptor-base);
+  stroke-width: 1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+svg .grey {
+  fill: var(--wfadaptor-base-light);
+  fill-opacity:1;
+  stroke: var(--wfadaptor-base-light);
+  stroke-width: 1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+
+svg .marked text.label {
+  color: var(--wfadaptor-label);
+  fill: var(--wfadaptor-label);
+}
+svg .marked .cfill {
+  fill: var(--wfadaptor-mark);
+  fill-opacity:1;
+  stroke: var(--wfadaptor-mark);
+  stroke-width:0.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+svg .marked .cline {
+  stroke: var(--wfadaptor-mark);
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+
+svg .selected text.label {
+  color: var(--wfadaptor-selected);
+  fill: var(--wfadaptor-selected);
+}
+svg .selected .cfill {
+  fill: var(--wfadaptor-selected);
+  fill-opacity:1;
+  stroke: var(--wfadaptor-selected);
+  stroke-width:0.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+svg .selected .cline {
+  stroke: var(--wfadaptor-selected);
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+
+svg .unknown {
+  fill: var(--wfadaptor-background);
+  fill-opacity:1;
+  stroke: var(--wfadaptor-base);
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+
+svg .gen {
+  fill:ButtonFace;
+  fill-opacity:1;
+  stroke-opacity:0.7;
+  stroke: var(--wfadaptor-base);
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+svg .standwithout {
+  fill: var(--wfadaptor-background);
+  fill-opacity:1;
+}
+svg .standtrans {
+  fill: var(--wfadaptor-background);
+}
+svg text.normal {
+  font-size:20px;
+  font-style:normal;
+  font-variant:normal;
+  font-weight:bold;
+  font-stretch:normal;
+  text-align:center;
+  line-height:125%;
+  writing-mode:horizontal-tb;
+  text-anchor:middle;
+  color: var(--wfadaptor-base);
+  fill: var(--wfadaptor-base);
+  fill-opacity:1;
+  stroke:none;
+  font-family:Arial;
+}
+svg text.inverted {
+  font-size:20px;
+  font-style:normal;
+  font-variant:normal;
+  font-weight:bold;
+  font-stretch:normal;
+  text-align:center;
+  line-height:125%;
+  writing-mode:horizontal-tb;
+  text-anchor:middle;
+  color: var(--wfadaptor-background);
+  fill: var(--wfadaptor-background);
+  fill-opacity:1;
+  stroke:none;
+  font-family:Arial;
+}
+
+svg text.super {
+  font-size:11px;
+  font-style:normal;
+  font-variant:normal;
+  font-weight:bold;
+  font-stretch:normal;
+  text-align:center;
+  line-height:100%;
+  writing-mode:horizontal-tb;
+  text-anchor:start;
+  color: var(--wfadaptor-base);
+  fill: var(--wfadaptor-base);
+  fill-opacity:1;
+  stroke:none;
+  font-family:Arial;
+}
+svg tspan.active {
+  fill: var(--wfadaptor-exec-active-text);
+  display: none;
+}
+svg tspan.vote {
+  fill: var(--wfadaptor-exec-vote-text);
+  display: none;
+}
+svg tspan.colon {
+  display: none;
+}
+svg tspan.necessary {
+  display: inline;
+}
+
+svg text.normallarge {
+  font-size:25px;
+  font-style:normal;
+  font-variant:normal;
+  font-weight:bold;
+  font-stretch:normal;
+  text-align:center;
+  line-height:125%;
+  writing-mode:horizontal-tb;
+  text-anchor:middle;
+  color: var(--wfadaptor-base);
+  fill: var(--wfadaptor-base);
+  fill-opacity:1;
+  stroke:none;
+  font-family:Arial;
+}
+
+svg text.small {
+  font-size:14px;
+  font-style:normal;
+  font-variant:normal;
+  font-weight:bold;
+  font-stretch:normal;
+  text-align:center;
+  line-height:125%;
+  writing-mode:horizontal-tb;
+  text-anchor:middle;
+  color: var(--wfadaptor-base);
+  fill: var(--wfadaptor-base);
+  fill-opacity:1;
+  stroke:none;
+  font-family:Arial;
+}
+
+svg text.label {
+  font-size:14px;
+  font-style:normal;
+  font-variant:normal;
+  font-stretch:normal;
+  text-align:center;
+  line-height:125%;
+  writing-mode:horizontal-tb;
+  text-anchor:start;
+  color: var(--wfadaptor-base);
+  fill: var(--wfadaptor-base);
+  fill-opacity:1;
+  stroke:none;
+  font-family:Arial;
+}
+
+svg text.smaller {
+  font-size:12px;
+  font-style:normal;
+  font-variant:normal;
+  font-weight:bold;
+  font-stretch:normal;
+  text-align:center;
+  line-height:125%;
+  writing-mode:horizontal-tb;
+  text-anchor:middle;
+  color: var(--wfadaptor-base);
+  fill: var(--wfadaptor-base);
+  fill-opacity:1;
+  stroke:none;
+  font-family:Arial;
+}
+
+#arrow {
+  stroke: var(--wfadaptor-base);
+  stroke-width: 2;
+  fill: var(--wfadaptor-base);
+}
+
+svg g.element[element-id].hover .hfill {
+  fill: var(--wfadaptor-selected);
+  fill-opacity:1;
+  cursor: pointer;
+}
+svg g.element[element-id].hover .hline {
+  fill: var(--wfadaptor-selected);
+  fill-opacity:1;
+  stroke: var(--wfadaptor-selected);
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+  cursor: pointer;
+}
+svg g.element[element-id].hover .htext {
+  fill: var(--wfadaptor-selected);
+  fill-opacity:1;
+  stroke: var(--wfadaptor-selected);
+  stroke-width:0.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+  cursor: pointer;
+}
+svg g.element[element-id].hover > text.label {
+  color: var(--wfadaptor-selected);
+  fill: var(--wfadaptor-selected);
+}
+svg g.element[element-id].hover .cfill {
+  fill: var(--wfadaptor-base);
+  fill-opacity:1;
+  stroke: var(--wfadaptor-base);
+  stroke-width:0.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+svg g.element[element-id].hover .cline {
+  stroke: var(--wfadaptor-base);
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-miterlimit:4;
+  stroke-opacity:1;
+  stroke-dasharray:none;
+}
+]]>  </style>
+  <rect element-row="28" class="stripe even" x="0" y="1125.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="27" class="stripe odd" x="0" y="1085.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="26" class="stripe even" x="0" y="1045.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="25" class="stripe odd" x="0" y="1005.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="24" class="stripe even" x="0" y="965.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="23" class="stripe odd" x="0" y="925.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="22" class="stripe even" x="0" y="885.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="21" class="stripe odd" x="0" y="845.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="20" class="stripe even" x="0" y="805.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="19" class="stripe odd" x="0" y="765.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="18" class="stripe even" x="0" y="725.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="17" class="stripe odd" x="0" y="685.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="16" class="stripe even" x="0" y="645.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="15" class="stripe odd" x="0" y="605.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="14" class="stripe even" x="0" y="565.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="13" class="stripe odd" x="0" y="525.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="12" class="stripe even" x="0" y="485.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="11" class="stripe odd" x="0" y="445.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="10" class="stripe even" x="0" y="405.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="9" class="stripe odd" x="0" y="365.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="8" class="stripe even" x="0" y="325.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="7" class="stripe odd" x="0" y="285.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="6" class="stripe even" x="0" y="245.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="5" class="stripe odd" x="0" y="205.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="4" class="stripe even" x="0" y="165.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="3" class="stripe odd" x="0" y="125.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="2" class="stripe even" x="0" y="85.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="1" class="stripe odd" x="0" y="45.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="0" class="stripe even" x="0" y="5.2" width="384.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <defs xmlns="http://www.w3.org/2000/svg">
+    <marker id="arrow" viewBox="0 0 10 10" refX="33" refY="5" orient="auto" markerUnits="strokeWidth" markerWidth="4.5" makerHeight="4.5" style="stroke: #000000; stroke-width: 2px; fill: #000000;">
+      <path d="m 2 2 l 6 3 l -6 3 z"/>
+    </marker>
+  </defs>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 80,105 80,145" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 80,185 120,185 120,225" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 120,265 160,265 160,305" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 160,305 160,345" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 160,345 160,385" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 160,385 160,425" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 240,585 240,625" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 240,625 240,665" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" d="M 200,545 240,545 240,585" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" d="M 200,545 280,545 280,705" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 200,505 200,545" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 240,665 240,725 214,725 200,745" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 280,705 280,725 214,725 200,745" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" d="M 160,465 200,465 200,505" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" d="M 160,465 320,465 320,785" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 160,425 160,465" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 200,745 200,805 174,805 160,825" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 320,785 320,805 174,805 160,825" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 120,225 120,265" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 120,865 120,265" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 160,825 160,845 134,845 120,865" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 120,865 120,905" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 120,905 95,905 95,215 80,185" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 80,145 80,185" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" d="M 40,65 80,65 80,105" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 360,945 360,985" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 360,985 360,1025" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 360,1025 360,1065" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" d="M 40,65 360,65 360,945" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 40,25 40,65" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 80,185 80,1085 54,1085 40,1105" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 360,1065 360,1085 54,1085 40,1105" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 40,1105 40,1145" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <g class="group"
+    xmlns="http://www.w3.org/2000/svg" element-id="group-description">
+    <g class="element" element-type="start_event" element-id="description"
+      xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(24.4,10.399999999999999)">
+        <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+          <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+          <tspan class="colon" style="display: none;">,</tspan>
+          <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+        </text>
+        <g xmlns="http://www.w3.org/2000/svg" class="activities">
+          <title xmlns="http://www.w3.org/2000/svg">START</title>
+          <circle cx="15" cy="15" r="14" class="cline stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+          <rect x="7" y="10" width="16" height="11" class="black" style="fill: #000000; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill: none"/>
+          <path d="m 7,10 8,6 8,-6" class="black" style="fill: #000000; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill: none"/>
+        </g>
+      </g>
+    </g>
+    <g class="group"
+      xmlns="http://www.w3.org/2000/svg" id="group-parallel_0">
+      <rect element-id="parallel_0" x="20.28" y="45.2" width="360" height="1080" class="tile" rx="15" ry="15"
+        xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/>
+      <g class="group"
+        xmlns="http://www.w3.org/2000/svg" id="group-parallel_branch_0">
+        <rect element-id="parallel_branch_0" x="60.28" y="85.2" width="280" height="840" class="tile" rx="15" ry="15"
+          xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/>
+        <g class="element primitive" element-type="manipulate" element-id="a11"
+          xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(64.4,130.4)">
+            <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+              <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+              <tspan class="colon" style="display: none;">,</tspan>
+              <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+            </text>
+            <g xmlns="http://www.w3.org/2000/svg" class="activities">
+              <title xmlns="http://www.w3.org/2000/svg">Initialize the Timer</title>
+              <rect x="1" y="1" width="28" height="28" rx="4" class="rfill hfill cline stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+              <text transform="translate(15,21)" class="normal" style="font-size: 20px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;fill: #000000; fill-opacity: 1; stroke: #000000; stroke-width: 0.2px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;">s</text>
+            </g>
+          </g>
+          <text class="label" transform="translate(384.4,150.4)"
+            xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+            <tspan x="0" dy="0"
+              xmlns="http://www.w3.org/2000/svg">Initialize the Timer</tspan>
+          </text>
+        </g>
+        <g class="group"
+          xmlns="http://www.w3.org/2000/svg" id="group-loop_1">
+          <rect element-id="loop_1" x="60.28" y="165.2" width="280" height="760" class="tile" rx="15" ry="15"
+            xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/>
+          <g class="element primitive" element-type="callmanipulate" element-id="a2"
+            xmlns="http://www.w3.org/2000/svg" element-endpoint="instance">
+            <g transform="translate(104.4,210.4)">
+              <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                <tspan class="colon" style="display: none;">,</tspan>
+                <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+              </text>
+              <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                <title xmlns="http://www.w3.org/2000/svg">Start an Instance</title>
+                <g class="replace">
+                  <rect x="1" y="1" width="28" height="28" rx="4" class="cline hfill rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  <path class="normal" style="fill: #000000; fill-opacity: 1; stroke: #000000; stroke-width: 0.2px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill:#000000;" d="m 21.561187,10.184155 c 0,-0.03232 0,-0.03232 0,-0.03232 C 21.076371,9.5054099 20.494591,8.9559512 19.815848,8.4388133 l 0,0.032323 C 19.266389,8.891311 18.71693,9.3438064 18.199794,9.7963017 17.973545,9.6670167 17.779619,9.5700535 17.585693,9.4730903 17.327124,9.3438064 17.068556,9.2145213 16.777665,9.1498799 16.680695,9.1175569 16.583739,9.0852339 16.486775,9.0852339 16.422135,8.3741695 16.357491,7.6631063 16.260528,6.952042 15.937318,6.887396 15.614106,6.887396 15.258574,6.855073 c -0.09697,0 -0.193926,0 -0.258569,0 -0.09697,0 -0.193925,0 -0.258568,0 -0.323211,0.032323 -0.614101,0.032323 -0.90499,0.096969 -0.09697,0.6787425 -0.161606,1.3898068 -0.193927,2.1008712 -0.129284,0 -0.226248,0.032323 -0.355532,0.064646 -0.03232,0 -0.06465,0 -0.09697,0.032323 -0.258568,0.064646 -0.517136,0.1939264 -0.775704,0.3232103 -0.226249,0.096969 -0.420175,0.1939264 -0.614102,0.3232114 -0.549458,-0.4524953 -1.066595,-0.87267 -1.616054,-1.3251654 0,0 0,0 -0.03232,-0.032323 C 10.022552,8.5357845 9.8932693,8.6327419 9.7963053,8.7297051 9.5700583,8.8913109 9.3761314,9.0852373 9.2145262,9.2791637 8.9236366,9.5377327 8.6973883,9.8609431 8.4388194,10.184155 c 0,0 0,0 0.032323,0 0.4201747,0.549459 0.87267,1.066596 1.325166,1.616054 -0.129285,0.193927 -0.258569,0.420175 -0.355533,0.614101 -0.129285,0.258569 -0.226248,0.549459 -0.2908894,0.808028 -0.064646,0.129284 -0.096969,0.258568 -0.096969,0.355531 -0.7110644,0.06465 -1.4221288,0.129285 -2.1008713,0.226248 -0.064646,0.323211 -0.096969,0.646422 -0.096969,1.001954 0,0.484816 0.032323,0.969632 0.1292839,1.422128 0.6787437,0.06465 1.3574862,0.129284 2.0685505,0.193926 0,0.129284 0.032323,0.258569 0.096969,0.355532 0.064646,0.29089 0.1616049,0.549459 0.2908899,0.840349 0.129284,0.226247 0.2262471,0.452495 0.387853,0.646421 -0.452496,0.549459 -0.9049912,1.066596 -1.3251647,1.616054 0.484816,0.678744 1.0665957,1.260523 1.7453387,1.74534 l 0,-0.03232 c 0.517137,-0.420175 1.066596,-0.87267 1.583733,-1.325166 l 0.03232,0 c 0.161605,0.09697 0.355532,0.193928 0.517136,0.290891 0.290891,0.129284 0.614101,0.258568 0.904991,0.32321 0.129284,0.03232 0.226248,0.06465 0.32321,0.09697 0.06465,0.678743 0.129285,1.389807 0.226249,2.100871 0.290889,0.03232 0.581779,0.06465 0.90499,0.06465 0.06465,0 0.258568,0 0.484817,0 0.355532,0 0.711064,-0.03232 1.066595,-0.09697 0.06465,-0.678742 0.129285,-1.389807 0.193926,-2.10087 0.09697,-0.03232 0.193927,-0.06465 0.29089,-0.09697 l 0,0 c 0.290891,-0.06464 0.549459,-0.161605 0.808028,-0.290889 0.226248,-0.09697 0.452495,-0.226248 0.678743,-0.387854 0,0.03232 0,0.03232 0.03232,0.03232 0.517137,0.452495 1.066596,0.904989 1.616054,1.325164 0.09697,-0.06465 0.193927,-0.129284 0.323212,-0.226247 0.193926,-0.161606 0.387852,-0.355532 0.549458,-0.549459 0.29089,-0.290889 0.58178,-0.614101 0.840348,-0.969633 -0.452495,-0.549459 -0.90499,-1.098917 -1.357486,-1.616054 0,-0.03232 0,-0.03232 0,-0.03232 0.09697,-0.161605 0.193927,-0.355531 0.29089,-0.549457 0.09696,-0.258569 0.226248,-0.517138 0.29089,-0.775707 0,-0.03232 0,-0.06465 0.03232,-0.06465 0,-0.129285 0.03232,-0.226248 0.06465,-0.290891 0.711065,-0.06465 1.422129,-0.129284 2.100872,-0.193926 0.06464,-0.323211 0.06464,-0.646422 0.09697,-0.969632 0,-0.09697 0,-0.193927 0,-0.29089 0,-0.06465 0,-0.161606 0,-0.258569 -0.03232,-0.323212 -0.03232,-0.646422 -0.09697,-0.969633 -0.678743,-0.06465 -1.389807,-0.129284 -2.100872,-0.193927 -0.03232,-0.09697 -0.06465,-0.193926 -0.06465,-0.290889 -0.09697,-0.29089 -0.193927,-0.58178 -0.323212,-0.872669 -0.09697,-0.193927 -0.226247,-0.420175 -0.32321,-0.614102 0.420173,-0.517136 0.872669,-1.066595 1.325164,-1.616054 z m -8.629731,2.682651 c 0.581779,-0.614101 1.292844,-0.904991 2.100871,-0.87267 0.840348,-0.03232 1.519091,0.258569 2.133192,0.87267 0.581779,0.581779 0.872669,1.292843 0.872669,2.10087 0,0.840348 -0.29089,1.519092 -0.872669,2.133192 -0.614101,0.58178 -1.292844,0.87267 -2.133192,0.87267 -0.808027,0 -1.519092,-0.29089 -2.100871,-0.87267 -0.581779,-0.6141 -0.872669,-1.292844 -0.872669,-2.133192 0,-0.808027 0.29089,-1.519091 0.872669,-2.10087 z"/>
+                </g>
+                <rect x="23" y="21" width="12" height="12" rx="2" class="cline rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                <text transform="translate(29,30.75)" class="small" style="font-size: 14px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">s</text>
+              </g>
+            </g>
+            <text class="label" transform="translate(384.4,230.4)"
+              xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+              <tspan x="0" dy="0"
+                xmlns="http://www.w3.org/2000/svg">Start an Instance</tspan>
+            </text>
+          </g>
+          <g class="group"
+            xmlns="http://www.w3.org/2000/svg" id="group-loop_0">
+            <rect element-id="loop_0" x="100.28" y="245.2" width="240" height="640" class="tile" rx="15" ry="15"
+              xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/>
+            <g class="element primitive" element-type="call" element-id="a7"
+              xmlns="http://www.w3.org/2000/svg" element-endpoint="timeout">
+              <g transform="translate(144.4,290.4)">
+                <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                  <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                  <tspan class="colon" style="display: none;">,</tspan>
+                  <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+                </text>
+                <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                  <title xmlns="http://www.w3.org/2000/svg">Timeout for 2 Seconds</title>
+                  <g xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="15" cy="15" r="14" class="cline stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                    <circle cx="15" cy="15" r="11" class="cline hfill rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                    <path d="m 9,11 7,5 0,-6" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill: none;"/>
+                  </g>
+                </g>
+              </g>
+              <text class="label" transform="translate(384.4,310.4)"
+                xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+                <tspan x="0" dy="0"
+                  xmlns="http://www.w3.org/2000/svg">Timeout for 2 Seconds</tspan>
+              </text>
+            </g>
+            <g class="element primitive" element-type="callmanipulate" element-id="a5"
+              xmlns="http://www.w3.org/2000/svg" element-endpoint="rudinstance">
+              <g transform="translate(144.4,330.4)">
+                <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                  <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                  <tspan class="colon" style="display: none;">,</tspan>
+                  <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+                </text>
+                <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                  <title xmlns="http://www.w3.org/2000/svg">Get Instance Updates</title>
+                  <g class="replace">
+                    <rect x="1" y="1" width="28" height="28" rx="4" class="cline hfill rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                    <path class="normal" style="fill: #000000; fill-opacity: 1; stroke: #000000; stroke-width: 0.2px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill:#000000;" d="m 21.561187,10.184155 c 0,-0.03232 0,-0.03232 0,-0.03232 C 21.076371,9.5054099 20.494591,8.9559512 19.815848,8.4388133 l 0,0.032323 C 19.266389,8.891311 18.71693,9.3438064 18.199794,9.7963017 17.973545,9.6670167 17.779619,9.5700535 17.585693,9.4730903 17.327124,9.3438064 17.068556,9.2145213 16.777665,9.1498799 16.680695,9.1175569 16.583739,9.0852339 16.486775,9.0852339 16.422135,8.3741695 16.357491,7.6631063 16.260528,6.952042 15.937318,6.887396 15.614106,6.887396 15.258574,6.855073 c -0.09697,0 -0.193926,0 -0.258569,0 -0.09697,0 -0.193925,0 -0.258568,0 -0.323211,0.032323 -0.614101,0.032323 -0.90499,0.096969 -0.09697,0.6787425 -0.161606,1.3898068 -0.193927,2.1008712 -0.129284,0 -0.226248,0.032323 -0.355532,0.064646 -0.03232,0 -0.06465,0 -0.09697,0.032323 -0.258568,0.064646 -0.517136,0.1939264 -0.775704,0.3232103 -0.226249,0.096969 -0.420175,0.1939264 -0.614102,0.3232114 -0.549458,-0.4524953 -1.066595,-0.87267 -1.616054,-1.3251654 0,0 0,0 -0.03232,-0.032323 C 10.022552,8.5357845 9.8932693,8.6327419 9.7963053,8.7297051 9.5700583,8.8913109 9.3761314,9.0852373 9.2145262,9.2791637 8.9236366,9.5377327 8.6973883,9.8609431 8.4388194,10.184155 c 0,0 0,0 0.032323,0 0.4201747,0.549459 0.87267,1.066596 1.325166,1.616054 -0.129285,0.193927 -0.258569,0.420175 -0.355533,0.614101 -0.129285,0.258569 -0.226248,0.549459 -0.2908894,0.808028 -0.064646,0.129284 -0.096969,0.258568 -0.096969,0.355531 -0.7110644,0.06465 -1.4221288,0.129285 -2.1008713,0.226248 -0.064646,0.323211 -0.096969,0.646422 -0.096969,1.001954 0,0.484816 0.032323,0.969632 0.1292839,1.422128 0.6787437,0.06465 1.3574862,0.129284 2.0685505,0.193926 0,0.129284 0.032323,0.258569 0.096969,0.355532 0.064646,0.29089 0.1616049,0.549459 0.2908899,0.840349 0.129284,0.226247 0.2262471,0.452495 0.387853,0.646421 -0.452496,0.549459 -0.9049912,1.066596 -1.3251647,1.616054 0.484816,0.678744 1.0665957,1.260523 1.7453387,1.74534 l 0,-0.03232 c 0.517137,-0.420175 1.066596,-0.87267 1.583733,-1.325166 l 0.03232,0 c 0.161605,0.09697 0.355532,0.193928 0.517136,0.290891 0.290891,0.129284 0.614101,0.258568 0.904991,0.32321 0.129284,0.03232 0.226248,0.06465 0.32321,0.09697 0.06465,0.678743 0.129285,1.389807 0.226249,2.100871 0.290889,0.03232 0.581779,0.06465 0.90499,0.06465 0.06465,0 0.258568,0 0.484817,0 0.355532,0 0.711064,-0.03232 1.066595,-0.09697 0.06465,-0.678742 0.129285,-1.389807 0.193926,-2.10087 0.09697,-0.03232 0.193927,-0.06465 0.29089,-0.09697 l 0,0 c 0.290891,-0.06464 0.549459,-0.161605 0.808028,-0.290889 0.226248,-0.09697 0.452495,-0.226248 0.678743,-0.387854 0,0.03232 0,0.03232 0.03232,0.03232 0.517137,0.452495 1.066596,0.904989 1.616054,1.325164 0.09697,-0.06465 0.193927,-0.129284 0.323212,-0.226247 0.193926,-0.161606 0.387852,-0.355532 0.549458,-0.549459 0.29089,-0.290889 0.58178,-0.614101 0.840348,-0.969633 -0.452495,-0.549459 -0.90499,-1.098917 -1.357486,-1.616054 0,-0.03232 0,-0.03232 0,-0.03232 0.09697,-0.161605 0.193927,-0.355531 0.29089,-0.549457 0.09696,-0.258569 0.226248,-0.517138 0.29089,-0.775707 0,-0.03232 0,-0.06465 0.03232,-0.06465 0,-0.129285 0.03232,-0.226248 0.06465,-0.290891 0.711065,-0.06465 1.422129,-0.129284 2.100872,-0.193926 0.06464,-0.323211 0.06464,-0.646422 0.09697,-0.969632 0,-0.09697 0,-0.193927 0,-0.29089 0,-0.06465 0,-0.161606 0,-0.258569 -0.03232,-0.323212 -0.03232,-0.646422 -0.09697,-0.969633 -0.678743,-0.06465 -1.389807,-0.129284 -2.100872,-0.193927 -0.03232,-0.09697 -0.06465,-0.193926 -0.06465,-0.290889 -0.09697,-0.29089 -0.193927,-0.58178 -0.323212,-0.872669 -0.09697,-0.193927 -0.226247,-0.420175 -0.32321,-0.614102 0.420173,-0.517136 0.872669,-1.066595 1.325164,-1.616054 z m -8.629731,2.682651 c 0.581779,-0.614101 1.292844,-0.904991 2.100871,-0.87267 0.840348,-0.03232 1.519091,0.258569 2.133192,0.87267 0.581779,0.581779 0.872669,1.292843 0.872669,2.10087 0,0.840348 -0.29089,1.519092 -0.872669,2.133192 -0.614101,0.58178 -1.292844,0.87267 -2.133192,0.87267 -0.808027,0 -1.519092,-0.29089 -2.100871,-0.87267 -0.581779,-0.6141 -0.872669,-1.292844 -0.872669,-2.133192 0,-0.808027 0.29089,-1.519091 0.872669,-2.10087 z"/>
+                  </g>
+                  <rect x="23" y="21" width="12" height="12" rx="2" class="cline rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  <text transform="translate(29,30.75)" class="small" style="font-size: 14px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">s</text>
+                </g>
+              </g>
+              <text class="label" transform="translate(384.4,350.4)"
+                xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+                <tspan x="0" dy="0"
+                  xmlns="http://www.w3.org/2000/svg">Get Instance Updates</tspan>
+              </text>
+            </g>
+            <g class="element primitive" element-type="callmanipulate" element-id="a10"
+              xmlns="http://www.w3.org/2000/svg" element-endpoint="serverstatus">
+              <g transform="translate(144.4,370.4)">
+                <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                  <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                  <tspan class="colon" style="display: none;">,</tspan>
+                  <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+                </text>
+                <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                  <title xmlns="http://www.w3.org/2000/svg">Get Server Status</title>
+                  <g class="replace">
+                    <rect x="1" y="1" width="28" height="28" rx="4" class="cline hfill rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                    <path class="normal" style="fill: #000000; fill-opacity: 1; stroke: #000000; stroke-width: 0.2px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill:#000000;" d="m 21.561187,10.184155 c 0,-0.03232 0,-0.03232 0,-0.03232 C 21.076371,9.5054099 20.494591,8.9559512 19.815848,8.4388133 l 0,0.032323 C 19.266389,8.891311 18.71693,9.3438064 18.199794,9.7963017 17.973545,9.6670167 17.779619,9.5700535 17.585693,9.4730903 17.327124,9.3438064 17.068556,9.2145213 16.777665,9.1498799 16.680695,9.1175569 16.583739,9.0852339 16.486775,9.0852339 16.422135,8.3741695 16.357491,7.6631063 16.260528,6.952042 15.937318,6.887396 15.614106,6.887396 15.258574,6.855073 c -0.09697,0 -0.193926,0 -0.258569,0 -0.09697,0 -0.193925,0 -0.258568,0 -0.323211,0.032323 -0.614101,0.032323 -0.90499,0.096969 -0.09697,0.6787425 -0.161606,1.3898068 -0.193927,2.1008712 -0.129284,0 -0.226248,0.032323 -0.355532,0.064646 -0.03232,0 -0.06465,0 -0.09697,0.032323 -0.258568,0.064646 -0.517136,0.1939264 -0.775704,0.3232103 -0.226249,0.096969 -0.420175,0.1939264 -0.614102,0.3232114 -0.549458,-0.4524953 -1.066595,-0.87267 -1.616054,-1.3251654 0,0 0,0 -0.03232,-0.032323 C 10.022552,8.5357845 9.8932693,8.6327419 9.7963053,8.7297051 9.5700583,8.8913109 9.3761314,9.0852373 9.2145262,9.2791637 8.9236366,9.5377327 8.6973883,9.8609431 8.4388194,10.184155 c 0,0 0,0 0.032323,0 0.4201747,0.549459 0.87267,1.066596 1.325166,1.616054 -0.129285,0.193927 -0.258569,0.420175 -0.355533,0.614101 -0.129285,0.258569 -0.226248,0.549459 -0.2908894,0.808028 -0.064646,0.129284 -0.096969,0.258568 -0.096969,0.355531 -0.7110644,0.06465 -1.4221288,0.129285 -2.1008713,0.226248 -0.064646,0.323211 -0.096969,0.646422 -0.096969,1.001954 0,0.484816 0.032323,0.969632 0.1292839,1.422128 0.6787437,0.06465 1.3574862,0.129284 2.0685505,0.193926 0,0.129284 0.032323,0.258569 0.096969,0.355532 0.064646,0.29089 0.1616049,0.549459 0.2908899,0.840349 0.129284,0.226247 0.2262471,0.452495 0.387853,0.646421 -0.452496,0.549459 -0.9049912,1.066596 -1.3251647,1.616054 0.484816,0.678744 1.0665957,1.260523 1.7453387,1.74534 l 0,-0.03232 c 0.517137,-0.420175 1.066596,-0.87267 1.583733,-1.325166 l 0.03232,0 c 0.161605,0.09697 0.355532,0.193928 0.517136,0.290891 0.290891,0.129284 0.614101,0.258568 0.904991,0.32321 0.129284,0.03232 0.226248,0.06465 0.32321,0.09697 0.06465,0.678743 0.129285,1.389807 0.226249,2.100871 0.290889,0.03232 0.581779,0.06465 0.90499,0.06465 0.06465,0 0.258568,0 0.484817,0 0.355532,0 0.711064,-0.03232 1.066595,-0.09697 0.06465,-0.678742 0.129285,-1.389807 0.193926,-2.10087 0.09697,-0.03232 0.193927,-0.06465 0.29089,-0.09697 l 0,0 c 0.290891,-0.06464 0.549459,-0.161605 0.808028,-0.290889 0.226248,-0.09697 0.452495,-0.226248 0.678743,-0.387854 0,0.03232 0,0.03232 0.03232,0.03232 0.517137,0.452495 1.066596,0.904989 1.616054,1.325164 0.09697,-0.06465 0.193927,-0.129284 0.323212,-0.226247 0.193926,-0.161606 0.387852,-0.355532 0.549458,-0.549459 0.29089,-0.290889 0.58178,-0.614101 0.840348,-0.969633 -0.452495,-0.549459 -0.90499,-1.098917 -1.357486,-1.616054 0,-0.03232 0,-0.03232 0,-0.03232 0.09697,-0.161605 0.193927,-0.355531 0.29089,-0.549457 0.09696,-0.258569 0.226248,-0.517138 0.29089,-0.775707 0,-0.03232 0,-0.06465 0.03232,-0.06465 0,-0.129285 0.03232,-0.226248 0.06465,-0.290891 0.711065,-0.06465 1.422129,-0.129284 2.100872,-0.193926 0.06464,-0.323211 0.06464,-0.646422 0.09697,-0.969632 0,-0.09697 0,-0.193927 0,-0.29089 0,-0.06465 0,-0.161606 0,-0.258569 -0.03232,-0.323212 -0.03232,-0.646422 -0.09697,-0.969633 -0.678743,-0.06465 -1.389807,-0.129284 -2.100872,-0.193927 -0.03232,-0.09697 -0.06465,-0.193926 -0.06465,-0.290889 -0.09697,-0.29089 -0.193927,-0.58178 -0.323212,-0.872669 -0.09697,-0.193927 -0.226247,-0.420175 -0.32321,-0.614102 0.420173,-0.517136 0.872669,-1.066595 1.325164,-1.616054 z m -8.629731,2.682651 c 0.581779,-0.614101 1.292844,-0.904991 2.100871,-0.87267 0.840348,-0.03232 1.519091,0.258569 2.133192,0.87267 0.581779,0.581779 0.872669,1.292843 0.872669,2.10087 0,0.840348 -0.29089,1.519092 -0.872669,2.133192 -0.614101,0.58178 -1.292844,0.87267 -2.133192,0.87267 -0.808027,0 -1.519092,-0.29089 -2.100871,-0.87267 -0.581779,-0.6141 -0.872669,-1.292844 -0.872669,-2.133192 0,-0.808027 0.29089,-1.519091 0.872669,-2.10087 z"/>
+                  </g>
+                  <rect x="23" y="21" width="12" height="12" rx="2" class="cline rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  <text transform="translate(29,30.75)" class="small" style="font-size: 14px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">s</text>
+                </g>
+              </g>
+              <text class="label" transform="translate(384.4,390.4)"
+                xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+                <tspan x="0" dy="0"
+                  xmlns="http://www.w3.org/2000/svg">Get Server Status</tspan>
+              </text>
+            </g>
+            <g class="element primitive" element-type="manipulate" element-id="a6"
+              xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(144.4,410.4)">
+                <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                  <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                  <tspan class="colon" style="display: none;">,</tspan>
+                  <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+                </text>
+                <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                  <title xmlns="http://www.w3.org/2000/svg">Calculate the remainingDurationToRequired</title>
+                  <rect x="1" y="1" width="28" height="28" rx="4" class="rfill hfill cline stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  <text transform="translate(15,21)" class="normal" style="font-size: 20px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;fill: #000000; fill-opacity: 1; stroke: #000000; stroke-width: 0.2px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;">s</text>
+                </g>
+              </g>
+              <text class="label" transform="translate(384.4,430.4)"
+                xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+                <tspan x="0" dy="0"
+                  xmlns="http://www.w3.org/2000/svg">Calculate the remainingDurationToRequired</tspan>
+              </text>
+            </g>
+            <g class="group"
+              xmlns="http://www.w3.org/2000/svg" id="group-choose_1">
+              <rect element-id="choose_1" x="140.28" y="445.2" width="200" height="400" class="tile" rx="15" ry="15"
+                xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/>
+              <g class="group"
+                xmlns="http://www.w3.org/2000/svg" id="group-alternative_1">
+                <rect element-id="alternative_1" x="180.28" y="485.2" width="120" height="280" class="tile" rx="15" ry="15"
+                  xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;display: none;"/>
+                <g class="group"
+                  xmlns="http://www.w3.org/2000/svg" id="group-choose_0">
+                  <rect element-id="choose_0" x="180.28" y="525.2" width="120" height="240" class="tile" rx="15" ry="15"
+                    xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/>
+                  <g class="group"
+                    xmlns="http://www.w3.org/2000/svg" id="group-alternative_0">
+                    <rect element-id="alternative_0" x="220.28" y="565.2" width="40" height="120" class="tile" rx="15" ry="15"
+                      xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/>
+                    <g class="element primitive" element-type="call" element-id="a12"
+                      xmlns="http://www.w3.org/2000/svg" element-endpoint="timeout">
+                      <g transform="translate(224.4,610.4)">
+                        <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                          <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                          <tspan class="colon" style="display: none;">,</tspan>
+                          <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+                        </text>
+                        <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                          <title xmlns="http://www.w3.org/2000/svg">Wait for 5 seconds before recovering</title>
+                          <g xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="15" cy="15" r="14" class="cline stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                            <circle cx="15" cy="15" r="11" class="cline hfill rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                            <path d="m 9,11 7,5 0,-6" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill: none;"/>
+                          </g>
+                        </g>
+                      </g>
+                      <text class="label" transform="translate(384.4,630.4)"
+                        xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+                        <tspan x="0" dy="0"
+                          xmlns="http://www.w3.org/2000/svg">Wait for 5 seconds before recovering</tspan>
+                      </text>
+                    </g>
+                    <g class="element primitive" element-type="call" element-id="a1"
+                      xmlns="http://www.w3.org/2000/svg" element-endpoint="recover">
+                      <g transform="translate(224.4,650.4)">
+                        <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                          <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                          <tspan class="colon" style="display: none;">,</tspan>
+                          <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+                        </text>
+                        <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                          <title xmlns="http://www.w3.org/2000/svg">Recover the Emergency Stop</title>
+                          <g class="replace">
+                            <rect x="1" y="1" width="28" height="28" rx="4" class="hfill rfill cline stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                            <path class="normal" style="fill: #000000; fill-opacity: 1; stroke: #000000; stroke-width: 0.2px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill:#000000;" d="m 21.561187,10.184155 c 0,-0.03232 0,-0.03232 0,-0.03232 C 21.076371,9.5054099 20.494591,8.9559512 19.815848,8.4388133 l 0,0.032323 C 19.266389,8.891311 18.71693,9.3438064 18.199794,9.7963017 17.973545,9.6670167 17.779619,9.5700535 17.585693,9.4730903 17.327124,9.3438064 17.068556,9.2145213 16.777665,9.1498799 16.680695,9.1175569 16.583739,9.0852339 16.486775,9.0852339 16.422135,8.3741695 16.357491,7.6631063 16.260528,6.952042 15.937318,6.887396 15.614106,6.887396 15.258574,6.855073 c -0.09697,0 -0.193926,0 -0.258569,0 -0.09697,0 -0.193925,0 -0.258568,0 -0.323211,0.032323 -0.614101,0.032323 -0.90499,0.096969 -0.09697,0.6787425 -0.161606,1.3898068 -0.193927,2.1008712 -0.129284,0 -0.226248,0.032323 -0.355532,0.064646 -0.03232,0 -0.06465,0 -0.09697,0.032323 -0.258568,0.064646 -0.517136,0.1939264 -0.775704,0.3232103 -0.226249,0.096969 -0.420175,0.1939264 -0.614102,0.3232114 -0.549458,-0.4524953 -1.066595,-0.87267 -1.616054,-1.3251654 0,0 0,0 -0.03232,-0.032323 C 10.022552,8.5357845 9.8932693,8.6327419 9.7963053,8.7297051 9.5700583,8.8913109 9.3761314,9.0852373 9.2145262,9.2791637 8.9236366,9.5377327 8.6973883,9.8609431 8.4388194,10.184155 c 0,0 0,0 0.032323,0 0.4201747,0.549459 0.87267,1.066596 1.325166,1.616054 -0.129285,0.193927 -0.258569,0.420175 -0.355533,0.614101 -0.129285,0.258569 -0.226248,0.549459 -0.2908894,0.808028 -0.064646,0.129284 -0.096969,0.258568 -0.096969,0.355531 -0.7110644,0.06465 -1.4221288,0.129285 -2.1008713,0.226248 -0.064646,0.323211 -0.096969,0.646422 -0.096969,1.001954 0,0.484816 0.032323,0.969632 0.1292839,1.422128 0.6787437,0.06465 1.3574862,0.129284 2.0685505,0.193926 0,0.129284 0.032323,0.258569 0.096969,0.355532 0.064646,0.29089 0.1616049,0.549459 0.2908899,0.840349 0.129284,0.226247 0.2262471,0.452495 0.387853,0.646421 -0.452496,0.549459 -0.9049912,1.066596 -1.3251647,1.616054 0.484816,0.678744 1.0665957,1.260523 1.7453387,1.74534 l 0,-0.03232 c 0.517137,-0.420175 1.066596,-0.87267 1.583733,-1.325166 l 0.03232,0 c 0.161605,0.09697 0.355532,0.193928 0.517136,0.290891 0.290891,0.129284 0.614101,0.258568 0.904991,0.32321 0.129284,0.03232 0.226248,0.06465 0.32321,0.09697 0.06465,0.678743 0.129285,1.389807 0.226249,2.100871 0.290889,0.03232 0.581779,0.06465 0.90499,0.06465 0.06465,0 0.258568,0 0.484817,0 0.355532,0 0.711064,-0.03232 1.066595,-0.09697 0.06465,-0.678742 0.129285,-1.389807 0.193926,-2.10087 0.09697,-0.03232 0.193927,-0.06465 0.29089,-0.09697 l 0,0 c 0.290891,-0.06464 0.549459,-0.161605 0.808028,-0.290889 0.226248,-0.09697 0.452495,-0.226248 0.678743,-0.387854 0,0.03232 0,0.03232 0.03232,0.03232 0.517137,0.452495 1.066596,0.904989 1.616054,1.325164 0.09697,-0.06465 0.193927,-0.129284 0.323212,-0.226247 0.193926,-0.161606 0.387852,-0.355532 0.549458,-0.549459 0.29089,-0.290889 0.58178,-0.614101 0.840348,-0.969633 -0.452495,-0.549459 -0.90499,-1.098917 -1.357486,-1.616054 0,-0.03232 0,-0.03232 0,-0.03232 0.09697,-0.161605 0.193927,-0.355531 0.29089,-0.549457 0.09696,-0.258569 0.226248,-0.517138 0.29089,-0.775707 0,-0.03232 0,-0.06465 0.03232,-0.06465 0,-0.129285 0.03232,-0.226248 0.06465,-0.290891 0.711065,-0.06465 1.422129,-0.129284 2.100872,-0.193926 0.06464,-0.323211 0.06464,-0.646422 0.09697,-0.969632 0,-0.09697 0,-0.193927 0,-0.29089 0,-0.06465 0,-0.161606 0,-0.258569 -0.03232,-0.323212 -0.03232,-0.646422 -0.09697,-0.969633 -0.678743,-0.06465 -1.389807,-0.129284 -2.100872,-0.193927 -0.03232,-0.09697 -0.06465,-0.193926 -0.06465,-0.290889 -0.09697,-0.29089 -0.193927,-0.58178 -0.323212,-0.872669 -0.09697,-0.193927 -0.226247,-0.420175 -0.32321,-0.614102 0.420173,-0.517136 0.872669,-1.066595 1.325164,-1.616054 z m -8.629731,2.682651 c 0.581779,-0.614101 1.292844,-0.904991 2.100871,-0.87267 0.840348,-0.03232 1.519091,0.258569 2.133192,0.87267 0.581779,0.581779 0.872669,1.292843 0.872669,2.10087 0,0.840348 -0.29089,1.519092 -0.872669,2.133192 -0.614101,0.58178 -1.292844,0.87267 -2.133192,0.87267 -0.808027,0 -1.519092,-0.29089 -2.100871,-0.87267 -0.581779,-0.6141 -0.872669,-1.292844 -0.872669,-2.133192 0,-0.808027 0.29089,-1.519091 0.872669,-2.10087 z"/>
+                          </g>
+                        </g>
+                      </g>
+                      <text class="label" transform="translate(384.4,670.4)"
+                        xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+                        <tspan x="0" dy="0"
+                          xmlns="http://www.w3.org/2000/svg">Recover the Emergency Stop</tspan>
+                      </text>
+                    </g>
+                    <g class="element complex" element-type="alternative" element-id="alternative_0"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <g transform="translate(224.4,570.4)">
+                        <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                          <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                          <tspan class="colon" style="display: none;">,</tspan>
+                          <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+                        </text>
+                        <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                          <title xmlns="http://www.w3.org/2000/svg">data.serverStatus['isEmergencyStopped']</title>
+                          <rect x="11" y="6" width="9" height="18" rx="0" class="hline white" style="fill: #ffffff; fill-opacity: 1; stroke: #ffffff; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                          <path class="cline hfill stand" d="M 11,5 C  2,9  2,21 11,25 M 20,5 C 29,9 29,21 20,25" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;stroke-dasharray:1,4;"/>
+                          <line x1="15.6" y1="4" x2="15.6" y2="27" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+                        </g>
+                      </g>
+                      <text class="label" transform="translate(384.4,590.4)"
+                        xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+                        <tspan x="0" dy="0"
+                          xmlns="http://www.w3.org/2000/svg">data.serverStatus['isEmergencyStopped']</tspan>
+                      </text>
+                    </g>
+                  </g>
+                  <g class="group"
+                    xmlns="http://www.w3.org/2000/svg" id="group-otherwise_0">
+                    <rect element-id="otherwise_0" x="260.28" y="685.2" width="40" height="40" class="tile" rx="15" ry="15"
+                      xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/>
+                    <g class="element complex" element-type="otherwise" element-id="otherwise_0"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <g transform="translate(264.4,690.4)">
+                        <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                          <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                          <tspan class="colon" style="display: none;">,</tspan>
+                          <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+                        </text>
+                        <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                          <title xmlns="http://www.w3.org/2000/svg"/>
+                          <circle cx="15" cy="15" r="11" class="hfill standtrans" style="fill: #ffffff;"/>
+                          <line x1="9" y1="21" x2="21" y2="9" class="stand cline hline" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                          <line x1="15.6" y1="4" x2="15.6" y2="27" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                  <g class="element complex" element-type="choose_exclusive" element-id="choose_0"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(184.4,530.4)">
+                      <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                        <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                        <tspan class="colon" style="display: none;">,</tspan>
+                        <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+                      </text>
+                      <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                        <title xmlns="http://www.w3.org/2000/svg">exclusive</title>
+                        <rect transform="rotate(45,14,12)" x="7" y="3" width="21" height="21" class="cline hfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                        <line x1="10.5" y1="20.5" x2="20.5" y2="10.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                        <line x1="10.5" y1="10.5" x2="20.5" y2="20.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                      </g>
+                    </g>
+                    <g class="element primitive" element-type="choose_exclusive_finish" element-id="choose_0"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <g transform="translate(184.4,730.4)">
+                        <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                          <title xmlns="http://www.w3.org/2000/svg">exclusive</title>
+                          <rect transform="rotate(45,14,12)" x="7" y="3" width="21" height="21" class="cline hfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                          <line x1="10.5" y1="20.5" x2="20.5" y2="10.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                          <line x1="10.5" y1="10.5" x2="20.5" y2="20.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                        </g>
+                      </g>
+                      <text class="label" transform="translate(384.4,550.4)"
+                        xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+                        <tspan x="0" dy="0"
+                          xmlns="http://www.w3.org/2000/svg">exclusive</tspan>
+                      </text>
+                    </g>
+                    <text class="label" transform="translate(384.4,550.4)"
+                      xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+                      <tspan x="0" dy="0"
+                        xmlns="http://www.w3.org/2000/svg">exclusive</tspan>
+                    </text>
+                  </g>
+                </g>
+                <g class="element complex" element-type="alternative" element-id="alternative_1"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g transform="translate(184.4,490.4)">
+                    <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                      <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                      <tspan class="colon" style="display: none;">,</tspan>
+                      <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+                    </text>
+                    <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                      <title xmlns="http://www.w3.org/2000/svg">data.remainingDurationToRequired &gt; 0 and data.instance['stopTimestamp']</title>
+                      <rect x="11" y="6" width="9" height="18" rx="0" class="hline white" style="fill: #ffffff; fill-opacity: 1; stroke: #ffffff; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                      <path class="cline hfill stand" d="M 11,5 C  2,9  2,21 11,25 M 20,5 C 29,9 29,21 20,25" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;stroke-dasharray:1,4;"/>
+                      <line x1="15.6" y1="4" x2="15.6" y2="27" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+                    </g>
+                  </g>
+                  <text class="label" transform="translate(384.4,510.4)"
+                    xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+                    <tspan x="0" dy="0"
+                      xmlns="http://www.w3.org/2000/svg">data.remainingDurationToRequired &gt; 0 and data.instance['stopTimestamp']</tspan>
+                  </text>
+                </g>
+              </g>
+              <g class="group"
+                xmlns="http://www.w3.org/2000/svg" id="group-otherwise_1">
+                <rect element-id="otherwise_1" x="300.28" y="765.2" width="40" height="40" class="tile" rx="15" ry="15"
+                  xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/>
+                <g class="element complex" element-type="otherwise" element-id="otherwise_1"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g transform="translate(304.4,770.4)">
+                    <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                      <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                      <tspan class="colon" style="display: none;">,</tspan>
+                      <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+                    </text>
+                    <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                      <title xmlns="http://www.w3.org/2000/svg"/>
+                      <circle cx="15" cy="15" r="11" class="hfill standtrans" style="fill: #ffffff;"/>
+                      <line x1="9" y1="21" x2="21" y2="9" class="stand cline hline" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                      <line x1="15.6" y1="4" x2="15.6" y2="27" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+                    </g>
+                  </g>
+                </g>
+              </g>
+              <g class="element complex" element-type="choose_exclusive" element-id="choose_1"
+                xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(144.4,450.4)">
+                  <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                    <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                    <tspan class="colon" style="display: none;">,</tspan>
+                    <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+                  </text>
+                  <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                    <title xmlns="http://www.w3.org/2000/svg">exclusive</title>
+                    <rect transform="rotate(45,14,12)" x="7" y="3" width="21" height="21" class="cline hfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                    <line x1="10.5" y1="20.5" x2="20.5" y2="10.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                    <line x1="10.5" y1="10.5" x2="20.5" y2="20.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  </g>
+                </g>
+                <g class="element primitive" element-type="choose_exclusive_finish" element-id="choose_1"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g transform="translate(144.4,810.4)">
+                    <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                      <title xmlns="http://www.w3.org/2000/svg">exclusive</title>
+                      <rect transform="rotate(45,14,12)" x="7" y="3" width="21" height="21" class="cline hfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                      <line x1="10.5" y1="20.5" x2="20.5" y2="10.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                      <line x1="10.5" y1="10.5" x2="20.5" y2="20.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                    </g>
+                  </g>
+                  <text class="label" transform="translate(384.4,470.4)"
+                    xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+                    <tspan x="0" dy="0"
+                      xmlns="http://www.w3.org/2000/svg">exclusive</tspan>
+                  </text>
+                </g>
+                <text class="label" transform="translate(384.4,470.4)"
+                  xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+                  <tspan x="0" dy="0"
+                    xmlns="http://www.w3.org/2000/svg">exclusive</tspan>
+                </text>
+              </g>
+            </g>
+            <g class="element complex" element-type="loop_tail" element-id="loop_0"
+              xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(104.4,250.4)">
+                <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                  <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                  <tspan class="colon" style="display: none;">,</tspan>
+                  <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+                </text>
+                <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                  <title xmlns="http://www.w3.org/2000/svg">data.remainingDurationToRequired &gt; 0 and !data.instance['stopTimestamp']</title>
+                  <rect transform="rotate(45,14,12)" x="7" y="3" width="21" height="21" class="cline hfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  <line x1="10.5" y1="20.5" x2="20.5" y2="10.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  <line x1="10.5" y1="10.5" x2="20.5" y2="20.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                </g>
+              </g>
+              <g class="element primitive" element-type="loop_finish" element-id="loop_0"
+                xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(104.4,850.4)">
+                  <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                    <title xmlns="http://www.w3.org/2000/svg">data.remainingDurationToRequired &gt; 0 and !data.instance['stopTimestamp']</title>
+                    <rect transform="rotate(45,14,12)" x="7" y="3" width="21" height="21" class="cline hfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                    <line x1="10.5" y1="20.5" x2="20.5" y2="10.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                    <line x1="10.5" y1="10.5" x2="20.5" y2="20.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  </g>
+                </g>
+                <text class="label" transform="translate(384.4,870.4)"
+                  xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+                  <tspan x="0" dy="0"
+                    xmlns="http://www.w3.org/2000/svg">data.remainingDurationToRequired &gt; 0 and !data.instance['stopTimestamp']</tspan>
+                </text>
+              </g>
+              <text class="label" transform="translate(384.4,870.4)"
+                xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+                <tspan x="0" dy="0"
+                  xmlns="http://www.w3.org/2000/svg">data.remainingDurationToRequired &gt; 0 and !data.instance['stopTimestamp']</tspan>
+              </text>
+            </g>
+          </g>
+          <g class="element primitive" element-type="callmanipulate" element-id="a9"
+            xmlns="http://www.w3.org/2000/svg" element-endpoint="putinstance">
+            <g transform="translate(104.4,890.4)">
+              <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                <tspan class="colon" style="display: none;">,</tspan>
+                <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+              </text>
+              <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                <title xmlns="http://www.w3.org/2000/svg">Stop the Instance</title>
+                <g class="replace">
+                  <rect x="1" y="1" width="28" height="28" rx="4" class="cline hfill rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  <path class="normal" style="fill: #000000; fill-opacity: 1; stroke: #000000; stroke-width: 0.2px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill:#000000;" d="m 21.561187,10.184155 c 0,-0.03232 0,-0.03232 0,-0.03232 C 21.076371,9.5054099 20.494591,8.9559512 19.815848,8.4388133 l 0,0.032323 C 19.266389,8.891311 18.71693,9.3438064 18.199794,9.7963017 17.973545,9.6670167 17.779619,9.5700535 17.585693,9.4730903 17.327124,9.3438064 17.068556,9.2145213 16.777665,9.1498799 16.680695,9.1175569 16.583739,9.0852339 16.486775,9.0852339 16.422135,8.3741695 16.357491,7.6631063 16.260528,6.952042 15.937318,6.887396 15.614106,6.887396 15.258574,6.855073 c -0.09697,0 -0.193926,0 -0.258569,0 -0.09697,0 -0.193925,0 -0.258568,0 -0.323211,0.032323 -0.614101,0.032323 -0.90499,0.096969 -0.09697,0.6787425 -0.161606,1.3898068 -0.193927,2.1008712 -0.129284,0 -0.226248,0.032323 -0.355532,0.064646 -0.03232,0 -0.06465,0 -0.09697,0.032323 -0.258568,0.064646 -0.517136,0.1939264 -0.775704,0.3232103 -0.226249,0.096969 -0.420175,0.1939264 -0.614102,0.3232114 -0.549458,-0.4524953 -1.066595,-0.87267 -1.616054,-1.3251654 0,0 0,0 -0.03232,-0.032323 C 10.022552,8.5357845 9.8932693,8.6327419 9.7963053,8.7297051 9.5700583,8.8913109 9.3761314,9.0852373 9.2145262,9.2791637 8.9236366,9.5377327 8.6973883,9.8609431 8.4388194,10.184155 c 0,0 0,0 0.032323,0 0.4201747,0.549459 0.87267,1.066596 1.325166,1.616054 -0.129285,0.193927 -0.258569,0.420175 -0.355533,0.614101 -0.129285,0.258569 -0.226248,0.549459 -0.2908894,0.808028 -0.064646,0.129284 -0.096969,0.258568 -0.096969,0.355531 -0.7110644,0.06465 -1.4221288,0.129285 -2.1008713,0.226248 -0.064646,0.323211 -0.096969,0.646422 -0.096969,1.001954 0,0.484816 0.032323,0.969632 0.1292839,1.422128 0.6787437,0.06465 1.3574862,0.129284 2.0685505,0.193926 0,0.129284 0.032323,0.258569 0.096969,0.355532 0.064646,0.29089 0.1616049,0.549459 0.2908899,0.840349 0.129284,0.226247 0.2262471,0.452495 0.387853,0.646421 -0.452496,0.549459 -0.9049912,1.066596 -1.3251647,1.616054 0.484816,0.678744 1.0665957,1.260523 1.7453387,1.74534 l 0,-0.03232 c 0.517137,-0.420175 1.066596,-0.87267 1.583733,-1.325166 l 0.03232,0 c 0.161605,0.09697 0.355532,0.193928 0.517136,0.290891 0.290891,0.129284 0.614101,0.258568 0.904991,0.32321 0.129284,0.03232 0.226248,0.06465 0.32321,0.09697 0.06465,0.678743 0.129285,1.389807 0.226249,2.100871 0.290889,0.03232 0.581779,0.06465 0.90499,0.06465 0.06465,0 0.258568,0 0.484817,0 0.355532,0 0.711064,-0.03232 1.066595,-0.09697 0.06465,-0.678742 0.129285,-1.389807 0.193926,-2.10087 0.09697,-0.03232 0.193927,-0.06465 0.29089,-0.09697 l 0,0 c 0.290891,-0.06464 0.549459,-0.161605 0.808028,-0.290889 0.226248,-0.09697 0.452495,-0.226248 0.678743,-0.387854 0,0.03232 0,0.03232 0.03232,0.03232 0.517137,0.452495 1.066596,0.904989 1.616054,1.325164 0.09697,-0.06465 0.193927,-0.129284 0.323212,-0.226247 0.193926,-0.161606 0.387852,-0.355532 0.549458,-0.549459 0.29089,-0.290889 0.58178,-0.614101 0.840348,-0.969633 -0.452495,-0.549459 -0.90499,-1.098917 -1.357486,-1.616054 0,-0.03232 0,-0.03232 0,-0.03232 0.09697,-0.161605 0.193927,-0.355531 0.29089,-0.549457 0.09696,-0.258569 0.226248,-0.517138 0.29089,-0.775707 0,-0.03232 0,-0.06465 0.03232,-0.06465 0,-0.129285 0.03232,-0.226248 0.06465,-0.290891 0.711065,-0.06465 1.422129,-0.129284 2.100872,-0.193926 0.06464,-0.323211 0.06464,-0.646422 0.09697,-0.969632 0,-0.09697 0,-0.193927 0,-0.29089 0,-0.06465 0,-0.161606 0,-0.258569 -0.03232,-0.323212 -0.03232,-0.646422 -0.09697,-0.969633 -0.678743,-0.06465 -1.389807,-0.129284 -2.100872,-0.193927 -0.03232,-0.09697 -0.06465,-0.193926 -0.06465,-0.290889 -0.09697,-0.29089 -0.193927,-0.58178 -0.323212,-0.872669 -0.09697,-0.193927 -0.226247,-0.420175 -0.32321,-0.614102 0.420173,-0.517136 0.872669,-1.066595 1.325164,-1.616054 z m -8.629731,2.682651 c 0.581779,-0.614101 1.292844,-0.904991 2.100871,-0.87267 0.840348,-0.03232 1.519091,0.258569 2.133192,0.87267 0.581779,0.581779 0.872669,1.292843 0.872669,2.10087 0,0.840348 -0.29089,1.519092 -0.872669,2.133192 -0.614101,0.58178 -1.292844,0.87267 -2.133192,0.87267 -0.808027,0 -1.519092,-0.29089 -2.100871,-0.87267 -0.581779,-0.6141 -0.872669,-1.292844 -0.872669,-2.133192 0,-0.808027 0.29089,-1.519091 0.872669,-2.10087 z"/>
+                </g>
+                <rect x="23" y="21" width="12" height="12" rx="2" class="cline rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                <text transform="translate(29,30.75)" class="small" style="font-size: 14px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">s</text>
+              </g>
+            </g>
+            <text class="label" transform="translate(384.4,910.4)"
+              xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+              <tspan x="0" dy="0"
+                xmlns="http://www.w3.org/2000/svg">Stop the Instance</tspan>
+            </text>
+          </g>
+          <g class="element complex" element-type="loop_head" element-id="loop_1"
+            xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(64.4,170.4)">
+              <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                <tspan class="colon" style="display: none;">,</tspan>
+                <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+              </text>
+              <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                <title xmlns="http://www.w3.org/2000/svg">data.remainingDurationToRequired &gt; 0</title>
+                <rect transform="rotate(45,14,12)" x="7" y="3" width="21" height="21" class="cline hfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                <line x1="10.5" y1="20.5" x2="20.5" y2="10.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                <line x1="10.5" y1="10.5" x2="20.5" y2="20.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+              </g>
+            </g>
+            <text class="label" transform="translate(384.4,190.4)"
+              xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+              <tspan x="0" dy="0"
+                xmlns="http://www.w3.org/2000/svg">data.remainingDurationToRequired &gt; 0</tspan>
+            </text>
+          </g>
+        </g>
+        <g class="element complex" element-type="parallel_branch_normal" element-id="parallel_branch_0"
+          xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(64.4,90.4)">
+            <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+              <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+              <tspan class="colon" style="display: none;">,</tspan>
+              <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+            </text>
+            <g xmlns="http://www.w3.org/2000/svg" class="activities">
+              <title xmlns="http://www.w3.org/2000/svg"/>
+              <rect x="11" y="6" width="9" height="18" rx="0" class="hline white" style="fill: #ffffff; fill-opacity: 1; stroke: #ffffff; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+              <path class="cline hfill stand" d="M 11,5 C  2,9  2,21 11,25 M 20,5 C 29,9 29,21 20,25" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;stroke-dasharray:1,4;"/>
+              <line x1="15.6" y1="4" x2="15.6" y2="27" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g class="group"
+        xmlns="http://www.w3.org/2000/svg" id="group-parallel_branch_1">
+        <rect element-id="parallel_branch_1" x="340.28" y="925.2" width="40" height="160" class="tile" rx="15" ry="15"
+          xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/>
+        <g class="element primitive" element-type="callmanipulate" element-id="a4"
+          xmlns="http://www.w3.org/2000/svg" element-endpoint="timeout">
+          <g transform="translate(344.4,970.4)">
+            <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+              <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+              <tspan class="colon" style="display: none;">,</tspan>
+              <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+            </text>
+            <g xmlns="http://www.w3.org/2000/svg" class="activities">
+              <title xmlns="http://www.w3.org/2000/svg"/>
+              <g xmlns="http://www.w3.org/2000/svg">
+                <circle cx="15" cy="15" r="14" class="cline stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                <circle cx="15" cy="15" r="11" class="cline hfill rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                <path d="m 9,11 7,5 0,-6" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill: none;"/>
+              </g>
+              <rect x="23" y="21" width="12" height="12" rx="2" class="cline rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+              <text transform="translate(29,30.75)" class="small" style="font-size: 14px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">s</text>
+            </g>
+          </g>
+        </g>
+        <g class="element primitive" element-type="callmanipulate" element-id="a8"
+          xmlns="http://www.w3.org/2000/svg" element-endpoint="emergencystop">
+          <g transform="translate(344.4,1010.4)">
+            <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+              <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+              <tspan class="colon" style="display: none;">,</tspan>
+              <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+            </text>
+            <g xmlns="http://www.w3.org/2000/svg" class="activities">
+              <title xmlns="http://www.w3.org/2000/svg">Trigger an Emergency Stop</title>
+              <g class="replace">
+                <rect x="1" y="1" width="28" height="28" rx="4" class="cline hfill rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                <path class="normal" style="fill: #000000; fill-opacity: 1; stroke: #000000; stroke-width: 0.2px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill:#000000;" d="m 21.561187,10.184155 c 0,-0.03232 0,-0.03232 0,-0.03232 C 21.076371,9.5054099 20.494591,8.9559512 19.815848,8.4388133 l 0,0.032323 C 19.266389,8.891311 18.71693,9.3438064 18.199794,9.7963017 17.973545,9.6670167 17.779619,9.5700535 17.585693,9.4730903 17.327124,9.3438064 17.068556,9.2145213 16.777665,9.1498799 16.680695,9.1175569 16.583739,9.0852339 16.486775,9.0852339 16.422135,8.3741695 16.357491,7.6631063 16.260528,6.952042 15.937318,6.887396 15.614106,6.887396 15.258574,6.855073 c -0.09697,0 -0.193926,0 -0.258569,0 -0.09697,0 -0.193925,0 -0.258568,0 -0.323211,0.032323 -0.614101,0.032323 -0.90499,0.096969 -0.09697,0.6787425 -0.161606,1.3898068 -0.193927,2.1008712 -0.129284,0 -0.226248,0.032323 -0.355532,0.064646 -0.03232,0 -0.06465,0 -0.09697,0.032323 -0.258568,0.064646 -0.517136,0.1939264 -0.775704,0.3232103 -0.226249,0.096969 -0.420175,0.1939264 -0.614102,0.3232114 -0.549458,-0.4524953 -1.066595,-0.87267 -1.616054,-1.3251654 0,0 0,0 -0.03232,-0.032323 C 10.022552,8.5357845 9.8932693,8.6327419 9.7963053,8.7297051 9.5700583,8.8913109 9.3761314,9.0852373 9.2145262,9.2791637 8.9236366,9.5377327 8.6973883,9.8609431 8.4388194,10.184155 c 0,0 0,0 0.032323,0 0.4201747,0.549459 0.87267,1.066596 1.325166,1.616054 -0.129285,0.193927 -0.258569,0.420175 -0.355533,0.614101 -0.129285,0.258569 -0.226248,0.549459 -0.2908894,0.808028 -0.064646,0.129284 -0.096969,0.258568 -0.096969,0.355531 -0.7110644,0.06465 -1.4221288,0.129285 -2.1008713,0.226248 -0.064646,0.323211 -0.096969,0.646422 -0.096969,1.001954 0,0.484816 0.032323,0.969632 0.1292839,1.422128 0.6787437,0.06465 1.3574862,0.129284 2.0685505,0.193926 0,0.129284 0.032323,0.258569 0.096969,0.355532 0.064646,0.29089 0.1616049,0.549459 0.2908899,0.840349 0.129284,0.226247 0.2262471,0.452495 0.387853,0.646421 -0.452496,0.549459 -0.9049912,1.066596 -1.3251647,1.616054 0.484816,0.678744 1.0665957,1.260523 1.7453387,1.74534 l 0,-0.03232 c 0.517137,-0.420175 1.066596,-0.87267 1.583733,-1.325166 l 0.03232,0 c 0.161605,0.09697 0.355532,0.193928 0.517136,0.290891 0.290891,0.129284 0.614101,0.258568 0.904991,0.32321 0.129284,0.03232 0.226248,0.06465 0.32321,0.09697 0.06465,0.678743 0.129285,1.389807 0.226249,2.100871 0.290889,0.03232 0.581779,0.06465 0.90499,0.06465 0.06465,0 0.258568,0 0.484817,0 0.355532,0 0.711064,-0.03232 1.066595,-0.09697 0.06465,-0.678742 0.129285,-1.389807 0.193926,-2.10087 0.09697,-0.03232 0.193927,-0.06465 0.29089,-0.09697 l 0,0 c 0.290891,-0.06464 0.549459,-0.161605 0.808028,-0.290889 0.226248,-0.09697 0.452495,-0.226248 0.678743,-0.387854 0,0.03232 0,0.03232 0.03232,0.03232 0.517137,0.452495 1.066596,0.904989 1.616054,1.325164 0.09697,-0.06465 0.193927,-0.129284 0.323212,-0.226247 0.193926,-0.161606 0.387852,-0.355532 0.549458,-0.549459 0.29089,-0.290889 0.58178,-0.614101 0.840348,-0.969633 -0.452495,-0.549459 -0.90499,-1.098917 -1.357486,-1.616054 0,-0.03232 0,-0.03232 0,-0.03232 0.09697,-0.161605 0.193927,-0.355531 0.29089,-0.549457 0.09696,-0.258569 0.226248,-0.517138 0.29089,-0.775707 0,-0.03232 0,-0.06465 0.03232,-0.06465 0,-0.129285 0.03232,-0.226248 0.06465,-0.290891 0.711065,-0.06465 1.422129,-0.129284 2.100872,-0.193926 0.06464,-0.323211 0.06464,-0.646422 0.09697,-0.969632 0,-0.09697 0,-0.193927 0,-0.29089 0,-0.06465 0,-0.161606 0,-0.258569 -0.03232,-0.323212 -0.03232,-0.646422 -0.09697,-0.969633 -0.678743,-0.06465 -1.389807,-0.129284 -2.100872,-0.193927 -0.03232,-0.09697 -0.06465,-0.193926 -0.06465,-0.290889 -0.09697,-0.29089 -0.193927,-0.58178 -0.323212,-0.872669 -0.09697,-0.193927 -0.226247,-0.420175 -0.32321,-0.614102 0.420173,-0.517136 0.872669,-1.066595 1.325164,-1.616054 z m -8.629731,2.682651 c 0.581779,-0.614101 1.292844,-0.904991 2.100871,-0.87267 0.840348,-0.03232 1.519091,0.258569 2.133192,0.87267 0.581779,0.581779 0.872669,1.292843 0.872669,2.10087 0,0.840348 -0.29089,1.519092 -0.872669,2.133192 -0.614101,0.58178 -1.292844,0.87267 -2.133192,0.87267 -0.808027,0 -1.519092,-0.29089 -2.100871,-0.87267 -0.581779,-0.6141 -0.872669,-1.292844 -0.872669,-2.133192 0,-0.808027 0.29089,-1.519091 0.872669,-2.10087 z"/>
+              </g>
+              <rect x="23" y="21" width="12" height="12" rx="2" class="cline rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+              <text transform="translate(29,30.75)" class="small" style="font-size: 14px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">s</text>
+            </g>
+          </g>
+          <text class="label" transform="translate(384.4,1030.4)"
+            xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+            <tspan x="0" dy="0"
+              xmlns="http://www.w3.org/2000/svg">Trigger an Emergency Stop</tspan>
+          </text>
+        </g>
+        <g class="element primitive" element-type="callmanipulate" element-id="a13"
+          xmlns="http://www.w3.org/2000/svg" element-endpoint="instance">
+          <g transform="translate(344.4,1050.4)">
+            <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+              <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+              <tspan class="colon" style="display: none;">,</tspan>
+              <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+            </text>
+            <g xmlns="http://www.w3.org/2000/svg" class="activities">
+              <title xmlns="http://www.w3.org/2000/svg">Start another Instance which should fail</title>
+              <g class="replace">
+                <rect x="1" y="1" width="28" height="28" rx="4" class="cline hfill rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                <path class="normal" style="fill: #000000; fill-opacity: 1; stroke: #000000; stroke-width: 0.2px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill:#000000;" d="m 21.561187,10.184155 c 0,-0.03232 0,-0.03232 0,-0.03232 C 21.076371,9.5054099 20.494591,8.9559512 19.815848,8.4388133 l 0,0.032323 C 19.266389,8.891311 18.71693,9.3438064 18.199794,9.7963017 17.973545,9.6670167 17.779619,9.5700535 17.585693,9.4730903 17.327124,9.3438064 17.068556,9.2145213 16.777665,9.1498799 16.680695,9.1175569 16.583739,9.0852339 16.486775,9.0852339 16.422135,8.3741695 16.357491,7.6631063 16.260528,6.952042 15.937318,6.887396 15.614106,6.887396 15.258574,6.855073 c -0.09697,0 -0.193926,0 -0.258569,0 -0.09697,0 -0.193925,0 -0.258568,0 -0.323211,0.032323 -0.614101,0.032323 -0.90499,0.096969 -0.09697,0.6787425 -0.161606,1.3898068 -0.193927,2.1008712 -0.129284,0 -0.226248,0.032323 -0.355532,0.064646 -0.03232,0 -0.06465,0 -0.09697,0.032323 -0.258568,0.064646 -0.517136,0.1939264 -0.775704,0.3232103 -0.226249,0.096969 -0.420175,0.1939264 -0.614102,0.3232114 -0.549458,-0.4524953 -1.066595,-0.87267 -1.616054,-1.3251654 0,0 0,0 -0.03232,-0.032323 C 10.022552,8.5357845 9.8932693,8.6327419 9.7963053,8.7297051 9.5700583,8.8913109 9.3761314,9.0852373 9.2145262,9.2791637 8.9236366,9.5377327 8.6973883,9.8609431 8.4388194,10.184155 c 0,0 0,0 0.032323,0 0.4201747,0.549459 0.87267,1.066596 1.325166,1.616054 -0.129285,0.193927 -0.258569,0.420175 -0.355533,0.614101 -0.129285,0.258569 -0.226248,0.549459 -0.2908894,0.808028 -0.064646,0.129284 -0.096969,0.258568 -0.096969,0.355531 -0.7110644,0.06465 -1.4221288,0.129285 -2.1008713,0.226248 -0.064646,0.323211 -0.096969,0.646422 -0.096969,1.001954 0,0.484816 0.032323,0.969632 0.1292839,1.422128 0.6787437,0.06465 1.3574862,0.129284 2.0685505,0.193926 0,0.129284 0.032323,0.258569 0.096969,0.355532 0.064646,0.29089 0.1616049,0.549459 0.2908899,0.840349 0.129284,0.226247 0.2262471,0.452495 0.387853,0.646421 -0.452496,0.549459 -0.9049912,1.066596 -1.3251647,1.616054 0.484816,0.678744 1.0665957,1.260523 1.7453387,1.74534 l 0,-0.03232 c 0.517137,-0.420175 1.066596,-0.87267 1.583733,-1.325166 l 0.03232,0 c 0.161605,0.09697 0.355532,0.193928 0.517136,0.290891 0.290891,0.129284 0.614101,0.258568 0.904991,0.32321 0.129284,0.03232 0.226248,0.06465 0.32321,0.09697 0.06465,0.678743 0.129285,1.389807 0.226249,2.100871 0.290889,0.03232 0.581779,0.06465 0.90499,0.06465 0.06465,0 0.258568,0 0.484817,0 0.355532,0 0.711064,-0.03232 1.066595,-0.09697 0.06465,-0.678742 0.129285,-1.389807 0.193926,-2.10087 0.09697,-0.03232 0.193927,-0.06465 0.29089,-0.09697 l 0,0 c 0.290891,-0.06464 0.549459,-0.161605 0.808028,-0.290889 0.226248,-0.09697 0.452495,-0.226248 0.678743,-0.387854 0,0.03232 0,0.03232 0.03232,0.03232 0.517137,0.452495 1.066596,0.904989 1.616054,1.325164 0.09697,-0.06465 0.193927,-0.129284 0.323212,-0.226247 0.193926,-0.161606 0.387852,-0.355532 0.549458,-0.549459 0.29089,-0.290889 0.58178,-0.614101 0.840348,-0.969633 -0.452495,-0.549459 -0.90499,-1.098917 -1.357486,-1.616054 0,-0.03232 0,-0.03232 0,-0.03232 0.09697,-0.161605 0.193927,-0.355531 0.29089,-0.549457 0.09696,-0.258569 0.226248,-0.517138 0.29089,-0.775707 0,-0.03232 0,-0.06465 0.03232,-0.06465 0,-0.129285 0.03232,-0.226248 0.06465,-0.290891 0.711065,-0.06465 1.422129,-0.129284 2.100872,-0.193926 0.06464,-0.323211 0.06464,-0.646422 0.09697,-0.969632 0,-0.09697 0,-0.193927 0,-0.29089 0,-0.06465 0,-0.161606 0,-0.258569 -0.03232,-0.323212 -0.03232,-0.646422 -0.09697,-0.969633 -0.678743,-0.06465 -1.389807,-0.129284 -2.100872,-0.193927 -0.03232,-0.09697 -0.06465,-0.193926 -0.06465,-0.290889 -0.09697,-0.29089 -0.193927,-0.58178 -0.323212,-0.872669 -0.09697,-0.193927 -0.226247,-0.420175 -0.32321,-0.614102 0.420173,-0.517136 0.872669,-1.066595 1.325164,-1.616054 z m -8.629731,2.682651 c 0.581779,-0.614101 1.292844,-0.904991 2.100871,-0.87267 0.840348,-0.03232 1.519091,0.258569 2.133192,0.87267 0.581779,0.581779 0.872669,1.292843 0.872669,2.10087 0,0.840348 -0.29089,1.519092 -0.872669,2.133192 -0.614101,0.58178 -1.292844,0.87267 -2.133192,0.87267 -0.808027,0 -1.519092,-0.29089 -2.100871,-0.87267 -0.581779,-0.6141 -0.872669,-1.292844 -0.872669,-2.133192 0,-0.808027 0.29089,-1.519091 0.872669,-2.10087 z"/>
+              </g>
+              <rect x="23" y="21" width="12" height="12" rx="2" class="cline rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+              <text transform="translate(29,30.75)" class="small" style="font-size: 14px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">s</text>
+            </g>
+          </g>
+          <text class="label" transform="translate(384.4,1070.4)"
+            xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+            <tspan x="0" dy="0"
+              xmlns="http://www.w3.org/2000/svg">Start another Instance which should fail</tspan>
+          </text>
+        </g>
+        <g class="element complex" element-type="parallel_branch_normal" element-id="parallel_branch_1"
+          xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(344.4,930.4)">
+            <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+              <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+              <tspan class="colon" style="display: none;">,</tspan>
+              <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+            </text>
+            <g xmlns="http://www.w3.org/2000/svg" class="activities">
+              <title xmlns="http://www.w3.org/2000/svg"/>
+              <rect x="11" y="6" width="9" height="18" rx="0" class="hline white" style="fill: #ffffff; fill-opacity: 1; stroke: #ffffff; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+              <path class="cline hfill stand" d="M 11,5 C  2,9  2,21 11,25 M 20,5 C 29,9 29,21 20,25" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;stroke-dasharray:1,4;"/>
+              <line x1="15.6" y1="4" x2="15.6" y2="27" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g class="element complex" element-type="parallel_start" element-id="parallel_0"
+        xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(24.4,50.4)">
+          <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+            <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+            <tspan class="colon" style="display: none;">,</tspan>
+            <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+          </text>
+          <g xmlns="http://www.w3.org/2000/svg" class="activities">
+            <title xmlns="http://www.w3.org/2000/svg"/>
+            <rect transform="rotate(45,14,12)" x="7" y="3" width="21" height="21" class="cline hfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+            <text transform="translate(15,25)" class="normallarge" style="font-size: 25px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">+</text>
+          </g>
+        </g>
+        <g class="element primitive" element-type="parallel_simple" element-id="parallel_0"
+          xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(24.4,1090.4)">
+            <g xmlns="http://www.w3.org/2000/svg" class="activities">
+              <title xmlns="http://www.w3.org/2000/svg"/>
+              <rect transform="rotate(45,14,12)" x="7" y="3" width="21" height="21" class="cline hfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+              <text transform="translate(15,25)" class="normallarge" style="font-size: 25px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">+</text>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <g class="element primitive" element-type="end" element-id="undefined"
+      xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(24.4,1130.4)">
+        <g xmlns="http://www.w3.org/2000/svg" class="activities">
+          <title xmlns="http://www.w3.org/2000/svg"/>
+          <circle cx="15" cy="15" r="14" class="standfat" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 3px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

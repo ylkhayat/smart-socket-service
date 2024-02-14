@@ -1,5 +1,19 @@
 {
   "README.md": "README.md",
+  "emergency-stop-recover": {
+    "README.md": "emergency-stop-recover/README.md",
+    "emergency-stop-recover.svg": "emergency-stop-recover/emergency-stop-recover.svg",
+    "emergency-stop-recover.xml": "emergency-stop-recover/emergency-stop-recover.xml",
+    "run-1": {
+      "README.md": "emergency-stop-recover/run-1/README.md",
+      "energy-monitor.html": "emergency-stop-recover/run-1/energy-monitor.html",
+      "server-monitor.html": "emergency-stop-recover/run-1/server-monitor.html"
+    },
+    "run-2": {
+      "energy-monitor.html": "emergency-stop-recover/run-2/energy-monitor.html",
+      "server-monitor.html": "emergency-stop-recover/run-2/server-monitor.html"
+    }
+  },
   "parallel-subprocesses": {
     "README.md": "parallel-subprocesses/README.md",
     "parallel-subprocesses.svg": "parallel-subprocesses/parallel-subprocesses.svg",
@@ -13,16 +27,6 @@
       "README.md": "parallel-subprocesses/run-2/README.md",
       "energy-monitor.html": "parallel-subprocesses/run-2/energy-monitor.html",
       "server-monitor.html": "parallel-subprocesses/run-2/server-monitor.html"
-    },
-    "run-3": {
-      "README.md": "parallel-subprocesses/run-3/README.md",
-      "energy-monitor.html": "parallel-subprocesses/run-3/energy-monitor.html",
-      "server-monitor.html": "parallel-subprocesses/run-3/server-monitor.html"
-    },
-    "run-4": {
-      "README.md": "parallel-subprocesses/run-4/README.md",
-      "energy-monitor.html": "parallel-subprocesses/run-4/energy-monitor.html",
-      "server-monitor.html": "parallel-subprocesses/run-4/server-monitor.html"
     }
   },
   "start-wait-stop": {

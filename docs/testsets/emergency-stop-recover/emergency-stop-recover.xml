@@ -1,0 +1,511 @@
+<testset xmlns="http://cpee.org/ns/properties/2.0">
+  <executionhandler>ruby</executionhandler>
+  <dataelements>
+    <requiredDurationForPowerOn>50</requiredDurationForPowerOn>
+    <emergencyAfterDuration>10</emergencyAfterDuration>
+  </dataelements>
+  <endpoints>
+    <user>https-post://cpee.org/services/timeout-user.php</user>
+    <auto>https-post://cpee.org/services/timeout-auto.php</auto>
+    <subprocess>https-post://cpee.org/flow/start/url/</subprocess>
+    <timeout>https://cpee.org/services/timeout.php</timeout>
+    <send>https-post://cpee.org/ing/correlators/message/send/</send>
+    <receive>https-get://cpee.org/ing/correlators/message/receive/</receive>
+    <instance>https://lehre.bpm.in.tum.de/ports/40111/api/instance</instance>
+    <rudinstance>https://lehre.bpm.in.tum.de/ports/40111/api/instance/:instanceId</rudinstance>
+    <putinstance>https://lehre.bpm.in.tum.de/ports/40111/api/instance/</putinstance>
+    <serverstatus>https://lehre.bpm.in.tum.de/ports/40111/api/server/status</serverstatus>
+    <emergencystop>https://lehre.bpm.in.tum.de/ports/40111/api/emergency-stop</emergencystop>
+    <recover>https://lehre.bpm.in.tum.de/ports/40111/api/recover</recover>
+  </endpoints>
+  <attributes>
+    <info>Enter info here</info>
+    <modeltype>CPEE</modeltype>
+    <theme>extended</theme>
+  </attributes>
+  <description>
+    <description xmlns="http://cpee.org/ns/description/1.0">
+      <parallel wait="-1" cancel="last">
+        <parallel_branch pass="" local="">
+          <manipulate id="a11" label="Initialize the Timer">data.remainingDurationToRequired = data.requiredDurationForPowerOn</manipulate>
+          <loop mode="pre_test" condition="data.remainingDurationToRequired &gt; 0">
+            <_probability>
+              <_probability_min/>
+              <_probability_max/>
+              <_probability_avg/>
+            </_probability>
+            <call id="a2" endpoint="instance">
+              <parameters>
+                <label>Start an Instance</label>
+                <method>:post</method>
+                <arguments/>
+              </parameters>
+              <code>
+                <prepare/>
+                <finalize output="result">data.instance = result['instance']</finalize>
+                <update output="result"/>
+                <rescue output="result"/>
+              </code>
+              <annotations>
+                <_generic/>
+                <_timing>
+                  <_timing_weight/>
+                  <_timing_avg/>
+                  <explanations/>
+                </_timing>
+                <_shifting>
+                  <_shifting_type>Duration</_shifting_type>
+                </_shifting>
+                <_context_data_analysis>
+                  <probes/>
+                  <ips/>
+                </_context_data_analysis>
+                <report>
+                  <url/>
+                </report>
+                <_notes>
+                  <_notes_general/>
+                </_notes>
+              </annotations>
+              <documentation>
+                <input/>
+                <output/>
+                <implementation>
+                  <description/>
+                </implementation>
+                <code>
+                  <description/>
+                </code>
+              </documentation>
+            </call>
+            <loop mode="post_test" condition="data.remainingDurationToRequired &gt; 0 and !data.instance['stopTimestamp']">
+              <_probability>
+                <_probability_min/>
+                <_probability_max/>
+                <_probability_avg/>
+              </_probability>
+              <call id="a7" endpoint="timeout">
+                <parameters>
+                  <label>Timeout for 2 Seconds</label>
+                  <method>:post</method>
+                  <arguments>
+                    <timeout>2</timeout>
+                  </arguments>
+                </parameters>
+                <annotations>
+                  <_generic/>
+                  <_timing>
+                    <_timing_weight/>
+                    <_timing_avg/>
+                    <explanations/>
+                  </_timing>
+                  <_shifting>
+                    <_shifting_type>Duration</_shifting_type>
+                  </_shifting>
+                  <_context_data_analysis>
+                    <probes/>
+                    <ips/>
+                  </_context_data_analysis>
+                  <report>
+                    <url/>
+                  </report>
+                  <_notes>
+                    <_notes_general/>
+                  </_notes>
+                </annotations>
+                <documentation>
+                  <input/>
+                  <output/>
+                  <implementation>
+                    <description/>
+                  </implementation>
+                </documentation>
+              </call>
+              <call id="a5" endpoint="rudinstance">
+                <parameters>
+                  <label>Get Instance Updates</label>
+                  <method>:get</method>
+                  <arguments>
+                    <instanceId>!data.instance['id']</instanceId>
+                  </arguments>
+                </parameters>
+                <code>
+                  <prepare/>
+                  <finalize output="result">data.instance = result['instance']</finalize>
+                  <update output="result"/>
+                  <rescue output="result"/>
+                </code>
+                <annotations>
+                  <_generic/>
+                  <_timing>
+                    <_timing_weight/>
+                    <_timing_avg/>
+                    <explanations/>
+                  </_timing>
+                  <_shifting>
+                    <_shifting_type>Duration</_shifting_type>
+                  </_shifting>
+                  <_context_data_analysis>
+                    <probes/>
+                    <ips/>
+                  </_context_data_analysis>
+                  <report>
+                    <url/>
+                  </report>
+                  <_notes>
+                    <_notes_general/>
+                  </_notes>
+                </annotations>
+                <documentation>
+                  <input/>
+                  <output/>
+                  <implementation>
+                    <description/>
+                  </implementation>
+                  <code>
+                    <description/>
+                  </code>
+                </documentation>
+              </call>
+              <call id="a10" endpoint="serverstatus">
+                <parameters>
+                  <label>Get Server Status</label>
+                  <method>:get</method>
+                  <arguments/>
+                </parameters>
+                <code>
+                  <prepare/>
+                  <finalize output="result">data.serverStatus = result</finalize>
+                  <update output="result"/>
+                  <rescue output="result"/>
+                </code>
+                <annotations>
+                  <_generic/>
+                  <_timing>
+                    <_timing_weight/>
+                    <_timing_avg/>
+                    <explanations/>
+                  </_timing>
+                  <_shifting>
+                    <_shifting_type>Duration</_shifting_type>
+                  </_shifting>
+                  <_context_data_analysis>
+                    <probes/>
+                    <ips/>
+                  </_context_data_analysis>
+                  <report>
+                    <url/>
+                  </report>
+                  <_notes>
+                    <_notes_general/>
+                  </_notes>
+                </annotations>
+                <documentation>
+                  <input/>
+                  <output/>
+                  <implementation>
+                    <description/>
+                  </implementation>
+                  <code>
+                    <description/>
+                  </code>
+                </documentation>
+              </call>
+              <manipulate id="a6" label="Calculate the remainingDurationToRequired">require 'time'
+
+startTimestamp = Time.parse(data.instance['startTimestamp'])
+
+stopTimestampStr = data.instance['stopTimestamp'] || data.serverStatus['currentTimestamp']
+
+stopTimestamp = Time.parse(stopTimestampStr)
+
+differenceInSeconds = (stopTimestamp - startTimestamp).abs
+
+data.remainingDurationToRequired = data.remainingDurationToRequired - differenceInSeconds</manipulate>
+              <choose mode="exclusive">
+                <alternative condition="data.remainingDurationToRequired &gt; 0 and data.instance['stopTimestamp']">
+                  <_probability>
+                    <_probability_min/>
+                    <_probability_max/>
+                    <_probability_avg/>
+                  </_probability>
+                  <choose mode="exclusive">
+                    <alternative condition="data.serverStatus['isEmergencyStopped']">
+                      <call id="a12" endpoint="timeout">
+                        <parameters>
+                          <label>Wait for 5 seconds before recovering</label>
+                          <method>:post</method>
+                          <arguments>
+                            <timeout>5</timeout>
+                          </arguments>
+                        </parameters>
+                        <annotations>
+                          <_generic/>
+                          <_timing>
+                            <_timing_weight/>
+                            <_timing_avg/>
+                            <explanations/>
+                          </_timing>
+                          <_shifting>
+                            <_shifting_type>Duration</_shifting_type>
+                          </_shifting>
+                          <_context_data_analysis>
+                            <probes/>
+                            <ips/>
+                          </_context_data_analysis>
+                          <report>
+                            <url/>
+                          </report>
+                          <_notes>
+                            <_notes_general/>
+                          </_notes>
+                        </annotations>
+                        <documentation>
+                          <input/>
+                          <output/>
+                          <implementation>
+                            <description/>
+                          </implementation>
+                        </documentation>
+                      </call>
+                      <call id="a1" endpoint="recover">
+                        <parameters>
+                          <label>Recover the Emergency Stop</label>
+                          <method>:put</method>
+                          <arguments/>
+                        </parameters>
+                        <annotations>
+                          <_generic/>
+                          <_timing>
+                            <_timing_weight/>
+                            <_timing_avg/>
+                            <explanations/>
+                          </_timing>
+                          <_shifting>
+                            <_shifting_type>Duration</_shifting_type>
+                          </_shifting>
+                          <_context_data_analysis>
+                            <probes/>
+                            <ips/>
+                          </_context_data_analysis>
+                          <report>
+                            <url/>
+                          </report>
+                          <_notes>
+                            <_notes_general/>
+                          </_notes>
+                        </annotations>
+                        <documentation>
+                          <input/>
+                          <output/>
+                          <implementation>
+                            <description/>
+                          </implementation>
+                          <code>
+                            <description/>
+                          </code>
+                        </documentation>
+                      </call>
+                      <_probability>
+                        <_probability_min/>
+                        <_probability_max/>
+                        <_probability_avg/>
+                      </_probability>
+                    </alternative>
+                    <otherwise/>
+                  </choose>
+                </alternative>
+                <otherwise/>
+              </choose>
+            </loop>
+            <call id="a9" endpoint="putinstance">
+              <parameters>
+                <label>Stop the Instance</label>
+                <method>:put</method>
+                <arguments/>
+              </parameters>
+              <code>
+                <prepare>endpoints.putinstance = endpoints.putinstance + data.instance['id']</prepare>
+                <finalize output="result"/>
+                <update output="result"/>
+                <rescue output="result"/>
+              </code>
+              <annotations>
+                <_generic/>
+                <_timing>
+                  <_timing_weight/>
+                  <_timing_avg/>
+                  <explanations/>
+                </_timing>
+                <_shifting>
+                  <_shifting_type>Duration</_shifting_type>
+                </_shifting>
+                <_context_data_analysis>
+                  <probes/>
+                  <ips/>
+                </_context_data_analysis>
+                <report>
+                  <url/>
+                </report>
+                <_notes>
+                  <_notes_general/>
+                </_notes>
+              </annotations>
+              <documentation>
+                <input/>
+                <output/>
+                <implementation>
+                  <description/>
+                </implementation>
+                <code>
+                  <description/>
+                </code>
+              </documentation>
+            </call>
+          </loop>
+        </parallel_branch>
+        <parallel_branch pass="" local="">
+          <call id="a4" endpoint="timeout">
+            <parameters>
+              <label/>
+              <method>:post</method>
+              <arguments>
+                <timeout>!data.emergencyAfterDuration</timeout>
+              </arguments>
+            </parameters>
+            <code>
+              <prepare/>
+              <finalize output="result"/>
+              <update output="result"/>
+              <rescue output="result"/>
+            </code>
+            <annotations>
+              <_generic/>
+              <_timing>
+                <_timing_weight/>
+                <_timing_avg/>
+                <explanations/>
+              </_timing>
+              <_shifting>
+                <_shifting_type>Duration</_shifting_type>
+              </_shifting>
+              <_context_data_analysis>
+                <probes/>
+                <ips/>
+              </_context_data_analysis>
+              <report>
+                <url/>
+              </report>
+              <_notes>
+                <_notes_general/>
+              </_notes>
+            </annotations>
+            <documentation>
+              <input/>
+              <output/>
+              <implementation>
+                <description/>
+              </implementation>
+              <code>
+                <description/>
+              </code>
+            </documentation>
+          </call>
+          <call id="a8" endpoint="emergencystop">
+            <parameters>
+              <label>Trigger an Emergency Stop</label>
+              <method>:post</method>
+              <arguments/>
+            </parameters>
+            <code>
+              <prepare/>
+              <finalize output="result"/>
+              <update output="result"/>
+              <rescue output="result"/>
+            </code>
+            <annotations>
+              <_generic/>
+              <_timing>
+                <_timing_weight/>
+                <_timing_avg/>
+                <explanations/>
+              </_timing>
+              <_shifting>
+                <_shifting_type>Duration</_shifting_type>
+              </_shifting>
+              <_context_data_analysis>
+                <probes/>
+                <ips/>
+              </_context_data_analysis>
+              <report>
+                <url/>
+              </report>
+              <_notes>
+                <_notes_general/>
+              </_notes>
+            </annotations>
+            <documentation>
+              <input/>
+              <output/>
+              <implementation>
+                <description/>
+              </implementation>
+              <code>
+                <description/>
+              </code>
+            </documentation>
+          </call>
+          <call id="a13" endpoint="instance">
+            <parameters>
+              <label>Start another Instance which should fail</label>
+              <method>:post</method>
+              <arguments/>
+            </parameters>
+            <code>
+              <prepare/>
+              <finalize output="result"/>
+              <update output="result"/>
+              <rescue output="result">data.anotherInstance = result</rescue>
+            </code>
+            <annotations>
+              <_generic/>
+              <_timing>
+                <_timing_weight/>
+                <_timing_avg/>
+                <explanations/>
+              </_timing>
+              <_shifting>
+                <_shifting_type>Duration</_shifting_type>
+              </_shifting>
+              <_context_data_analysis>
+                <probes/>
+                <ips/>
+              </_context_data_analysis>
+              <report>
+                <url/>
+              </report>
+              <_notes>
+                <_notes_general/>
+              </_notes>
+            </annotations>
+            <documentation>
+              <input/>
+              <output/>
+              <implementation>
+                <description/>
+              </implementation>
+              <code>
+                <description/>
+              </code>
+            </documentation>
+          </call>
+        </parallel_branch>
+      </parallel>
+    </description>
+  </description>
+  <transformation>
+    <description type="copy"/>
+    <dataelements type="none"/>
+    <endpoints type="none"/>
+  </transformation>
+</testset>

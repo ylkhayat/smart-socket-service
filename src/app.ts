@@ -42,7 +42,7 @@ const app = express();
 app.use((_, res, next) => {
   res.on("finish", () => {
     if (res.statusCode < 400) {
-      if (LOGGING_ENABLED === "true") {
+      if (LOGGING_ENABLED) {
         const logServerData = require("./logger").logServerData;
         logServerData?.();
       }
