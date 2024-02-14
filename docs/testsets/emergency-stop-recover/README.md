@@ -26,8 +26,6 @@ Once again, refer back to my personal explanation of what is a testset (the `sta
 
 Please click on each [`run-<x>/README.md`] to view what is happening in each run and further information on why is a run different from another.
 
-- [Run 1](https://ylkhayat.github.io/smart-socket-service/testsets/#emergency-stop-recover/run-1/README.md)
-
 ## Run the thing online!
 
 You can start a process through this link which will take you to cpee.org and start the process for you! [Click me to create a process and get started!](https://cpee.org/flow/graph.html?load=https://raw.githubusercontent.com/ylkhayat/smart-socket-service/main/docs/testsets/emergency-stop-recover/emergency-stop-recover.xml)
