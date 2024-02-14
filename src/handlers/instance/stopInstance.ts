@@ -1,5 +1,5 @@
 import { waitForEventEmitterPowerData } from "../../events/eventEmitter";
-import { InstanceData, instancesData, serverData } from "../../store";
+import { InstanceData, instancesData, instancesStartingTimeout, serverData } from "../../store";
 import { stopSocket } from "../socket/control";
 
 export type StopReport = {
@@ -33,6 +33,11 @@ export const stopInstance = async (
             statusCode: 404,
             message: `Instance with ID ${id} does not exist.`,
         };
+    }
+
+    if (instancesStartingTimeout[id]) {
+        clearTimeout(instancesStartingTimeout[id]);
+        delete instancesStartingTimeout[id];
     }
 
     if (
@@ -110,6 +115,7 @@ export const stopInstance = async (
             };
         }
     }
+
 
     serverData.instancesStopping = serverData.instancesStopping.filter(
         (instance) => instance !== id,

@@ -166,9 +166,9 @@ You get a `message` to describe the outcome of the action and a status code.
 - 409 Conflict: The smart socket could was powered on instead of powering off.
 - 500 Internal Server Error: An error occurred while stopping the smart socket.
 - 200 OK: The instance was successfully deleted.
-- | Parameter          | Type       | Description                                            |
-  | ------------------ | ---------- | ------------------------------------------------------ |
-  | `stoppedInstances` | `string[]` | IDs of the stopped instances due to the emergency stop |
+  - | Parameter          | Type       | Description                                            |
+    | ------------------ | ---------- | ------------------------------------------------------ |
+    | `stoppedInstances` | `string[]` | IDs of the stopped instances due to the emergency stop |
 
 ### `PUT /api/recover`
 
@@ -181,6 +181,21 @@ You get a `message` to describe the outcome of the action and a status code.
 ### `GET /api/download`
 
 This endpoint allows you to download the server's state retrieving both the `serverData` under `server` and the `instancesData` under `instances`.
+
+### `GET /api/server/status`
+
+This endpoint allows you to check the status of the server.
+
+#### Response
+
+- 500 Internal Server Error: An error occurred while retrieving the data from the server.
+- 200 OK: The server status was retrieved successfully.
+  - | Parameter            | Type                                            | Description                                                                                           |
+    | -------------------- | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+    | `isEmergencyStopped` | `boolean`                                       | Indicator if the server underwent an emergency stop and not able to process new instances now or not. |
+    | `energyToday`        | `number`                                        | Energy consumption per second.                                                                        |
+    | `initialEnergy`      | [`ServerDataEnergy / null`](../src/store.ts#L7) | The first energy readings when the server just started.                                               |
+    | `runningInstances`   | `string[]`                                      | An array of instance IDs that are currently running.                                                  |
 
 ## 🎛️ Handlers
 
@@ -239,7 +254,7 @@ The application also maintains a `serverData` object in the [store.ts](../src/st
 | `instancesStopping`           | `string[]`                                      | An array of instance IDs that are currently triggered to be stopped.                                                                                                                                                                 |
 | `runningInstancesWithTimeout` | `string[]`                                      | Running instances that has a certain timeout.                                                                                                                                                                                        |
 | `connectedSocketName`         | `string / null`                                 | The name of the smart socket that the server is connected to                                                                                                                                                                         |
-| `isSocketEmergencyStopped`    | `boolean`                                       | Indicator of whether the smart socket was emergency stopped or not.                                                                                                                                                                  |
+| `isEmergencyStopped`          | `boolean`                                       | Indicator of whether the smart socket was emergency stopped or not.                                                                                                                                                                  |
 
 The `serverData` object is updated by various handlers in the `../src/handlers` directory. For example, the [`startInstance`](../src/handlers/instance/startInstance.ts) handler adds the started instance's ID to the `runningInstances` array, and the [`stopInstance`](../src/handlers/instance/stopInstance.ts) handler removes the stopped instance's ID from the `runningInstances` array and adds it to the `instancesStopping` array.
 

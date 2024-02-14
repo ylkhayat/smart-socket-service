@@ -28,7 +28,7 @@ export const startInstance = async (
         id,
     };
 
-    if (serverData.isSocketEmergencyStopped) {
+    if (serverData.isEmergencyStopped) {
         return {
             success: false,
             statusCode: 409,

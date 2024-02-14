@@ -15,7 +15,7 @@ type OperationReport = {
  * @returns {OperationReport} An object indicating the operation's report.
  */
 export const emergencyStop = async (): Promise<OperationReport> => {
-    if (serverData.isSocketEmergencyStopped) {
+    if (serverData.isEmergencyStopped) {
         return {
             success: true,
             statusCode: 200,
@@ -67,7 +67,7 @@ export const emergencyStop = async (): Promise<OperationReport> => {
         }
     }
 
-    serverData.isSocketEmergencyStopped = true;
+    serverData.isEmergencyStopped = true;
 
     return report;
 };

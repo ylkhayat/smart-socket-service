@@ -19,7 +19,7 @@ const serverDataKeys: (keyof ServerData)[] = [
     "instancesStarting",
     "instancesStopping",
     "runningInstancesWithTimeout",
-    "isSocketEmergencyStopped",
+    "isEmergencyStopped",
 ] as const;
 
 const instanceDataKeys: (keyof InstanceData)[] = [

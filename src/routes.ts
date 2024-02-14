@@ -3,6 +3,7 @@ import {
   InstanceData,
   InstanceDataInput,
   instancesData,
+  instancesStartingTimeout,
   serverData,
 } from "./store";
 import { stopInstance } from "./handlers/instance/stopInstance";
@@ -46,7 +47,7 @@ router.post("/start-wait-stop", async (req: Request<any, any, any, PostStartWait
     setupPowerStatisticWatcher();
 
     const callbackUrl = req.get("CPEE-CALLBACK");
-    setTimeout(async () => {
+    instancesStartingTimeout[instanceId] = setTimeout(async () => {
       if (callbackUrl) {
         const { success, message, instance } = await stopInstance(
           instanceId,
@@ -167,7 +168,7 @@ router.put(
 
 router.put("/recover", async (_: Request, res: Response) => {
   try {
-    serverData.isSocketEmergencyStopped = false;
+    serverData.isEmergencyStopped = false;
     return res.status(200).json({
       message: "Socket recovered successfully! You can now start instances.",
     });
@@ -275,6 +276,23 @@ router.get("/download", (_: Request, res: Response) => {
     "attachment; filename=server_state.json",
   );
   res.status(200).send(JSON.stringify(data, null, 4));
+});
+
+
+router.get("/server/status", (_: Request, res: Response) => {
+  const {
+    isEmergencyStopped,
+    energyToday,
+    runningInstances,
+    initialEnergy,
+  } = serverData;
+  return res.status(200).json({
+    isEmergencyStopped,
+    energyToday,
+    initialEnergy,
+    runningInstances,
+  });
+
 });
 
 export default router;

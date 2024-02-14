@@ -98,7 +98,7 @@ export type ServerData = {
     /**
      * Flag indicating if the socket was stopped due to an emergency stop
      */
-    isSocketEmergencyStopped: boolean;
+    isEmergencyStopped: boolean;
 };
 
 export let serverData: ServerData = {
@@ -115,7 +115,7 @@ export let serverData: ServerData = {
     ],
     connectedSocketName: null,
     initialEnergy: null,
-    isSocketEmergencyStopped: false,
+    isEmergencyStopped: false,
 };
 
 export let instancesStartingTimeout: Record<string, NodeJS.Timeout> = {};
@@ -129,7 +129,7 @@ export const resetAllData = () => {
         runningInstancesWithTimeout: [],
         instancesStarting: [],
         instancesStopping: [],
-        isSocketEmergencyStopped: false,
+        isEmergencyStopped: false,
         powerStatus: [
             {
                 powerOn: null,
