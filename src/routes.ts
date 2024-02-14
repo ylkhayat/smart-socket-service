@@ -148,7 +148,7 @@ router.put(
   },
 );
 
-router.put(
+router.post(
   "/emergency-stop",
   async (_: Request, res: Response) => {
     try {
