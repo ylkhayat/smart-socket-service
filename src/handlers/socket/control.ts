@@ -1,5 +1,10 @@
 import { MQTTClient } from "../../mqtt/setupMQTT";
-import { TOPIC } from "../../mqtt/topic";
+
+const { TOPIC } = process.env;
+
+if (TOPIC === undefined) {
+  throw new Error("TOPIC is not defined");
+}
 
 const POWER_TOPIC = `cmnd/${TOPIC}/Power`;
 

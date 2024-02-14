@@ -1,8 +1,9 @@
 import shortid from "shortid";
-import { InstanceData, instancesData, serverData } from "../../store";
+import { InstanceData, instancesData, instancesStartingTimeout, serverData } from "../../store";
 import { waitForEventEmitterPowerData } from "../../events/eventEmitter";
 import { energyFetch } from "../socket/powerMonitor";
 import { startSocket } from "../socket/control";
+import { stopInstance } from "./stopInstance";
 
 type OperationReport = {
     success: boolean;
@@ -27,13 +28,21 @@ export const startInstance = async (
         id,
     };
 
-    if (instancesData[id]) {
-        // Instance already exists, return a failure message
+    if (serverData.isSocketEmergencyStopped) {
         return {
             success: false,
             statusCode: 409,
-            message: `Instance with ID ${id} already exists. Initialization aborted.`,
+            message: "The socket is emergency stopped. You cannot start instances.",
             instanceId: id,
+        };
+    }
+
+    if (instancesData[id]) {
+        return {
+            success: true,
+            statusCode: 200,
+            message: `Instance with ID ${id} already exists. Initialization aborted.`,
+            instance: instancesData[id]
         };
     }
 
@@ -46,8 +55,8 @@ export const startInstance = async (
 
     serverData.runningInstances.push(id);
     serverData.energyToday = 0;
-    if (augmentedData.emergencyStopTimeout) {
-        serverData.runningInstancesWithEmergencyStop.push(id);
+    if (augmentedData.timeout) {
+        serverData.runningInstancesWithTimeout.push(id);
     }
     serverData.instancesStarting.push(id);
     const lastPowerStatus =
@@ -133,6 +142,12 @@ export const startInstance = async (
                 "An error occurred while starting the socket and fetching the data",
             instanceId: id,
         };
+    }
+
+    if (augmentedData.timeout) {
+        instancesStartingTimeout[id] = setTimeout(() => {
+            stopInstance(id, { timeout: true });
+        }, augmentedData.timeout);
     }
 
     instancesData[id] = augmentedData;

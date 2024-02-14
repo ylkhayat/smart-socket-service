@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Table from "cli-table3";
-import { instancesData, serverData } from "./store";
+import { InstanceData, ServerData, instancesData, serverData } from "./store";
 
 const instanceDataEnergyKeys = [
     "apparentPower",
@@ -13,17 +13,18 @@ const instanceDataEnergyKeys = [
     "voltage",
 ] as const;
 
-const serverDataKeys = [
+const serverDataKeys: (keyof ServerData)[] = [
     "connectedSocketName",
     "energyToday",
     "instancesStarting",
     "instancesStopping",
-    "runningInstancesWithEmergencyStop",
+    "runningInstancesWithTimeout",
+    "isSocketEmergencyStopped",
 ] as const;
 
-const instanceDataKeys = [
+const instanceDataKeys: (keyof InstanceData)[] = [
     "id",
-    "emergencyStopTimeout",
+    "timeout",
     "isEmergencyStopped",
     "isManuallyStopped",
     "powerOffTimestamp",

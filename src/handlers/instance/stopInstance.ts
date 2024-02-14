@@ -10,6 +10,11 @@ export type StopReport = {
     instance?: InstanceData;
 };
 
+
+type Config = {
+    emergency?: boolean;
+    timeout?: boolean;
+}
 /**
  * Stops a certain instance and updates server-wide data accordingly.
  * @param {string} id - identifier for the instance.
@@ -18,9 +23,9 @@ export type StopReport = {
  */
 export const stopInstance = async (
     id: string,
-    emergency?: boolean,
+    config?: Config,
 ): Promise<StopReport> => {
-    let triggerPowerOff = emergency ? true : false;
+    let triggerPowerOff = config?.emergency ? true : false;
     if (!instancesData[id]) {
         // Instance already exists, return a failure message
         return {
@@ -38,8 +43,9 @@ export const stopInstance = async (
         )
     ) {
         return {
-            success: false,
-            statusCode: 409,
+            success: true,
+            statusCode: 200,
+            instance: instancesData[id],
             message: `Instance with ID ${id} is already stopped.`,
         };
     }
@@ -60,13 +66,14 @@ export const stopInstance = async (
         serverData.runningInstances.length === 1 &&
         serverData.runningInstances[0] === id
     ) {
-        const stoppingId = emergency ? "<emergency>" : id;
+
+        const stoppingId = config?.emergency ? "<emergency>" : config?.timeout ? "<timeout>" : id;
         serverData.powerStatus[serverData.powerStatus.length - 1].powerOff = {
             instanceId: stoppingId,
             timestamp: new Date(),
         };
         instancesData[id].powerOffTimestamp = new Date();
-        instancesData[id].isEmergencyStopped = emergency ? true : false;
+        instancesData[id].isEmergencyStopped = config?.emergency ? true : false;
         triggerPowerOff = true;
     }
 
@@ -74,9 +81,9 @@ export const stopInstance = async (
         (instanceId) => instanceId !== id,
     );
 
-    if (instancesData[id].emergencyStopTimeout) {
-        serverData.runningInstancesWithEmergencyStop =
-            serverData.runningInstancesWithEmergencyStop.filter(
+    if (instancesData[id].timeout) {
+        serverData.runningInstancesWithTimeout =
+            serverData.runningInstancesWithTimeout.filter(
                 (instanceId) => instanceId !== id,
             );
     }
@@ -84,7 +91,7 @@ export const stopInstance = async (
      * If the stop is an emergency stop, stop the socket and wait for the power off event.
      * If is an emergency stop, we handle it differently and more efficiently
      */
-    if (!emergency && triggerPowerOff) {
+    if (!config?.emergency && triggerPowerOff) {
         try {
             stopSocket();
             const powerData = await waitForEventEmitterPowerData();

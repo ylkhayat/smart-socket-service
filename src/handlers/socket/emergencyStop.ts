@@ -6,22 +6,20 @@ import { stopSocket } from "./control";
 type OperationReport = {
     success: boolean;
     stoppedInstances?: string[];
-    instanceId?: string;
     message: string;
     statusCode: number;
 };
 
 /**
  * Stops all instances, stops the socket and updates server-wide data accordingly.
- * @param {string} id - identifier for the instance that triggered the emergency stop.
  * @returns {OperationReport} An object indicating the operation's report.
  */
-export const emergencyStop = async (id?: string): Promise<OperationReport> => {
-    if (id && !instancesData[id]) {
+export const emergencyStop = async (): Promise<OperationReport> => {
+    if (serverData.isSocketEmergencyStopped) {
         return {
-            success: false,
-            statusCode: 404,
-            message: `Instance with ID ${id} does not exist.`,
+            success: true,
+            statusCode: 200,
+            message: `Socket is already stopped.`,
         };
     }
 
@@ -33,18 +31,24 @@ export const emergencyStop = async (id?: string): Promise<OperationReport> => {
         };
     } else {
         serverData.powerStatus[serverData.powerStatus.length - 1].powerOff = {
-            instanceId: `${id + " "}<emergency>`,
+            instanceId: "<emergency>",
             timestamp: new Date(),
         };
     }
 
     stopSocket();
     const powerData = await waitForEventEmitterPowerData();
-    if (!powerData || powerData === "ON") {
+    if (!powerData) {
         return {
             success: false,
             statusCode: 500,
             message: "An error occurred while emergency stopping the socket",
+        };
+    } else if (powerData === "ON") {
+        return {
+            success: false,
+            statusCode: 409,
+            message: "The socket was started instead of stopping. Please try again.",
         };
     }
 
@@ -53,15 +57,17 @@ export const emergencyStop = async (id?: string): Promise<OperationReport> => {
         statusCode: 200,
         message: `All instances stopped successfully.`,
         stoppedInstances: [],
-        instanceId: id,
     };
 
     for (const instanceId of serverData.runningInstances) {
         if (instancesData[instanceId].stopTimestamp) continue;
-        const { success } = await stopInstance(instanceId, true);
+        const { success } = await stopInstance(instanceId, { emergency: true });
         if (success) {
             report.stoppedInstances?.push(instanceId);
         }
     }
+
+    serverData.isSocketEmergencyStopped = true;
+
     return report;
 };

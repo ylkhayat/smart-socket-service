@@ -1,7 +1,12 @@
 import { waitForEventEmitterEnergyData } from "../../events/eventEmitter";
 import { serverData, instancesData } from "../../store";
 import { MQTTClient } from "../../mqtt/setupMQTT";
-import { TOPIC } from "../../mqtt/topic";
+
+const { TOPIC } = process.env;
+
+if (TOPIC === undefined) {
+    throw new Error("TOPIC is not defined");
+}
 
 let workerRunning = false;
 let intervalId: NodeJS.Timeout | null = null;

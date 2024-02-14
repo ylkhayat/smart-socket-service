@@ -1,7 +1,7 @@
 import { Status10Energy } from "./mqtt/setupMQTT";
 
 export type InstanceDataInput = {
-    [K in keyof Pick<InstanceData, "emergencyStopTimeout">]?: string;
+    [K in keyof Pick<InstanceData, "timeout">]?: string;
 };
 
 type ServerDataEnergy = {
@@ -20,7 +20,7 @@ export type InstanceData = {
     /**
      * The time in milliseconds after which the device will be stopped if it is not stopped manually
      */
-    emergencyStopTimeout: number;
+    timeout: number;
     /**
      * Timestamp when the instance was started
      */
@@ -33,7 +33,7 @@ export type InstanceData = {
     stopTimestamp: Date | null;
     /**
      * Timestamp when the socket was powered on
-     * 
+     *
      * Might be `null` if the socket was already on when the instance was started
      */
     powerOnTimestamp: Date | null;
@@ -80,7 +80,7 @@ type PowerStatus = {
     } | null;
 };
 
-type ServerData = {
+export type ServerData = {
     /**
      * List of running instances
      */
@@ -90,17 +90,21 @@ type ServerData = {
      */
     energyToday: number;
     initialEnergy: ServerDataEnergy | null;
-    runningInstancesWithEmergencyStop: string[];
+    runningInstancesWithTimeout: string[];
     powerStatus: PowerStatus[];
     instancesStarting: string[];
     instancesStopping: string[];
     connectedSocketName: string | null;
+    /**
+     * Flag indicating if the socket was stopped due to an emergency stop
+     */
+    isSocketEmergencyStopped: boolean;
 };
 
 export let serverData: ServerData = {
     runningInstances: [],
     energyToday: 0,
-    runningInstancesWithEmergencyStop: [],
+    runningInstancesWithTimeout: [],
     instancesStopping: [],
     instancesStarting: [],
     powerStatus: [
@@ -111,7 +115,10 @@ export let serverData: ServerData = {
     ],
     connectedSocketName: null,
     initialEnergy: null,
+    isSocketEmergencyStopped: false,
 };
+
+export let instancesStartingTimeout: Record<string, NodeJS.Timeout> = {};
 
 export const resetAllData = () => {
     instancesData = {};
@@ -119,9 +126,10 @@ export const resetAllData = () => {
         connectedSocketName: null,
         runningInstances: [],
         energyToday: 0,
-        runningInstancesWithEmergencyStop: [],
+        runningInstancesWithTimeout: [],
         instancesStarting: [],
         instancesStopping: [],
+        isSocketEmergencyStopped: false,
         powerStatus: [
             {
                 powerOn: null,

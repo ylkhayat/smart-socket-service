@@ -9,19 +9,79 @@ import { stopInstance } from "./handlers/instance/stopInstance";
 import { startInstance } from "./handlers/instance/startInstance";
 import { emergencyStop } from "./handlers/socket/emergencyStop";
 import { deleteInstance } from "./handlers/instance/deleteInstance";
-import {
-  setupPowerStatisticWatcher,
-} from "./handlers/socket/powerMonitor";
+import { setupPowerStatisticWatcher } from "./handlers/socket/powerMonitor";
 
 const router = Router();
+
+type PostStartWaitStopParams = {
+  duration: string;
+};
+
+router.post("/start-wait-stop", async (req: Request<any, any, any, PostStartWaitStopParams>, res: Response) => {
+  const query = req.query;
+  const duration = query.duration ? parseInt(query.duration, 10) : null;
+
+  if (duration === null || isNaN(duration)) {
+    return res.status(422).json({ message: "duration is required" });
+  }
+
+  let instanceData: Partial<InstanceData> = {
+    startTimestamp: new Date(),
+    stopTimestamp: null,
+    powerOffTimestamp: null,
+    isEmergencyStopped: false,
+  };
+
+
+  try {
+    const { instanceId, success, message, instance, statusCode } =
+      await startInstance(instanceData as InstanceData);
+
+    if (!success || !instanceId) {
+      return res.status(statusCode).json({
+        message,
+        instanceId,
+      });
+    }
+    setupPowerStatisticWatcher();
+
+    const callbackUrl = req.get("CPEE-CALLBACK");
+    setTimeout(async () => {
+      if (callbackUrl) {
+        const { success, message, instance } = await stopInstance(
+          instanceId,
+        );
+        if (!success) {
+          fetch(callbackUrl, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              message,
+              instance,
+            }),
+          });
+        }
+      }
+    }, duration * 1000);
+    return res.set("CPEE-CALLBACK", "true").status(200).json({
+      instance,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message:
+        "An error occurred while controlling the socket or fetching power statistics",
+    });
+  }
+});
 
 router.post(
   "/instance",
   async (req: Request<any, any, any, InstanceDataInput>, res: Response) => {
     const query = req.query;
-
-    const emergencyStopTimeout = query.emergencyStopTimeout
-      ? parseInt(query.emergencyStopTimeout, 10)
+    const timeout = query.timeout
+      ? parseInt(query.timeout, 10)
       : null;
 
     let instanceData: Partial<InstanceData> = {
@@ -30,13 +90,12 @@ router.post(
       powerOffTimestamp: null,
       isEmergencyStopped: false,
     };
-    if (emergencyStopTimeout)
-      instanceData.emergencyStopTimeout = emergencyStopTimeout;
+    if (timeout)
+      instanceData.timeout = timeout;
 
     try {
-      const { instanceId, success, message, instance, statusCode } = await startInstance(
-        instanceData as InstanceData,
-      );
+      const { instanceId, success, message, instance, statusCode } =
+        await startInstance(instanceData as InstanceData);
 
       if (!success) {
         return res.status(statusCode).json({
@@ -70,7 +129,6 @@ router.put(
     try {
       const { success, statusCode, message, instance } = await stopInstance(
         instanceId,
-        false,
       );
       if (!success) {
         return res.status(statusCode).json({
@@ -90,15 +148,13 @@ router.put(
 );
 
 router.put(
-  "/emergency-stop/:instanceId?",
-  async (req: Request, res: Response) => {
-    const { instanceId: id } = req.params;
+  "/emergency-stop",
+  async (_: Request, res: Response) => {
     try {
-      const { message, instanceId, stoppedInstances, statusCode } =
-        await emergencyStop(id);
+      const { message, stoppedInstances, statusCode } =
+        await emergencyStop();
       return res.status(statusCode).json({
         message,
-        instanceId,
         stoppedInstances,
       });
     } catch (error) {
@@ -108,6 +164,19 @@ router.put(
     }
   },
 );
+
+router.put("/recover", async (_: Request, res: Response) => {
+  try {
+    serverData.isSocketEmergencyStopped = false;
+    return res.status(200).json({
+      message: "Socket recovered successfully! You can now start instances.",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "An error occurred while recovering the socket",
+    });
+  }
+});
 
 type GetInstanceParams = {
   instanceId: string;

@@ -11,7 +11,7 @@ type OperationReport = StopReport & {
  * @returns {OperationReport} An object indicating the operation's report.
  */
 export const deleteInstance = async (id: string): Promise<OperationReport> => {
-    const { success, statusCode, message, instanceId } =
+    const { success, statusCode, message } =
         await stopInstance(id);
     const instanceData = instancesData[id];
     delete instancesData[id];
