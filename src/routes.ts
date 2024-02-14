@@ -285,12 +285,15 @@ router.get("/server/status", (_: Request, res: Response) => {
     energyToday,
     runningInstances,
     initialEnergy,
+    powerStatus,
   } = serverData;
   return res.status(200).json({
     isEmergencyStopped,
     energyToday,
     initialEnergy,
     runningInstances,
+    powerStatus,
+    currentTimestamp: new Date(),
   });
 
 });
