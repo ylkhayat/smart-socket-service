@@ -27,7 +27,7 @@
     <description xmlns="http://cpee.org/ns/description/1.0">
       <parallel wait="-1" cancel="last">
         <parallel_branch pass="" local="">
-          <manipulate id="a11" label="Initialize the Timer">data.remainingDurationToRequired = data.requiredDurationForPowerOn</manipulate>
+          <manipulate id="a1" label="Initialize the Timer">data.remainingDurationToRequired = data.requiredDurationForPowerOn</manipulate>
           <loop mode="pre_test" condition="data.remainingDurationToRequired &gt; 0">
             <_probability>
               <_probability_min/>
@@ -84,7 +84,7 @@
                 <_probability_max/>
                 <_probability_avg/>
               </_probability>
-              <call id="a7" endpoint="timeout">
+              <call id="a3" endpoint="timeout">
                 <parameters>
                   <label>Timeout for 2 Seconds</label>
                   <method>:post</method>
@@ -121,7 +121,7 @@
                   </implementation>
                 </documentation>
               </call>
-              <call id="a5" endpoint="rudinstance">
+              <call id="a4" endpoint="rudinstance">
                 <parameters>
                   <label>Get Instance Updates</label>
                   <method>:get</method>
@@ -167,7 +167,7 @@
                   </code>
                 </documentation>
               </call>
-              <call id="a10" endpoint="serverstatus">
+              <call id="a5" endpoint="serverstatus">
                 <parameters>
                   <label>Get Server Status</label>
                   <method>:get</method>
@@ -231,7 +231,7 @@ data.remainingDurationToRequired = data.remainingDurationToRequired - difference
                   </_probability>
                   <choose mode="exclusive">
                     <alternative condition="data.serverStatus['isEmergencyStopped']">
-                      <call id="a12" endpoint="timeout">
+                      <call id="a7" endpoint="timeout">
                         <parameters>
                           <label>Wait for 5 seconds before recovering</label>
                           <method>:post</method>
@@ -268,7 +268,7 @@ data.remainingDurationToRequired = data.remainingDurationToRequired - difference
                           </implementation>
                         </documentation>
                       </call>
-                      <call id="a1" endpoint="recover">
+                      <call id="a8" endpoint="recover">
                         <parameters>
                           <label>Recover the Emergency Stop</label>
                           <method>:put</method>
@@ -365,7 +365,7 @@ data.remainingDurationToRequired = data.remainingDurationToRequired - difference
           </loop>
         </parallel_branch>
         <parallel_branch pass="" local="">
-          <call id="a4" endpoint="timeout">
+          <call id="a10" endpoint="timeout">
             <parameters>
               <label/>
               <method>:post</method>
@@ -411,7 +411,7 @@ data.remainingDurationToRequired = data.remainingDurationToRequired - difference
               </code>
             </documentation>
           </call>
-          <call id="a8" endpoint="emergencystop">
+          <call id="a11" endpoint="emergencystop">
             <parameters>
               <label>Trigger an Emergency Stop</label>
               <method>:post</method>
@@ -455,7 +455,7 @@ data.remainingDurationToRequired = data.remainingDurationToRequired - difference
               </code>
             </documentation>
           </call>
-          <call id="a13" endpoint="instance">
+          <call id="a12" endpoint="instance">
             <parameters>
               <label>Start another Instance which should fail</label>
               <method>:post</method>

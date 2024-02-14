@@ -1,7 +1,11 @@
 <testset xmlns="http://cpee.org/ns/properties/2.0">
   <executionhandler>ruby</executionhandler>
   <dataelements>
-    <iterations>7</iterations>
+    <iterations>5</iterations>
+    <remainingIterations>0</remainingIterations>
+    <subProcess1ToggleDuration>20</subProcess1ToggleDuration>
+    <subProcess2ToggleDuration>16</subProcess2ToggleDuration>
+    <timeoutDuration>1</timeoutDuration>
   </dataelements>
   <endpoints>
     <user>https-post://cpee.org/services/timeout-user.php</user>
@@ -18,20 +22,21 @@
   </attributes>
   <description>
     <description xmlns="http://cpee.org/ns/description/1.0">
-      <loop mode="pre_test" condition="data.iterations &gt; 0">
-        <manipulate id="a6" label="">data.subProcess1ToggleDuration = rand(10..35)
-data.subProcess2ToggleDuration = rand(10..30)
-data.timeoutDuration = rand(1..5)</manipulate>
+      <manipulate id="a1" label="Set up the iterations counter">data.remainingIterations = data.iterations</manipulate>
+      <loop mode="pre_test" condition="data.remainingIterations &gt; 0">
         <_probability>
           <_probability_min/>
           <_probability_max/>
           <_probability_avg/>
         </_probability>
+        <manipulate id="a2" label="Initialize random durations">data.subProcess1ToggleDuration = rand(10..35)
+data.subProcess2ToggleDuration = rand(10..30)
+data.timeoutDuration = rand(1..5)</manipulate>
         <parallel wait="-1" cancel="last">
           <parallel_branch pass="" local="">
-            <call id="a1" endpoint="subprocess">
+            <call id="a3" endpoint="subprocess">
               <parameters>
-                <label/>
+                <label>Subprocess 1</label>
                 <arguments>
                   <behavior>wait_running</behavior>
                   <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/main/docs/testsets/start-wait-stop/start-wait-stop.xml</url>
@@ -83,9 +88,9 @@ data.timeoutDuration = rand(1..5)</manipulate>
             </call>
           </parallel_branch>
           <parallel_branch pass="" local="">
-            <call id="a2" endpoint="timeout">
+            <call id="a4" endpoint="timeout">
               <parameters>
-                <label/>
+                <label>Timeout for random seconds</label>
                 <method>:post</method>
                 <arguments>
                   <timeout>!data.timeoutDuration</timeout>
@@ -129,9 +134,9 @@ data.timeoutDuration = rand(1..5)</manipulate>
                 </code>
               </documentation>
             </call>
-            <call id="a3" endpoint="subprocess">
+            <call id="a5" endpoint="subprocess">
               <parameters>
-                <label/>
+                <label>Subprocess 2</label>
                 <arguments>
                   <behavior>wait_running</behavior>
                   <url>https://raw.githubusercontent.com/ylkhayat/smart-socket-service/main/docs/testsets/start-wait-stop/start-wait-stop.xml</url>
@@ -183,9 +188,8 @@ data.timeoutDuration = rand(1..5)</manipulate>
             </call>
           </parallel_branch>
         </parallel>
-        <manipulate id="a4" label="">data.iterations = data.iterations - 1</manipulate>
+        <manipulate id="a6" label="Update iterations counter">data.remainingIterations = data.remainingIterations - 1</manipulate>
       </loop>
-      <stop id="a5"/>
     </description>
   </description>
   <transformation>

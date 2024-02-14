@@ -10,6 +10,7 @@
       "server-monitor.html": "emergency-stop-recover/run-1/server-monitor.html"
     },
     "run-2": {
+      "README.md": "emergency-stop-recover/run-2/README.md",
       "energy-monitor.html": "emergency-stop-recover/run-2/energy-monitor.html",
       "server-monitor.html": "emergency-stop-recover/run-2/server-monitor.html"
     }

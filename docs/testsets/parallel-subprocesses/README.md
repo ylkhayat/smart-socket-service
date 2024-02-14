@@ -10,7 +10,7 @@ This process uses instances of the previously defined `Start Wait Stop` testset!
 
 ### Literal Description
 
-The testset simulates a loop that is of 7 iterations. Each iteration starts with a script that generates 3 data element numbers, the first is the duration of the `toggleDuration` (the time we have to wait between starting and closing) for the first subprocess. The second is the duration of the `toggleDuration` for the second subprocess. The third is the duration of the timeout that is placed behind the second subprocess. This was done to achieve some kind of randomness in the testset, where subprocesses are harmonically communicating with the smart socket.
+The testset simulates a loop that is of 5 iterations. Each iteration starts with a script that generates 3 data element numbers, the first is the duration of the `toggleDuration` (the time we have to wait between starting and closing) for the first subprocess. The second is the duration of the `toggleDuration` for the second subprocess. The third is the duration of the timeout that is placed behind the second subprocess. This was done to achieve some kind of randomness in the testset, where subprocesses are harmonically communicating with the smart socket.
 
 ### Real-life Scenario
 
