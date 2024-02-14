@@ -22,4 +22,4 @@ For this run, the testset was executed for me, connecting my personal laptop and
 
 ## Results
 
-Check the results through the [energy-monitor.html](./energy-monitor.html) and the [server-monitor.html](./server-monitor.html) files.
+Check the results through the [energy-monitor.html](https://ylkhayat.github.io/smart-socket-service/testsets/#start-wait-stop/run-1/energy-monitor.html) and the [server-monitor.html](https://ylkhayat.github.io/smart-socket-service/testsets/#start-wait-stop/run-1/server-monitor.html) files.

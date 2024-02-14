@@ -5,18 +5,22 @@
     "parallel-subprocesses.svg": "parallel-subprocesses/parallel-subprocesses.svg",
     "parallel-subprocesses.xml": "parallel-subprocesses/parallel-subprocesses.xml",
     "run-1": {
+      "README.md": "parallel-subprocesses/run-1/README.md",
       "energy-monitor.html": "parallel-subprocesses/run-1/energy-monitor.html",
       "server-monitor.html": "parallel-subprocesses/run-1/server-monitor.html"
     },
     "run-2": {
+      "README.md": "parallel-subprocesses/run-2/README.md",
       "energy-monitor.html": "parallel-subprocesses/run-2/energy-monitor.html",
       "server-monitor.html": "parallel-subprocesses/run-2/server-monitor.html"
     },
     "run-3": {
+      "README.md": "parallel-subprocesses/run-3/README.md",
       "energy-monitor.html": "parallel-subprocesses/run-3/energy-monitor.html",
       "server-monitor.html": "parallel-subprocesses/run-3/server-monitor.html"
     },
     "run-4": {
+      "README.md": "parallel-subprocesses/run-4/README.md",
       "energy-monitor.html": "parallel-subprocesses/run-4/energy-monitor.html",
       "server-monitor.html": "parallel-subprocesses/run-4/server-monitor.html"
     }

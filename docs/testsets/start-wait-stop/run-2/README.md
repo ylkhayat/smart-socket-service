@@ -10,9 +10,9 @@ A run is simply the environment or the setup in which the testset was executed.
 
 Quoting the description from the main `start-wait-stop` README:
 
-> So... We just want to charge our phone or something, right? The important thing is that the charger is connected to our start socket. Thus, we want to start the socket, wait for it to charge for a certain duration, and then stop it. Tada, that's it 🎉
+> So... We just want to charge our phone or something, right? The important thing is that the charger is connected to our start socket. Thus, we want to start the socket, wait for it to charge for a certain duration, and then stop it.
 >
-> Once again, check out my personal explanation of the testset in the document [start-wait-stop](https://raw.githubusercontent.com/ylkhayat/smart-socket-service/main/docs/testsets/start-wait-stop.pdf) 🚀
+> Tada, that's it 🎉. Once again, check out my personal explanation of the testset in the document [start-wait-stop](https://ylkhayat.github.io/smart-socket-service/testsets/#start-wait-stop.pdf) 🚀
 
 For this run, the testset was executed for me, connecting my personal laptop and charging it for 20 seconds before stopping the socket again.
 
@@ -22,4 +22,4 @@ For this run, the testset was executed for me, connecting my personal laptop and
 
 ## Results
 
-Check the results through the [energy-monitor.html](./energy-monitor.html) and the [server-monitor.html](./server-monitor.html) files.
+Check the results through the [energy-monitor.html](https://ylkhayat.github.io/smart-socket-service/testsets/#start-wait-stop/run-2/energy-monitor.html) and the [server-monitor.html](https://ylkhayat.github.io/smart-socket-service/testsets/#start-wait-stop/run-2/server-monitor.html) files.

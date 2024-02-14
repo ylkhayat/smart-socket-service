@@ -18,11 +18,11 @@ Once again, refer back to my personal explanation of what is a testset (the `sta
 
 Please click on each [`run-<x>/README.md`] to view what is happening in each run and further information on why is a run different from another.
 
-- [Run 1](run-1/README.md)
-- [Run 2](run-2/README.md)
-- [Run 3](run-3/README.md)
-- [Run 4](run-4/README.md)
-- [Run 5](run-5/README.md)
+- [Run 1](https://ylkhayat.github.io/smart-socket-service/testsets/#parallel-subprocesses/run-1/README.md)
+- [Run 2](https://ylkhayat.github.io/smart-socket-service/testsets/#parallel-subprocesses/run-2/README.md)
+- [Run 3](https://ylkhayat.github.io/smart-socket-service/testsets/#parallel-subprocesses/run-3/README.md)
+- [Run 4](https://ylkhayat.github.io/smart-socket-service/testsets/#parallel-subprocesses/run-4/README.md)
+- [Run 5](https://ylkhayat.github.io/smart-socket-service/testsets/#parallel-subprocesses/run-5/README.md)
 
 ## Run the thing online!
 
