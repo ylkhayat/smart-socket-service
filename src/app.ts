@@ -1,8 +1,9 @@
+// Has to be the first import
+import 'dotenv/config'
+
 import express from "express";
 import routes from "./routes";
-import dotenv from "dotenv";
 
-dotenv.config();
 
 const {
   MQTT_TOPIC,
@@ -14,6 +15,7 @@ const {
   MQTT_PASSWORD,
   PORT,
 } = process.env;
+
 
 if (PORT === undefined) {
   throw new Error("PORT is not defined");

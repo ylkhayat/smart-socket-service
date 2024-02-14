@@ -1,12 +1,8 @@
 import { MQTTClient } from "../../mqtt/setupMQTT";
 
-const { TOPIC } = process.env;
+const { MQTT_TOPIC } = process.env;
 
-if (TOPIC === undefined) {
-  throw new Error("TOPIC is not defined");
-}
-
-const POWER_TOPIC = `cmnd/${TOPIC}/Power`;
+const POWER_TOPIC = `cmnd/${MQTT_TOPIC}/Power`;
 
 const sendSocket = (message: string) => {
   MQTTClient.publish(POWER_TOPIC, `${message}`);

@@ -1,5 +1,4 @@
 import mqtt from "mqtt";
-
 import mqttEventEmitter from "../events/eventEmitter";
 import { serverData } from "../store";
 import { manualStop } from "../handlers/socket/manualStop";
@@ -13,34 +12,23 @@ import {
 import { manualStart } from "../handlers/socket/manualStart";
 
 const {
-  PROTOCOL,
-  HOST,
-  PORT,
-  CLIENT_ID,
-  USERNAME,
-  PASSWORD,
+  MQTT_PROTOCOL,
+  MQTT_HOST,
+  MQTT_PORT,
+  MQTT_CLIENT_ID,
+  MQTT_USERNAME,
+  MQTT_PASSWORD,
   ...additionalMqttConfig
 } = process.env;
 
-if (
-  PROTOCOL === undefined ||
-  HOST === undefined ||
-  PORT === undefined ||
-  CLIENT_ID === undefined ||
-  USERNAME === undefined ||
-  PASSWORD === undefined
-) {
-  throw new Error("MQTT environment variables are not defined!");
-}
-
-const CONNECT_URL = `${PROTOCOL}://${HOST}:${PORT}`;
+const CONNECT_URL = `${MQTT_PROTOCOL}://${MQTT_HOST}:${MQTT_PORT}`;
 
 export const MQTTClient = mqtt.connect(CONNECT_URL, {
-  clientId: CLIENT_ID,
+  clientId: MQTT_CLIENT_ID,
   clean: true,
   connectTimeout: 4000,
-  username: USERNAME,
-  password: PASSWORD,
+  username: MQTT_USERNAME,
+  password: MQTT_PASSWORD,
   ...additionalMqttConfig,
 });
 

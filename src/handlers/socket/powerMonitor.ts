@@ -2,11 +2,7 @@ import { waitForEventEmitterEnergyData } from "../../events/eventEmitter";
 import { serverData, instancesData } from "../../store";
 import { MQTTClient } from "../../mqtt/setupMQTT";
 
-const { TOPIC } = process.env;
-
-if (TOPIC === undefined) {
-    throw new Error("TOPIC is not defined");
-}
+const { MQTT_TOPIC } = process.env;
 
 let workerRunning = false;
 let intervalId: NodeJS.Timeout | null = null;
@@ -14,10 +10,10 @@ let intervalId: NodeJS.Timeout | null = null;
 const FETCH_POWER_TIMEOUT_MS = 5000;
 const CHECK_CHANGES_TIMEOUT_MS = 2000;
 
-export const CMND_STATUS_TOPIC = `cmnd/${TOPIC}/STATUS`;
-export const STATUS_TOPIC_RESULT = `stat/${TOPIC}/STATUS`;
-export const ENERGY_TOPIC_RESULT = `stat/${TOPIC}/STATUS10`;
-export const POWER_TOPIC_RESULT = `stat/${TOPIC}/POWER`;
+export const CMND_STATUS_TOPIC = `cmnd/${MQTT_TOPIC}/STATUS`;
+export const STATUS_TOPIC_RESULT = `stat/${MQTT_TOPIC}/STATUS`;
+export const ENERGY_TOPIC_RESULT = `stat/${MQTT_TOPIC}/STATUS10`;
+export const POWER_TOPIC_RESULT = `stat/${MQTT_TOPIC}/POWER`;
 
 export const retrieveGeneralStatus = () => {
     MQTTClient.publish(CMND_STATUS_TOPIC, "");
