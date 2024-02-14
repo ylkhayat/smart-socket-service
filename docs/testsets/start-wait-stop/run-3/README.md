@@ -14,7 +14,7 @@ Quoting the description from the main `start-wait-stop` README:
 >
 > Tada, that's it 🎉. Once again, check out my personal explanation of the testset in the document [start-wait-stop](https://ylkhayat.github.io/smart-socket-service/testsets/#start-wait-stop.pdf) 🚀
 
-For this run, the testset was executed for me, connecting my personal laptop and charging it for 20 seconds before stopping the socket again.
+For this run, the testset was executed for me, plugging in my personal laptop and letting the process control the powering on and off of the smart socket. The toggle duration input was 30 seconds.
 
 ### Manual Intervention
 

@@ -10,7 +10,7 @@ What is a testset though? And what are we talking about? 🤔
 
 Let me show you a little bit of what we have in store for you! I have annotated this personally over a "testset" that we have that simulates a real life scenario.
 
-Yalla habibi! Go to [testsets](https://ylkhayat.github.io/smart-socket-service/testsets/) to know more 🚀
+Yalla habibi! Go to [testsets](https://ylkhayat.github.io/smart-socket-service/testsets/#README.md) to know more 🚀
 
 ## 🎛️ Smart Socket Configuration
 
