@@ -14,8 +14,12 @@ const {
   MQTT_USERNAME,
   MQTT_PASSWORD,
   PORT,
+  LOGGING_ENABLED,
 } = process.env;
 
+if (LOGGING_ENABLED) {
+  console.log("Logging is enabled!")
+}
 
 if (PORT === undefined) {
   throw new Error("PORT is not defined");
@@ -38,8 +42,10 @@ const app = express();
 app.use((_, res, next) => {
   res.on("finish", () => {
     if (res.statusCode < 400) {
-      const logServerData = require("./logger").logServerData;
-      logServerData?.();
+      if (LOGGING_ENABLED === "true") {
+        const logServerData = require("./logger").logServerData;
+        logServerData?.();
+      }
     }
   });
   next();

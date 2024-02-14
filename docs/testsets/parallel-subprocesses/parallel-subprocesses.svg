@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:x="http://www.w3.org/1999/xlink" id="graphcanvas" width="182" height="410.4" style="grid-row: 1 / span 12;"><style xmlns="http://www.w3.org/2000/svg" type="text/css"><![CDATA[/*
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+  xmlns:x="http://www.w3.org/1999/xlink" id="graphcanvas" width="182" height="450.4" style="grid-row: 1 / span 13;">
+  <style xmlns="http://www.w3.org/2000/svg" type="text/css"><![CDATA[/*
   This file is part of CPEE.
 
   CPEE is free software: you can redistribute it and/or modify it under the terms
@@ -461,18 +463,273 @@ svg g.element[element-id].hover .cline {
   stroke-opacity:1;
   stroke-dasharray:none;
 }
-]]></style><rect element-row="9" class="stripe odd" x="0" y="365.2" width="184.4" height="40" xmlns="http://www.w3.org/2000/svg" style="fill: #e9e9e9; display: none"/><rect element-row="8" class="stripe even" x="0" y="325.2" width="184.4" height="40" xmlns="http://www.w3.org/2000/svg" style="fill: #e9e9e9; display: none"/><rect element-row="7" class="stripe odd" x="0" y="285.2" width="184.4" height="40" xmlns="http://www.w3.org/2000/svg" style="fill: #e9e9e9; display: none"/><rect element-row="6" class="stripe even" x="0" y="245.2" width="184.4" height="40" xmlns="http://www.w3.org/2000/svg" style="fill: #e9e9e9; display: none"/><rect element-row="5" class="stripe odd" x="0" y="205.2" width="184.4" height="40" xmlns="http://www.w3.org/2000/svg" style="fill: #e9e9e9; display: none"/><rect element-row="4" class="stripe even" x="0" y="165.2" width="184.4" height="40" xmlns="http://www.w3.org/2000/svg" style="fill: #e9e9e9; display: none"/><rect element-row="3" class="stripe odd" x="0" y="125.2" width="184.4" height="40" xmlns="http://www.w3.org/2000/svg" style="fill: #e9e9e9; display: none"/><rect element-row="2" class="stripe even" x="0" y="85.2" width="184.4" height="40" xmlns="http://www.w3.org/2000/svg" style="fill: #e9e9e9; display: none"/><rect element-row="1" class="stripe odd" x="0" y="45.2" width="184.4" height="40" xmlns="http://www.w3.org/2000/svg" style="fill: #e9e9e9; display: none"/><rect element-row="0" class="stripe even" x="0" y="5.2" width="184.4" height="40" xmlns="http://www.w3.org/2000/svg" style="fill: #e9e9e9; display: none"/><defs xmlns="http://www.w3.org/2000/svg">  <marker id="arrow" viewBox="0 0 10 10" refX="33" refY="5" orient="auto" markerUnits="strokeWidth" markerWidth="4.5" makerHeight="4.5" style="stroke: #000000; stroke-width: 2px; fill: #000000;">    <path d="m 2 2 l 6 3 l -6 3 z"/>  </marker></defs><defs xmlns="http://www.w3.org/2000/svg">  <marker id="arrow" viewBox="0 0 10 10" refX="33" refY="5" orient="auto" markerUnits="strokeWidth" markerWidth="4.5" makerHeight="4.5" style="stroke: #000000; stroke-width: 2px; fill: #000000;">    <path d="m 2 2 l 6 3 l -6 3 z"/>  </marker></defs><defs xmlns="http://www.w3.org/2000/svg">  <marker id="arrow" viewBox="0 0 10 10" refX="33" refY="5" orient="auto" markerUnits="strokeWidth" markerWidth="4.5" makerHeight="4.5" style="stroke: #000000; stroke-width: 2px; fill: #000000;">    <path d="m 2 2 l 6 3 l -6 3 z"/>  </marker></defs><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 120,145 120,185" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" d="M 80,105 120,105 120,145" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 160,225 160,265" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 160,265 160,305" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" d="M 80,105 160,105 160,225" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 40,65 80,65 80,105" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 120,185 120,325 94,325 80,345" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 160,305 160,325 94,325 80,345" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 80,345 55,345 55,95 40,65" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 40,25 40,65" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 40,65 40,385" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/><g class="group" xmlns="http://www.w3.org/2000/svg" element-id="group-description"><g class="element" element-type="description" element-id="description" xmlns="http://www.w3.org/2000/svg"><g transform="translate(24.4,10.399999999999999)"><text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none"><tspan class="active" style="fill: #cc0000; display: none;">0</tspan><tspan class="colon" style="display: none;">,</tspan><tspan class="vote" style="fill: #73d216; display: none;">0</tspan></text><g xmlns="http://www.w3.org/2000/svg" class="activities"><title xmlns="http://www.w3.org/2000/svg">START</title><circle cx="15" cy="15" r="14" class="cline hfill rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/></g></g></g><g class="group" xmlns="http://www.w3.org/2000/svg" id="group-loop_0"><rect element-id="loop_0" x="20.28" y="45.2" width="160" height="320" class="tile" rx="15" ry="15" xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/><g class="group" xmlns="http://www.w3.org/2000/svg" id="group-parallel_0"><rect element-id="parallel_0" x="60.28" y="85.2" width="120" height="280" class="tile" rx="15" ry="15" xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/><g class="group" xmlns="http://www.w3.org/2000/svg" id="group-parallel_branch_0"><rect element-id="parallel_branch_0" x="100.28" y="125.2" width="40" height="80" class="tile" rx="15" ry="15" xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/><g class="element primitive" element-type="callmanipulate" element-id="a2" xmlns="http://www.w3.org/2000/svg" element-endpoint="subprocess"><g transform="translate(104.4,170.4)"><text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none"><tspan class="active" style="fill: #cc0000; display: none;">0</tspan><tspan class="colon" style="display: none;">,</tspan><tspan class="vote" style="fill: #73d216; display: none;">0</tspan></text><g xmlns="http://www.w3.org/2000/svg" class="activities"><title xmlns="http://www.w3.org/2000/svg"/><g xmlns="http://www.w3.org/2000/svg">
-  <rect x="1" y="1" width="28" height="28" rx="4" class="hfill rfill cline stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
-  <path class="cline hfill rfill stand" d="m 2 22 l 13 0 l 0 -14 l -13 0" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
-  <path class="stand" d="m 5 15 l 6 0" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
-  <path class="stand" d="m 8 12 l 0 6" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
-</g><rect x="23" y="21" width="12" height="12" rx="2" class="cline rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/><text transform="translate(29,30.75)" class="small" style="font-size: 14px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">s</text></g></g></g><g class="element complex" element-type="parallel_branch_normal" element-id="parallel_branch_0" xmlns="http://www.w3.org/2000/svg"><g transform="translate(104.4,130.4)"><text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none"><tspan class="active" style="fill: #cc0000; display: none;">0</tspan><tspan class="colon" style="display: none;">,</tspan><tspan class="vote" style="fill: #73d216; display: none;">0</tspan></text><g xmlns="http://www.w3.org/2000/svg" class="activities"><title xmlns="http://www.w3.org/2000/svg"/><rect x="11" y="6" width="9" height="18" rx="0" class="hline white" style="fill: #ffffff; fill-opacity: 1; stroke: #ffffff; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/><path class="cline hfill stand" d="M 11,5 C  2,9  2,21 11,25 M 20,5 C 29,9 29,21 20,25" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;stroke-dasharray:1,4;"/><line x1="15.6" y1="4" x2="15.6" y2="27" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/></g></g></g></g><g class="group" xmlns="http://www.w3.org/2000/svg" id="group-parallel_branch_1"><rect element-id="parallel_branch_1" x="140.28" y="205.2" width="40" height="120" class="tile" rx="15" ry="15" xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/><g class="element primitive" element-type="callmanipulate" element-id="a1" xmlns="http://www.w3.org/2000/svg" element-endpoint="timeout"><g transform="translate(144.4,250.4)"><text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none"><tspan class="active" style="fill: #cc0000; display: none;">0</tspan><tspan class="colon" style="display: none;">,</tspan><tspan class="vote" style="fill: #73d216; display: none;">0</tspan></text><g xmlns="http://www.w3.org/2000/svg" class="activities"><title xmlns="http://www.w3.org/2000/svg"/><g xmlns="http://www.w3.org/2000/svg">
-  <circle cx="15" cy="15" r="14" class="cline stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
-  <circle cx="15" cy="15" r="11" class="cline hfill rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
-  <path d="m 9,11 7,5 0,-6" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill: none;"/>
-</g><rect x="23" y="21" width="12" height="12" rx="2" class="cline rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/><text transform="translate(29,30.75)" class="small" style="font-size: 14px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">s</text></g></g></g><g class="element primitive" element-type="callmanipulate" element-id="a5" xmlns="http://www.w3.org/2000/svg" element-endpoint="subprocess"><g transform="translate(144.4,290.4)"><text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none"><tspan class="active" style="fill: #cc0000; display: none;">0</tspan><tspan class="colon" style="display: none;">,</tspan><tspan class="vote" style="fill: #73d216; display: none;">0</tspan></text><g xmlns="http://www.w3.org/2000/svg" class="activities"><title xmlns="http://www.w3.org/2000/svg"/><g xmlns="http://www.w3.org/2000/svg">
-  <rect x="1" y="1" width="28" height="28" rx="4" class="hfill rfill cline stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
-  <path class="cline hfill rfill stand" d="m 2 22 l 13 0 l 0 -14 l -13 0" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
-  <path class="stand" d="m 5 15 l 6 0" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
-  <path class="stand" d="m 8 12 l 0 6" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
-</g><rect x="23" y="21" width="12" height="12" rx="2" class="cline rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/><text transform="translate(29,30.75)" class="small" style="font-size: 14px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">s</text></g></g></g><g class="element complex" element-type="parallel_branch_normal" element-id="parallel_branch_1" xmlns="http://www.w3.org/2000/svg"><g transform="translate(144.4,210.4)"><text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none"><tspan class="active" style="fill: #cc0000; display: none;">0</tspan><tspan class="colon" style="display: none;">,</tspan><tspan class="vote" style="fill: #73d216; display: none;">0</tspan></text><g xmlns="http://www.w3.org/2000/svg" class="activities"><title xmlns="http://www.w3.org/2000/svg"/><rect x="11" y="6" width="9" height="18" rx="0" class="hline white" style="fill: #ffffff; fill-opacity: 1; stroke: #ffffff; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/><path class="cline hfill stand" d="M 11,5 C  2,9  2,21 11,25 M 20,5 C 29,9 29,21 20,25" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;stroke-dasharray:1,4;"/><line x1="15.6" y1="4" x2="15.6" y2="27" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/></g></g></g></g><g class="element complex" element-type="parallel_eventbased_parallel" element-id="parallel_0" xmlns="http://www.w3.org/2000/svg"><g transform="translate(64.4,90.4)"><text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none"><tspan class="active" style="fill: #cc0000; display: none;">0</tspan><tspan class="colon" style="display: none;">,</tspan><tspan class="vote" style="fill: #73d216; display: none;">0</tspan></text><g xmlns="http://www.w3.org/2000/svg" class="activities"><title xmlns="http://www.w3.org/2000/svg"/><rect transform="rotate(45,14,12)" x="7" y="3" width="21" height="21" class="cline hfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/><circle cx="15.5" cy="15.5" r="8" class="standthin" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/><circle cx="15.5" cy="15.5" r="6" class="standthin" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/><line x1="12.5" y1="15.5" x2="18.5" y2="15.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/><line x1="15.5" y1="12.5" x2="15.5" y2="18.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/></g></g><g class="element primitive" element-type="parallel_event_all" element-id="parallel_0" xmlns="http://www.w3.org/2000/svg"><g transform="translate(64.4,330.4)"><g xmlns="http://www.w3.org/2000/svg" class="activities"><title xmlns="http://www.w3.org/2000/svg"/><rect transform="rotate(45,14,12)" x="7" y="3" width="21" height="21" class="cline hfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/><circle cx="15.5" cy="15.5" r="8" class="standthin" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/><circle cx="15.5" cy="15.5" r="6" class="standthin" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/><line x1="12.5" y1="15.5" x2="18.5" y2="15.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/><line x1="15.5" y1="12.5" x2="15.5" y2="18.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/></g></g></g></g></g><g class="element complex" element-type="loop_head" element-id="loop_0" xmlns="http://www.w3.org/2000/svg"><g transform="translate(24.4,50.4)"><text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none"><tspan class="active" style="fill: #cc0000; display: none;">0</tspan><tspan class="colon" style="display: none;">,</tspan><tspan class="vote" style="fill: #73d216; display: none;">0</tspan></text><g xmlns="http://www.w3.org/2000/svg" class="activities"><title xmlns="http://www.w3.org/2000/svg">true</title><rect transform="rotate(45,14,12)" x="7" y="3" width="21" height="21" class="cline hfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/><line x1="10.5" y1="20.5" x2="20.5" y2="10.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/><line x1="10.5" y1="10.5" x2="20.5" y2="20.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/></g></g><text class="label" transform="translate(184.4,70.4)" xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;"><tspan x="0" dy="0" xmlns="http://www.w3.org/2000/svg">true</tspan></text></g></g><g class="element primitive" element-type="end" element-id="undefined" xmlns="http://www.w3.org/2000/svg"><g transform="translate(24.4,370.4)"><g xmlns="http://www.w3.org/2000/svg" class="activities"><title xmlns="http://www.w3.org/2000/svg"/><circle cx="15" cy="15" r="14" class="standfat" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 3px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/></g></g></g></g></svg>
+]]>  </style>
+  <rect element-row="10" class="stripe even" x="0" y="405.2" width="184.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="9" class="stripe odd" x="0" y="365.2" width="184.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="8" class="stripe even" x="0" y="325.2" width="184.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="7" class="stripe odd" x="0" y="285.2" width="184.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="6" class="stripe even" x="0" y="245.2" width="184.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="5" class="stripe odd" x="0" y="205.2" width="184.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="4" class="stripe even" x="0" y="165.2" width="184.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="3" class="stripe odd" x="0" y="125.2" width="184.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="2" class="stripe even" x="0" y="85.2" width="184.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="1" class="stripe odd" x="0" y="45.2" width="184.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <rect element-row="0" class="stripe even" x="0" y="5.2" width="184.4" height="40"
+    xmlns="http://www.w3.org/2000/svg" style="fill: #ffffff; display: none"/>
+  <defs xmlns="http://www.w3.org/2000/svg">
+    <marker id="arrow" viewBox="0 0 10 10" refX="33" refY="5" orient="auto" markerUnits="strokeWidth" markerWidth="4.5" makerHeight="4.5" style="stroke: #000000; stroke-width: 2px; fill: #000000;">
+      <path d="m 2 2 l 6 3 l -6 3 z"/>
+    </marker>
+  </defs>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 120,145 120,185" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" d="M 80,105 120,105 120,145" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 160,225 160,265" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 160,265 160,305" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" d="M 80,105 160,105 160,225" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 40,65 80,65 80,105" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 120,185 120,325 94,325 80,345" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 160,305 160,325 94,325 80,345" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 80,345 80,385" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 80,385 55,385 55,95 40,65" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 40,25 40,65" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" d="M 40,65 40,425" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <path xmlns="http://www.w3.org/2000/svg" class="ourline" marker-end="url(#arrow)" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+  <g class="group"
+    xmlns="http://www.w3.org/2000/svg" element-id="group-description">
+    <g class="element" element-type="start_event" element-id="description"
+      xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(24.4,10.399999999999999)">
+        <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+          <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+          <tspan class="colon" style="display: none;">,</tspan>
+          <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+        </text>
+        <g xmlns="http://www.w3.org/2000/svg" class="activities">
+          <title xmlns="http://www.w3.org/2000/svg">START</title>
+          <circle cx="15" cy="15" r="14" class="cline stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+          <rect x="7" y="10" width="16" height="11" class="black" style="fill: #000000; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill: none"/>
+          <path d="m 7,10 8,6 8,-6" class="black" style="fill: #000000; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill: none"/>
+        </g>
+      </g>
+    </g>
+    <g class="group"
+      xmlns="http://www.w3.org/2000/svg" id="group-loop_0">
+      <rect element-id="loop_0" x="20.28" y="45.2" width="160" height="360" class="tile" rx="15" ry="15"
+        xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/>
+      <g class="group"
+        xmlns="http://www.w3.org/2000/svg" id="group-parallel_0">
+        <rect element-id="parallel_0" x="60.28" y="85.2" width="120" height="280" class="tile" rx="15" ry="15"
+          xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/>
+        <g class="group"
+          xmlns="http://www.w3.org/2000/svg" id="group-parallel_branch_0">
+          <rect element-id="parallel_branch_0" x="100.28" y="125.2" width="40" height="80" class="tile" rx="15" ry="15"
+            xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/>
+          <g class="element primitive" element-type="callmanipulate" element-id="a1"
+            xmlns="http://www.w3.org/2000/svg" element-endpoint="subprocess">
+            <g transform="translate(104.4,170.4)">
+              <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                <tspan class="colon" style="display: none;">,</tspan>
+                <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+              </text>
+              <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                <title xmlns="http://www.w3.org/2000/svg"/>
+                <g xmlns="http://www.w3.org/2000/svg">
+                  <rect x="1" y="1" width="28" height="28" rx="4" class="hfill rfill cline stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  <path class="cline hfill rfill stand" d="m 2 22 l 13 0 l 0 -14 l -13 0" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  <path class="stand" d="m 5 15 l 6 0" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  <path class="stand" d="m 8 12 l 0 6" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                </g>
+                <rect x="23" y="21" width="12" height="12" rx="2" class="cline rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                <text transform="translate(29,30.75)" class="small" style="font-size: 14px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">s</text>
+              </g>
+            </g>
+          </g>
+          <g class="element complex" element-type="parallel_branch_normal" element-id="parallel_branch_0"
+            xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(104.4,130.4)">
+              <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                <tspan class="colon" style="display: none;">,</tspan>
+                <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+              </text>
+              <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                <title xmlns="http://www.w3.org/2000/svg"/>
+                <rect x="11" y="6" width="9" height="18" rx="0" class="hline white" style="fill: #ffffff; fill-opacity: 1; stroke: #ffffff; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                <path class="cline hfill stand" d="M 11,5 C  2,9  2,21 11,25 M 20,5 C 29,9 29,21 20,25" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;stroke-dasharray:1,4;"/>
+                <line x1="15.6" y1="4" x2="15.6" y2="27" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g class="group"
+          xmlns="http://www.w3.org/2000/svg" id="group-parallel_branch_1">
+          <rect element-id="parallel_branch_1" x="140.28" y="205.2" width="40" height="120" class="tile" rx="15" ry="15"
+            xmlns="http://www.w3.org/2000/svg" style="stroke-width: 1px; stroke-dasharray: 3px, 5px; fill: #0081c7; fill-opacity: 0.3; display: none;"/>
+          <g class="element primitive" element-type="callmanipulate" element-id="a2"
+            xmlns="http://www.w3.org/2000/svg" element-endpoint="timeout">
+            <g transform="translate(144.4,250.4)">
+              <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                <tspan class="colon" style="display: none;">,</tspan>
+                <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+              </text>
+              <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                <title xmlns="http://www.w3.org/2000/svg"/>
+                <g xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="15" cy="15" r="14" class="cline stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  <circle cx="15" cy="15" r="11" class="cline hfill rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  <path d="m 9,11 7,5 0,-6" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;fill: none;"/>
+                </g>
+                <rect x="23" y="21" width="12" height="12" rx="2" class="cline rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                <text transform="translate(29,30.75)" class="small" style="font-size: 14px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">s</text>
+              </g>
+            </g>
+          </g>
+          <g class="element primitive" element-type="callmanipulate" element-id="a3"
+            xmlns="http://www.w3.org/2000/svg" element-endpoint="subprocess">
+            <g transform="translate(144.4,290.4)">
+              <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                <tspan class="colon" style="display: none;">,</tspan>
+                <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+              </text>
+              <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                <title xmlns="http://www.w3.org/2000/svg"/>
+                <g xmlns="http://www.w3.org/2000/svg">
+                  <rect x="1" y="1" width="28" height="28" rx="4" class="hfill rfill cline stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  <path class="cline hfill rfill stand" d="m 2 22 l 13 0 l 0 -14 l -13 0" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  <path class="stand" d="m 5 15 l 6 0" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                  <path class="stand" d="m 8 12 l 0 6" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                </g>
+                <rect x="23" y="21" width="12" height="12" rx="2" class="cline rfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                <text transform="translate(29,30.75)" class="small" style="font-size: 14px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">s</text>
+              </g>
+            </g>
+          </g>
+          <g class="element complex" element-type="parallel_branch_normal" element-id="parallel_branch_1"
+            xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(144.4,210.4)">
+              <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+                <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+                <tspan class="colon" style="display: none;">,</tspan>
+                <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+              </text>
+              <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                <title xmlns="http://www.w3.org/2000/svg"/>
+                <rect x="11" y="6" width="9" height="18" rx="0" class="hline white" style="fill: #ffffff; fill-opacity: 1; stroke: #ffffff; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                <path class="cline hfill stand" d="M 11,5 C  2,9  2,21 11,25 M 20,5 C 29,9 29,21 20,25" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;stroke-dasharray:1,4;"/>
+                <line x1="15.6" y1="4" x2="15.6" y2="27" class="ourline" style="stroke-opacity: 1; stroke: #000000; stroke-width: 2px; fill: none;"/>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g class="element complex" element-type="parallel_start" element-id="parallel_0"
+          xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(64.4,90.4)">
+            <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+              <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+              <tspan class="colon" style="display: none;">,</tspan>
+              <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+            </text>
+            <g xmlns="http://www.w3.org/2000/svg" class="activities">
+              <title xmlns="http://www.w3.org/2000/svg"/>
+              <rect transform="rotate(45,14,12)" x="7" y="3" width="21" height="21" class="cline hfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+              <text transform="translate(15,25)" class="normallarge" style="font-size: 25px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">+</text>
+            </g>
+          </g>
+          <g class="element primitive" element-type="parallel_simple" element-id="parallel_0"
+            xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(64.4,330.4)">
+              <g xmlns="http://www.w3.org/2000/svg" class="activities">
+                <title xmlns="http://www.w3.org/2000/svg"/>
+                <rect transform="rotate(45,14,12)" x="7" y="3" width="21" height="21" class="cline hfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+                <text transform="translate(15,25)" class="normallarge" style="font-size: 25px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">+</text>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g class="element primitive" element-type="manipulate" element-id="a4"
+        xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(64.4,370.4)">
+          <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+            <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+            <tspan class="colon" style="display: none;">,</tspan>
+            <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+          </text>
+          <g xmlns="http://www.w3.org/2000/svg" class="activities">
+            <title xmlns="http://www.w3.org/2000/svg"/>
+            <rect x="1" y="1" width="28" height="28" rx="4" class="rfill hfill cline stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+            <text transform="translate(15,21)" class="normal" style="font-size: 20px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: middle; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;fill: #000000; fill-opacity: 1; stroke: #000000; stroke-width: 0.2px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;">s</text>
+          </g>
+        </g>
+      </g>
+      <g class="element complex" element-type="loop_head" element-id="loop_0"
+        xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(24.4,50.4)">
+          <text class="super" transform="translate(30,8.4)" style="font-size: 11px; font-style: normal; font-variant: normal; font-weight: bold; font-stretch: normal; text-align: center; line-height: 100%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial; display: none">
+            <tspan class="active" style="fill: #cc0000; display: none;">0</tspan>
+            <tspan class="colon" style="display: none;">,</tspan>
+            <tspan class="vote" style="fill: #73d216; display: none;">0</tspan>
+          </text>
+          <g xmlns="http://www.w3.org/2000/svg" class="activities">
+            <title xmlns="http://www.w3.org/2000/svg">data.iterations &gt; 0</title>
+            <rect transform="rotate(45,14,12)" x="7" y="3" width="21" height="21" class="cline hfill stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+            <line x1="10.5" y1="20.5" x2="20.5" y2="10.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+            <line x1="10.5" y1="10.5" x2="20.5" y2="20.5" class="stand" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 1.6px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+          </g>
+        </g>
+        <text class="label" transform="translate(184.4,70.4)"
+          xmlns="http://www.w3.org/2000/svg" style="font-size: 14px; font-style: normal; font-variant: normal; font-stretch: normal; text-align: center; line-height: 125%; writing-mode: horizontal-tb; text-anchor: start; color: #000000; fill: #000000; fill-opacity: 1; stroke: none; font-family: Arial;">
+          <tspan x="0" dy="0"
+            xmlns="http://www.w3.org/2000/svg">data.iterations &gt; 0</tspan>
+        </text>
+      </g>
+    </g>
+    <g class="element primitive" element-type="end" element-id="undefined"
+      xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(24.4,410.4)">
+        <g xmlns="http://www.w3.org/2000/svg" class="activities">
+          <title xmlns="http://www.w3.org/2000/svg"/>
+          <circle cx="15" cy="15" r="14" class="standfat" style="fill: #ffffff; fill-opacity: 1; stroke: #000000; stroke-width: 3px; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 4; stroke-opacity: 1; stroke-dasharray: none;"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
