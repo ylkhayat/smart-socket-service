@@ -41,7 +41,7 @@ For a non overwhelming documentation, here's one endpoint that you can use witho
 
 ### `POST /api/start-wait-stop`
 
-This endpoint allows you to start an instance, wait for a specific duration, and then stop the instance.
+This endpoint allows you to start an instance, wait for a specific duration, and then stop the instance. It also supports callbacks to notify you when the instance has stopped. Simply provide a header suffixed by `-callback` with the url expecting the response and you will get the non blocking response on this url.
 
 | Parameter  | Type   | Optional | Default | Description                                |
 | ---------- | ------ | -------- | ------- | ------------------------------------------ |
@@ -143,7 +143,7 @@ You get a `message` to describe the outcome of the action and a status code.
 
 ### `GET /api/wait`
 
-This endpoint allows you to wait for a specific duration.
+This endpoint allows you to wait for a specific duration. It also supports callbacks to notify you when the time runs out. Simply provide a header suffixed by `-callback` with the url expecting the response and you will get the non blocking response on this url.
 
 | Parameter  | Type   | Optional | Description                                |
 | ---------- | ------ | -------- | ------------------------------------------ |

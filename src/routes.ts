@@ -24,7 +24,7 @@ router.post(
     req: Request<any, any, any, PostStartWaitStopParams>,
     res: Response,
   ) => {
-    const query = req.query;
+    const query = req.body;
     const duration = query.duration ? parseInt(query.duration, 10) : null;
 
     if (duration === null || isNaN(duration)) {
@@ -49,26 +49,43 @@ router.post(
         });
       }
       setupPowerStatisticWatcher();
+      const headers = req.headers;
 
-      const callbackUrl = req.get("CPEE-CALLBACK");
-      instancesStartingTimeout[instanceId] = setTimeout(async () => {
-        if (callbackUrl) {
-          const { success, message, instance } = await stopInstance(instanceId);
-          if (!success) {
-            fetch(callbackUrl, {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                message,
-                instance,
-              }),
-            });
-          }
+      const callbackHeaders: string[] = [];
+      /**
+       * Extract all headers that end with '-callback' and store them in an array
+       * to be used for callback requests and set the corresponding response header to true
+       */
+      for (let key in headers) {
+        if (key.toLowerCase().endsWith('-callback') && headers[key]) {
+          callbackHeaders.push(headers[key] as string);
+          res.set(key, "true");
         }
+      }
+
+      instancesStartingTimeout[instanceId] = setTimeout(async () => {
+        const { success, message, instance } = await stopInstance(instanceId, {
+          timeout: callbackHeaders.length > 0
+        });
+        callbackHeaders.forEach((callbackUrl) => {
+          if (callbackUrl) {
+            if (!success) {
+              fetch(callbackUrl, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  message,
+                  instance,
+                }),
+              });
+            }
+          }
+        });
       }, duration * 1000);
-      return res.set("CPEE-CALLBACK", "true").status(200).json({
+
+      return res.status(200).json({
         instance,
       });
     } catch (error) {
@@ -237,21 +254,35 @@ router.get(
     }
 
     try {
-      const callbackUrl = req.get("CPEE-CALLBACK");
-      setTimeout(() => {
-        if (callbackUrl) {
-          fetch(callbackUrl, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              waiting: false,
-            }),
-          });
+      const headers = req.headers;
+      const callbackHeaders: string[] = [];
+      /**
+       * Extract all headers that end with '-callback' and store them in an array
+       * to be used for callback requests and set the corresponding response header to true
+       */
+      for (let key in headers) {
+        if (key.toLowerCase().endsWith('-callback') && headers[key]) {
+          callbackHeaders.push(headers[key] as string);
+          res.set(key, "true");
         }
+      }
+
+      setTimeout(() => {
+        callbackHeaders.forEach((callbackUrl) => {
+          if (callbackUrl) {
+            fetch(callbackUrl, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                waiting: false,
+              }),
+            });
+          }
+        });
       }, duration * 1000);
-      return res.set("CPEE-CALLBACK", "true").status(200).json({
+      return res.status(200).json({
         waiting: true,
       });
     } catch (error) {
