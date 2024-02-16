@@ -9,7 +9,8 @@
     "prod": "NODE_ENV=production npm run build && node dist/app.js",
     "dev": "nodemon --watch src -e .ts --exec 'npm run build && node dist/app.js'",
     "test": "jest",
-    "prepare-pages": "./prepare_pages.sh"
+    "prepare-pages": "./prepare_pages.sh",
+    "setup": "./setup.sh"
   },
   "repository": {
     "type": "git",

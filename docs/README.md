@@ -4,7 +4,7 @@ Welcome to the Smart Socket Service, your one-stop shop for controlling and moni
 
 This documentation also has a [github page](https://ylkhayat.github.io/smart-socket-service/), maybe check it out for better visualization when it comes to testsets.
 
-## Usage Scenario & Testsets
+## 🖼️ Usage Scenario & Testsets
 
 What is a testset though? And what are we talking about? 🤔
 
@@ -12,26 +12,44 @@ Let me show you a little bit of what we have in store for you! I have annotated 
 
 Yalla habibi! Go to [testsets](https://ylkhayat.github.io/smart-socket-service/testsets/#README.md) to know more 🚀
 
+## 🛠️ Installation
+
+Just clone this repository, run `npm install` to install the dependencies, and you're good to go!
+
 ## 🎛️ Smart Socket Configuration
+
+You can just run the following script to create the `.env` file for you in an interactive way.
+
+```bash
+npm run setup
+```
 
 The `.env` file is where you can configure the MQTT client used by the Smart Socket Service. Here's an example of what this file might look like:
 
-```.env
-// The port that the server listens on
+```bash
+# The port that the server listens on
 PORT=3000
-// MQTT Configuration
+# MQTT Configuration
 MQTT_PROTOCOL=mqtt
-MQTT_HOST=<your preferred host>
+MQTT_HOST=your-preferred-host
 MQTT_PORT=1883
 MQTT_CLIENT_ID=SOME_CLIENT_ID
 MQTT_USERNAME=THE_USER
 MQTT_PASSWORD=password
 MQTT_TOPIC=smart-socket
+# Logging Configuration (advised to use only in development)
+# It writes a log file that can grow significantly
+LOGGING_ENABLED=False
 ```
 
-This file should be located at the root of your project directory. The `MQTT_PROTOCOL`, `MQTT_HOST`, and `MQTT_PORT` fields are used to construct the URL that the MQTT client connects to. The `MQTT_CLIENT_ID`, `MQTT_USERNAME`, and `MQTT_PASSWORD` fields are used for authentication.
+This file should be located at the root of your project directory. The `MQTT_PROTOCOL`, `MQTT_HOST`, and `MQTT_PORT` fields are used to construct the URL that the MQTT client connects to. The `MQTT_CLIENT_ID`, `MQTT_USERNAME`, and `MQTT_PASSWORD` fields are used for authentication. And the `PORT` is the port that the server listens on.
 
 You can also include any additional options that are supported by the MQTT.js library. For a full list of options, refer to the [MQTT.js documentation](https://github.com/mqttjs/MQTT.js?tab=readme-ov-file#mqttclientstreambuilder-options).
+
+## 🎮 Running the Thing!
+
+To start the service, just run `npm start`.
+To run in production, use `npm run prod`.
 
 ## 🌐 API Endpoints
 
@@ -257,15 +275,6 @@ The application also maintains a `serverData` object in the [store.ts](../src/st
 | `isEmergencyStopped`          | `boolean`                                       | Indicator of whether the smart socket was emergency stopped or not.                                                                                                                                                                  |
 
 The `serverData` object is updated by various handlers in the `../src/handlers` directory. For example, the [`startInstance`](../src/handlers/instance/startInstance.ts) handler adds the started instance's ID to the `runningInstances` array, and the [`stopInstance`](../src/handlers/instance/stopInstance.ts) handler removes the stopped instance's ID from the `runningInstances` array and adds it to the `instancesStopping` array.
-
-## 🛠️ Installation
-
-Just clone this repository, run `npm install` to install the dependencies, and you're good to go!
-
-## 🎮 Usage
-
-To start the service, just run `npm start`.
-To run in production, use `npm run prod`.
 
 ## 🤝 Contributing
 
