@@ -1,6 +1,6 @@
 # 🚀 Smart Socket Service
 
-![Tests](https://github.com/ylkhayat/smart-socket-service/.github/workflows/main.yml/badge.svg)
+![Tests](https://github.com/ylkhayat/smart-socket-service/actions/workflows/run-test.yml/badge.svg)
 
 Welcome to the Smart Socket Service, your one-stop shop for controlling and monitoring smart sockets. This service is like a remote control for your smart sockets, but with superpowers! 💪
 
