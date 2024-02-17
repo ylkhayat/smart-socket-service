@@ -1,5 +1,10 @@
-import shortid from "shortid";
-import { InstanceData, instancesData, instancesStartingTimeout, serverData } from "../../store";
+import { nanoid } from "nanoid";
+import {
+    InstanceData,
+    instancesData,
+    instancesStartingTimeout,
+    serverData,
+} from "../../store";
 import { waitForEventEmitterPowerData } from "../../events/eventEmitter";
 import { energyFetch } from "../socket/powerMonitor";
 import { startSocket } from "../socket/control";
@@ -22,7 +27,7 @@ export const startInstance = async (
     data: InstanceData,
 ): Promise<OperationReport> => {
     let triggerPowerOn = false;
-    const id = shortid.generate();
+    const id = nanoid();
     const augmentedData = {
         ...data,
         id,
@@ -38,11 +43,19 @@ export const startInstance = async (
     }
 
     if (instancesData[id]) {
+        if (!instancesData[id].stopTimestamp) {
+            return {
+                success: true,
+                statusCode: 200,
+                message: `Instance with ID ${id} already exists. Initialization aborted.`,
+                instance: instancesData[id],
+            };
+        }
         return {
-            success: true,
-            statusCode: 200,
-            message: `Instance with ID ${id} already exists. Initialization aborted.`,
-            instance: instancesData[id]
+            success: false,
+            statusCode: 409,
+            message: `Instance with ID ${id} already exists and but stopped.`,
+            instanceId: id,
         };
     }
 

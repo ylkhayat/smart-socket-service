@@ -15,26 +15,20 @@ type OperationReport = {
  * @returns {OperationReport} An object indicating the operation's report.
  */
 export const emergencyStop = async (): Promise<OperationReport> => {
-    if (serverData.isEmergencyStopped) {
+    if (serverData.powerStatus[serverData.powerStatus.length - 1].powerOff) {
+        serverData.isEmergencyStopped = true;
         return {
             success: true,
             statusCode: 200,
-            message: `Socket is already stopped.`,
+            message: `Server is already stopped.`,
         };
     }
 
-    if (serverData.powerStatus[serverData.powerStatus.length - 1].powerOff) {
-        return {
-            success: true,
-            statusCode: 200,
-            message: `Socket is already stopped.`,
-        };
-    } else {
-        serverData.powerStatus[serverData.powerStatus.length - 1].powerOff = {
-            instanceId: "<emergency>",
-            timestamp: new Date(),
-        };
-    }
+    serverData.powerStatus[serverData.powerStatus.length - 1].powerOff = {
+        instanceId: "<emergency>",
+        timestamp: new Date(),
+    };
+
 
     stopSocket();
     const powerData = await waitForEventEmitterPowerData();

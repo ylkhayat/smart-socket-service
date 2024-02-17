@@ -1,5 +1,10 @@
 import { waitForEventEmitterPowerData } from "../../events/eventEmitter";
-import { InstanceData, instancesData, instancesStartingTimeout, serverData } from "../../store";
+import {
+    InstanceData,
+    instancesData,
+    instancesStartingTimeout,
+    serverData,
+} from "../../store";
 import { stopSocket } from "../socket/control";
 
 export type StopReport = {
@@ -10,11 +15,10 @@ export type StopReport = {
     instance?: InstanceData;
 };
 
-
 type Config = {
     emergency?: boolean;
     timeout?: boolean;
-}
+};
 /**
  * Stops a certain instance and updates server-wide data accordingly.
  * @param {string} id - identifier for the instance.
@@ -27,7 +31,6 @@ export const stopInstance = async (
 ): Promise<StopReport> => {
     let triggerPowerOff = config?.emergency ? true : false;
     if (!instancesData[id]) {
-        // Instance already exists, return a failure message
         return {
             success: false,
             statusCode: 404,
@@ -40,13 +43,7 @@ export const stopInstance = async (
         delete instancesStartingTimeout[id];
     }
 
-    if (
-        instancesData[id].stopTimestamp &&
-        !(
-            instancesData[id].isEmergencyStopped ||
-            instancesData[id].isManuallyStopped
-        )
-    ) {
+    if (instancesData[id].stopTimestamp) {
         return {
             success: true,
             statusCode: 200,
@@ -71,8 +68,11 @@ export const stopInstance = async (
         serverData.runningInstances.length === 1 &&
         serverData.runningInstances[0] === id
     ) {
-
-        const stoppingId = config?.emergency ? "<emergency>" : config?.timeout ? "<timeout>" : id;
+        const stoppingId = config?.emergency
+            ? "<emergency>"
+            : config?.timeout
+                ? "<timeout>"
+                : id;
         serverData.powerStatus[serverData.powerStatus.length - 1].powerOff = {
             instanceId: stoppingId,
             timestamp: new Date(),
@@ -115,7 +115,6 @@ export const stopInstance = async (
             };
         }
     }
-
 
     serverData.instancesStopping = serverData.instancesStopping.filter(
         (instance) => instance !== id,
